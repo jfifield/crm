@@ -67,7 +67,7 @@
 	
 	<!--
 	<bean id="searchService" class="org.programmerplanet.crm.service.LuceneSearchService">
-		<property name="indexDirectory" value="${search.index.dir}"/>
+		<property name="indexDirectory" value="${user.dir}/.org.programmerplanet.crm/lucene"/>
 	</bean>
 	-->
 
