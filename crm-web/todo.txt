@@ -1,0 +1,29 @@
+to do
+-----
+group fields into field groups
+audit columns
+encrypt passwords
+password fields on user edit page
+when rendering an Object, need to somehow configure how it should be displayed (which fields, format, etc)
+	could be more than one field?
+	could have special formatting (last name, first name)
+viewing an object with no columns looks funny - probably should be a message instead
+application selection should be sticky for user
+have object selection "single relationship" be a popup (or ajax auto-complete)
+define "calendars" containing 1 or more object/date
+make paging and sorting an ajax request
+add searching
+define what goes on the home page
+
+future
+------
+define charts/graphs
+support rich text field with editor?
+recognized blob types should have a specific icon (pdf, doc, xls, etc)
+recognized blob types should be indexed for searching (pdf, doc, xls, etc)
+built-in workflow definitions
+"trigger" plug-ins
+display (tabs, lists, relationships, etc) configurable by user
+"active filters" on list views (i.e. status=open)
+relationships can be viewed by list or tab (by user)
+     

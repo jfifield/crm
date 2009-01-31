@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-autowire="byName">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:/application.properties"/>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.postgresql.Driver"/>
+		<property name="url" value="jdbc:postgresql://${database.host}/${database.name}"/>
+		<property name="username" value="${database.username}"/>
+		<property name="password" value="${database.password}"/>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"/>
+
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames"><value>*Service</value></property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"/>
+	
+	<bean id="userDao" class="org.programmerplanet.crm.dao.jdbc.JdbcUserDao"/>
+
+	<bean id="applicationDao" class="org.programmerplanet.crm.dao.jdbc.JdbcApplicationDao"/>
+
+	<bean id="applicationObjectDao" class="org.programmerplanet.crm.dao.jdbc.JdbcApplicationObjectDao"/>
+
+	<bean id="objectDefinitionDao" class="org.programmerplanet.crm.dao.jdbc.JdbcObjectDefinitionDao"/>
+	
+	<bean id="fieldDefinitionDao" class="org.programmerplanet.crm.dao.jdbc.JdbcFieldDefinitionDao"/>
+	
+	<bean id="relationshipDao" class="org.programmerplanet.crm.dao.jdbc.JdbcRelationshipDao"/>
+
+	<bean id="optionListDao" class="org.programmerplanet.crm.dao.jdbc.JdbcOptionListDao"/>
+
+	<bean id="optionListItemDao" class="org.programmerplanet.crm.dao.jdbc.JdbcOptionListItemDao"/>
+
+	<bean id="fileDao" class="org.programmerplanet.crm.dao.jdbc.JdbcFileDao"/>
+	
+	<bean id="crmObjectDao" class="org.programmerplanet.crm.dao.jdbc.JdbcCrmObjectDao"/>
+	
+	<bean id="schemaManager" class="org.programmerplanet.crm.schema.PostgresqlSchemaManager"/>
+	
+	<bean id="administrationService" class="org.programmerplanet.crm.service.AdministrationServiceImpl"/>
+
+	<bean id="applicationService" class="org.programmerplanet.crm.service.ApplicationServiceImpl"/>
+	
+	<!--
+	<bean id="searchService" class="org.programmerplanet.crm.service.LuceneSearchService">
+		<property name="indexDirectory" value="${search.index.dir}"/>
+	</bean>
+	-->
+
+	<bean id="searchService" class="org.programmerplanet.crm.service.JdbcSearchService"/>
+	
+</beans>

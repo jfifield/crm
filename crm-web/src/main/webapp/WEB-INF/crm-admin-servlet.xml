@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-autowire="byName">
+
+	<bean id="methodNameResolver" class="org.programmerplanet.crm.web.PrefixedParameterMethodNameResolver">
+		<property name="prefix" value="__"/>
+	</bean>
+
+	<bean id="homeController" class="org.programmerplanet.crm.web.admin.HomeController"/>
+
+	<bean id="userListController" class="org.programmerplanet.crm.web.admin.UserListController"/>
+
+	<bean id="userValidator" class="org.programmerplanet.crm.web.admin.UserValidator"/>
+
+	<bean id="userEditController" class="org.programmerplanet.crm.web.admin.UserEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="user"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.User"/>
+		<property name="validator" ref="userValidator"/>
+		<property name="formView" value="userEdit"/>
+		<property name="successView" value="redirect:userList"/>
+	</bean>
+
+	<bean id="applicationListController" class="org.programmerplanet.crm.web.admin.ApplicationListController"/>
+
+	<bean id="applicationValidator" class="org.programmerplanet.crm.web.admin.ApplicationValidator"/>
+
+	<bean id="applicationEditController" class="org.programmerplanet.crm.web.admin.ApplicationEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="application"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.Application"/>
+		<property name="validator" ref="applicationValidator"/>
+		<property name="formView" value="applicationEdit"/>
+		<property name="successView" value="redirect:applicationList"/>
+	</bean>
+
+	<bean id="applicationObjectEditController" class="org.programmerplanet.crm.web.admin.ApplicationObjectEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="applicationObject"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.ApplicationObject"/>
+		<property name="successView" value="redirect:applicationEdit"/>
+	</bean>
+
+	<bean id="objectListController" class="org.programmerplanet.crm.web.admin.ObjectListController"/>
+
+	<bean id="objectValidator" class="org.programmerplanet.crm.web.admin.ObjectValidator"/>
+
+	<bean id="objectEditController" class="org.programmerplanet.crm.web.admin.ObjectEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="objectDefinition"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.ObjectDefinition"/>
+		<property name="validator" ref="objectValidator"/>
+		<property name="formView" value="objectEdit"/>
+		<property name="successView" value="redirect:objectList"/>
+	</bean>
+
+	<bean id="fieldValidator" class="org.programmerplanet.crm.web.admin.FieldValidator"/>
+
+	<bean id="fieldEditController" class="org.programmerplanet.crm.web.admin.FieldEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="fieldDefinition"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.FieldDefinition"/>
+		<property name="validator" ref="fieldValidator"/>
+		<property name="formView" value="fieldEdit"/>
+		<property name="successView" value="redirect:objectEdit"/>
+	</bean>
+
+	<bean id="optionListListController" class="org.programmerplanet.crm.web.admin.OptionListListController"/>
+
+	<bean id="optionListValidator" class="org.programmerplanet.crm.web.admin.OptionListValidator"/>
+
+	<bean id="optionListEditController" class="org.programmerplanet.crm.web.admin.OptionListEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="optionList"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.OptionList"/>
+		<property name="validator" ref="optionListValidator"/>
+		<property name="formView" value="optionListEdit"/>
+		<property name="successView" value="redirect:optionListList"/>
+	</bean>
+
+	<bean id="optionListItemValidator" class="org.programmerplanet.crm.web.admin.OptionListItemValidator"/>
+
+	<bean id="optionListItemEditController" class="org.programmerplanet.crm.web.admin.OptionListItemEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="optionListItem"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.OptionListItem"/>
+		<property name="validator" ref="optionListItemValidator"/>
+		<property name="formView" value="optionListItemEdit"/>
+		<property name="successView" value="redirect:optionListEdit"/>
+	</bean>
+
+	<bean id="relationshipEditController" class="org.programmerplanet.crm.web.admin.RelationshipEditController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="relationship"/>
+		<property name="commandClass" value="org.programmerplanet.crm.model.Relationship"/>
+		<property name="successView" value="redirect:objectEdit"/>
+	</bean>
+
+	<bean id="authenticationInterceptor" class="org.programmerplanet.crm.web.AuthenticationInterceptor"/>
+	<bean id="administrationInterceptor" class="org.programmerplanet.crm.web.admin.AdministrationInterceptor"/>
+
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="authenticationInterceptor"/>
+				<ref bean="administrationInterceptor"/>
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="/home">homeController</prop>
+				<prop key="/userList">userListController</prop>
+				<prop key="/userEdit">userEditController</prop>
+				<prop key="/applicationList">applicationListController</prop>
+				<prop key="/applicationEdit">applicationEditController</prop>
+				<prop key="/applicationObjectEdit">applicationObjectEditController</prop>
+				<prop key="/objectList">objectListController</prop>
+				<prop key="/objectEdit">objectEditController</prop>
+				<prop key="/fieldEdit">fieldEditController</prop>
+				<prop key="/optionListList">optionListListController</prop>
+				<prop key="/optionListEdit">optionListEditController</prop>
+				<prop key="/optionListItemEdit">optionListItemEditController</prop>
+				<prop key="/relationshipEdit">relationshipEditController</prop>
+			</props>
+		</property>
+    </bean>
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"/>
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/view/admin/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+    
+</beans>

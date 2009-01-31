@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation=
+		"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
+	default-autowire="byName">
+
+	<bean id="loginController" class="org.programmerplanet.crm.web.app.LoginController">
+		<property name="sessionForm" value="true"/>
+		<property name="commandName" value="credentials"/>
+		<property name="commandClass" value="org.programmerplanet.crm.web.app.Credentials"/>
+		<property name="validator" ref="credentialsValidator"/>
+		<property name="formView" value="login"/>
+		<property name="successView" value="redirect:home"/>
+	</bean>
+	
+	<bean id="logoutController" class="org.programmerplanet.crm.web.app.LogoutController"/>
+
+	<bean id="homeController" class="org.programmerplanet.crm.web.app.HomeController"/>
+
+	<bean id="objectListController" class="org.programmerplanet.crm.web.app.ObjectListController"/>
+
+	<bean id="objectViewController" class="org.programmerplanet.crm.web.app.ObjectViewController"/>
+
+	<bean id="objectEditController" class="org.programmerplanet.crm.web.app.ObjectEditController"/>
+
+	<bean id="objectLinkController" class="org.programmerplanet.crm.web.app.ObjectLinkController"/>
+
+	<bean id="downloadController" class="org.programmerplanet.crm.web.app.DownloadController"/>
+
+	<bean id="searchController" class="org.programmerplanet.crm.web.app.SearchController">
+		<property name="sessionForm" value="false"/>
+		<property name="commandName" value="searchCriteria"/>
+		<property name="commandClass" value="org.programmerplanet.crm.service.SearchCriteria"/>
+		<property name="formView" value="search"/>
+		<property name="successView" value="search"/>
+	</bean>
+
+	<bean id="credentialsValidator" class="org.programmerplanet.crm.web.app.CredentialsValidator"/>
+
+	<bean id="unsecureMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/login">loginController</prop>
+				<prop key="/logout">logoutController</prop>
+			</props>
+		</property>
+    </bean>
+
+	<bean id="authenticationInterceptor" class="org.programmerplanet.crm.web.AuthenticationInterceptor"/>
+
+	<bean id="applicationInterceptor" class="org.programmerplanet.crm.web.app.ApplicationInterceptor"/>
+
+	<bean id="secureMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="authenticationInterceptor"/>
+				<ref bean="applicationInterceptor"/>
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="/home">homeController</prop>
+				<prop key="/*.list">objectListController</prop>
+				<prop key="/*.view">objectViewController</prop>
+				<prop key="/*.edit">objectEditController</prop>
+				<prop key="/*.link">objectLinkController</prop>
+				<prop key="/download">downloadController</prop>
+				<prop key="/search">searchController</prop>
+			</props>
+		</property>
+    </bean>
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"/>
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/view/app/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+        
+	<util:map id="fieldRenderers">
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.SHORT_TEXT"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.ShortTextRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.LONG_TEXT"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.LongTextRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.AUTO_NUMBER"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.AutoNumberRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.NUMBER"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.NumberRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.MONEY"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.MoneyRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.PERCENT"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.PercentRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.DATE"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.DateRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.DATE_TIME"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.DateTimeRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.BOOLEAN"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.BooleanRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.USER"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.UserRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.EMAIL"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.EmailRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.URL"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.UrlRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.OPTION_LIST"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.OptionRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.FILE"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.FileRenderer"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.OBJECT"/></key>
+			<bean class="org.programmerplanet.crm.web.app.renderer.ObjectRenderer"/>
+		</entry>
+	</util:map>
+	
+	<util:map id="converters">
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.SHORT_TEXT"/></key>
+			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.LONG_TEXT"/></key>
+			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.AUTO_NUMBER"/></key>
+			<bean class="org.programmerplanet.crm.converter.NumberConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.NUMBER"/></key>
+			<bean class="org.programmerplanet.crm.converter.NumberConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.MONEY"/></key>
+			<bean class="org.programmerplanet.crm.converter.MoneyConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.PERCENT"/></key>
+			<bean class="org.programmerplanet.crm.converter.PercentConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.DATE"/></key>
+			<bean class="org.programmerplanet.crm.converter.DateConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.DATE_TIME"/></key>
+			<bean class="org.programmerplanet.crm.converter.DateTimeConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.BOOLEAN"/></key>
+			<bean class="org.programmerplanet.crm.converter.BooleanConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.USER"/></key>
+			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.EMAIL"/></key>
+			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.URL"/></key>
+			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.OPTION_LIST"/></key>
+			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.FILE"/></key>
+			<bean class="org.programmerplanet.crm.converter.FileConverter"/>
+		</entry>
+		<entry>
+			<key><util:constant static-field="org.programmerplanet.crm.model.DataType.OBJECT"/></key>
+			<bean class="org.programmerplanet.crm.converter.ObjectConverter"/>
+		</entry>
+	</util:map>
+	
+</beans>
