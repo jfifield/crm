@@ -65,7 +65,7 @@
 				<td colspan="4" style="text-align: center;">
 					<input type="submit" class="button" value="Save" name="__save"/>
 					<c:if test="${!empty data['id']}">
-					<input type="submit" class="button" value="Delete" name="__delete" onclick="deleteObject('${objectDefinition.objectName}', ${data['id']}, '${param.source}', '${param.source_object}', '${param.source_object_id}'); return false;"/>
+					<input type="submit" class="button" value="Delete" name="__delete" onclick="deleteObject('${objectDefinition.objectName}', '${data['id']}', '${param.source}', '${param.source_object}', '${param.source_object_id}'); return false;"/>
 					</c:if>
 					<input type="submit" class="button" value="Cancel" name="__cancel"/>
 				</td>

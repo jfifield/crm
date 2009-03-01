@@ -3,6 +3,7 @@ package org.programmerplanet.crm.web.app;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +47,7 @@ public class ObjectLinkController extends ObjectController {
 		String parentObjectName = request.getParameter("source_object");
 		String childObjectName = getObjectName(request);
 
-		Long id = RequestUtil.getRequestId(request, "source_object_id");
+		UUID id = RequestUtil.getRequestId(request, "source_object_id");
 
 		ObjectDefinition parentObjectDefinition = applicationService.getObjectDefinition(parentObjectName);
 		ObjectDefinition childObjectDefinition = applicationService.getObjectDefinition(childObjectName);
@@ -72,8 +73,8 @@ public class ObjectLinkController extends ObjectController {
 		ObjectDefinition parentObjectDefinition = applicationService.getObjectDefinition(parentObjectName);
 		ObjectDefinition childObjectDefinition = applicationService.getObjectDefinition(childObjectName);
 
-		Long parentId = RequestUtil.getRequestId(request, "source_object_id");
-		Long childId = RequestUtil.getRequestId(request);
+		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
+		UUID childId = RequestUtil.getRequestId(request);
 
 		applicationService.insertCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 
@@ -88,8 +89,8 @@ public class ObjectLinkController extends ObjectController {
 		ObjectDefinition parentObjectDefinition = applicationService.getObjectDefinition(parentObjectName);
 		ObjectDefinition childObjectDefinition = applicationService.getObjectDefinition(childObjectName);
 
-		Long parentId = RequestUtil.getRequestId(request, "source_object_id");
-		Long childId = RequestUtil.getRequestId(request);
+		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
+		UUID childId = RequestUtil.getRequestId(request);
 
 		applicationService.deleteCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 

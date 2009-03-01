@@ -1,0 +1,9 @@
+DROP TABLE crm_user
+DROP TABLE crm_file
+DROP TABLE crm_option_list_item
+DROP TABLE crm_option_list
+DROP TABLE crm_application_object
+DROP TABLE crm_application
+DROP TABLE crm_relationship
+DROP TABLE crm_field
+DROP TABLE crm_object

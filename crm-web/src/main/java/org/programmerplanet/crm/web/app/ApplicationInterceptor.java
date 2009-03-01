@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.web.app;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +44,7 @@ public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 
-		Long selectedApplicationId = userSession.getSelectedApplicationId();
+		UUID selectedApplicationId = userSession.getSelectedApplicationId();
 		if (selectedApplicationId != null) {
 			Application application = applicationService.getApplication(selectedApplicationId);
 			List objects = applicationService.getObjectDefinitionsForApplication(application);
@@ -56,8 +57,8 @@ public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 	private boolean changeSelectedApplication(HttpServletRequest request) {
 		boolean changed = false;
 		UserSession userSession = UserSession.getUserSession(request);
-		Long selectedApplicationId = userSession.getSelectedApplicationId();
-		Long requestedApplicationId = RequestUtil.getRequestId(request, "application");
+		UUID selectedApplicationId = userSession.getSelectedApplicationId();
+		UUID requestedApplicationId = RequestUtil.getRequestId(request, "application");
 		if (requestedApplicationId != null && !requestedApplicationId.equals(selectedApplicationId)) {
 			userSession.setSelectedApplicationId(requestedApplicationId);
 			changed = true;
@@ -68,7 +69,7 @@ public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 	private boolean defaultSelectedApplication(HttpServletRequest request, List applications) {
 		boolean changed = false;
 		UserSession userSession = UserSession.getUserSession(request);
-		Long selectedApplicationId = userSession.getSelectedApplicationId();
+		UUID selectedApplicationId = userSession.getSelectedApplicationId();
 		if (selectedApplicationId == null && !applications.isEmpty()) {
 			Application application = (Application)applications.get(0);
 			selectedApplicationId = application.getId();

@@ -36,7 +36,7 @@ Users
 			<td><c:if test="${user.administrator}">Yes</c:if></td>
 			<td>
 				<a href="userEdit?id=${user.id}"><img src="../theme/default/edit.png"/></a>
-				<a href="javascript:void(0);" onclick="_deleteUser(${user.id});"><img src="../theme/default/delete.png"/></a>
+				<a href="javascript:void(0);" onclick="_deleteUser('${user.id}');"><img src="../theme/default/delete.png"/></a>
 			</td>
 		</tr>
 	</c:forEach>

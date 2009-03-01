@@ -13,7 +13,7 @@
 		<td align="right">
 			<a href="${objectDefinition.objectName}.list"><img src="../theme/default/list.png"/></a>
 			<a href="${objectDefinition.objectName}.edit?id=${data['id']}&source=view"><img src="../theme/default/edit.png"/></a>
-			<a href="javascript:void(0);" onclick="deleteObject('${objectDefinition.objectName}', ${data['id']});"><img src="../theme/default/delete.png"/></a>
+			<a href="javascript:void(0);" onclick="deleteObject('${objectDefinition.objectName}', '${data['id']}');"><img src="../theme/default/delete.png"/></a>
 		</td>
 	</tr>
 	</table>

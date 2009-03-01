@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.ApplicationObject;
@@ -15,7 +16,7 @@ public interface ApplicationObjectDao {
 
 	List getApplicationObjectsForApplication(Application application);
 
-	ApplicationObject getApplicationObject(Long applicationId, Long objectId);
+	ApplicationObject getApplicationObject(UUID applicationId, UUID objectId);
 
 	void insertApplicationObject(ApplicationObject applicationObject);
 

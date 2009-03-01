@@ -2,6 +2,7 @@ package org.programmerplanet.crm.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -10,16 +11,16 @@ import java.util.Map;
  */
 public class CrmObject {
 
-	private Long id;
+	private UUID id;
 	private Map data;
 	private ObjectDefinition objectDefinition;
 	private List fieldDefinitions;
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 

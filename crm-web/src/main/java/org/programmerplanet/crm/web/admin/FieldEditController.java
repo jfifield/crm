@@ -3,6 +3,7 @@ package org.programmerplanet.crm.web.admin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ public class FieldEditController extends SimpleMultiActionFormController {
 	}
 
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
 		binder.registerCustomEditor(DataType.class, new ValuedEnumPropertyEditor(DataType.class));
 	}
 
@@ -128,14 +130,14 @@ public class FieldEditController extends SimpleMultiActionFormController {
 	}
 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
 			FieldDefinition fieldDefinition = administrationService.getFieldDefinition(id);
 			return fieldDefinition;
 		}
 		else {
 			FieldDefinition fieldDefinition = new FieldDefinition();
-			Long objectId = RequestUtil.getRequestId(request, "object_id");
+			UUID objectId = RequestUtil.getRequestId(request, "object_id");
 			fieldDefinition.setObjectId(objectId);
 			return fieldDefinition;
 		}

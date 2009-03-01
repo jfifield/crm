@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.UserDao;
 import org.programmerplanet.crm.model.User;
@@ -26,12 +27,12 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#getUser(java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.UserDao#getUser(java.util.UUID)
 	 */
-	public User getUser(Long id) {
-		String sql = "SELECT * FROM crm_user WHERE id = ?";
+	public User getUser(UUID id) {
+		String sql = "SELECT * FROM crm_user WHERE id = ?::uuid";
 		RowMapper userRowMapper = new UserRowMapper();
-		User user = (User)this.getJdbcTemplate().queryForObject(sql, new Object[] { id }, userRowMapper);
+		User user = (User)this.getJdbcTemplate().queryForObject(sql, new Object[] { id.toString() }, userRowMapper);
 		return user;
 	}
 
@@ -59,19 +60,19 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	 * @see org.programmerplanet.crm.dao.UserDao#insertUser(org.programmerplanet.crm.model.User)
 	 */
 	public void insertUser(User user) {
-		String sql = "INSERT INTO crm_user (username, password, first_name, last_name, email_address, administrator) VALUES (?, ?, ?, ?, ?, ?)";
-		Object[] params = new Object[] { user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailAddress(), new Boolean(user.isAdministrator()) };
+		UUID id = UUID.randomUUID();
+		String sql = "INSERT INTO crm_user (id, username, password, first_name, last_name, email_address, administrator) VALUES (?::uuid, ?, ?, ?, ?, ?, ?)";
+		Object[] params = new Object[] { id.toString(), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailAddress(), new Boolean(user.isAdministrator()) };
 		this.getJdbcTemplate().update(sql, params);
-		int id = this.getJdbcTemplate().queryForInt("SELECT currval('crm_user_id_seq')");
-		user.setId(new Long(id));
+		user.setId(id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.dao.UserDao#updateUser(org.programmerplanet.crm.model.User)
 	 */
 	public void updateUser(User user) {
-		String sql = "UPDATE crm_user SET username = ?, password = ?, first_name = ?, last_name = ?, email_address = ?, administrator = ? WHERE id = ?";
-		Object[] params = new Object[] { user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailAddress(), new Boolean(user.isAdministrator()), user.getId() };
+		String sql = "UPDATE crm_user SET username = ?, password = ?, first_name = ?, last_name = ?, email_address = ?, administrator = ? WHERE id = ?::uuid";
+		Object[] params = new Object[] { user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailAddress(), new Boolean(user.isAdministrator()), user.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -79,17 +80,25 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	 * @see org.programmerplanet.crm.dao.UserDao#deleteUser(org.programmerplanet.crm.model.User)
 	 */
 	public void deleteUser(User user) {
-		String sql = "DELETE FROM crm_user WHERE id = ?";
-		Object[] params = new Object[] { user.getId() };
+		String sql = "DELETE FROM crm_user WHERE id = ?::uuid";
+		Object[] params = new Object[] { user.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#isUsernameUnique(java.lang.Long, java.lang.String)
+	 * @see org.programmerplanet.crm.dao.UserDao#isUsernameUnique(java.util.UUID, java.lang.String)
 	 */
-	public boolean isUsernameUnique(Long id, String username) {
-		String sql = "SELECT COUNT(*) FROM crm_user WHERE username = ? AND id <> ?";
-		Object[] params = new Object[] { username, id != null ? id : new Long(0) };
+	public boolean isUsernameUnique(UUID id, String username) {
+		String sql = null;
+		Object[] params = null;
+		if (id != null) {
+			sql = "SELECT COUNT(*) FROM crm_user WHERE username = ? AND id <> ?::uuid";
+			params = new Object[] { username, id.toString() };
+		}
+		else {
+			sql = "SELECT COUNT(*) FROM crm_user WHERE username = ?";
+			params = new Object[] { username };
+		}
 		int count = this.getJdbcTemplate().queryForInt(sql, params);
 		return count == 0;
 	}

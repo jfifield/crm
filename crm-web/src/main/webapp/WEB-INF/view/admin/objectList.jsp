@@ -29,7 +29,7 @@ Objects
 			<td>${objectDefinition.objectName}</td>
 			<td>
 				<a href="objectEdit?id=${objectDefinition.id}"><img src="../theme/default/edit.png"/></a>
-				<a href="javascript:void(0);" onclick="_deleteObject(${objectDefinition.id});"><img src="../theme/default/delete.png"/></a>
+				<a href="javascript:void(0);" onclick="_deleteObject('${objectDefinition.id}');"><img src="../theme/default/delete.png"/></a>
 			</td>
 		</tr>
 	</c:forEach>

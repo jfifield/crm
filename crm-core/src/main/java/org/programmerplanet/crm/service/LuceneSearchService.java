@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -85,7 +86,7 @@ public class LuceneSearchService extends AbstractSearchService {
 				crmObject.setObjectDefinition(objectDefinition);
 				crmObject.setFieldDefinitions(fieldDefinitions);
 				crmObject.setData(data);
-				crmObject.setId(new Long(((Number)data.get("id")).longValue()));
+				crmObject.setId((UUID)data.get("id"));
 
 				Document document = createDocument(crmObject);
 				indexModifier.addDocument(document);
@@ -117,7 +118,7 @@ public class LuceneSearchService extends AbstractSearchService {
 				document.add(field);
 			}
 		}
-		Long id = crmObject.getId();
+		UUID id = crmObject.getId();
 		Field field = new Field("id", id.toString(), Field.Store.YES, Field.Index.NO);
 		document.add(field);
 		return document;
@@ -143,7 +144,7 @@ public class LuceneSearchService extends AbstractSearchService {
 			for (Iterator h = hits.iterator(); h.hasNext();) {
 				Hit hit = (Hit)h.next();
 				String idValue = hit.get("id");
-				Long id = new Long(idValue);
+				UUID id = UUID.fromString(idValue);
 				Map crmObject = crmObjectDao.getCrmObject(objectDefinition, fieldDefinitionsForDisplay, id);
 				results.add(crmObject);
 			}

@@ -3,6 +3,7 @@ package org.programmerplanet.crm.web.admin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,7 +65,7 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 	}
 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
 			Application application = administrationService.getApplication(id);
 			return application;

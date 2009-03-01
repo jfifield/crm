@@ -2,6 +2,7 @@ package org.programmerplanet.crm.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.OptionList;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +14,7 @@ public class OptionListRowMapper implements RowMapper {
 
 	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 		OptionList optionList = new OptionList();
-		optionList.setId(new Long(rs.getLong("id")));
+		optionList.setId(UUID.fromString(rs.getString("id")));
 		optionList.setName(rs.getString("option_list_name"));
 		return optionList;
 	}

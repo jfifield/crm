@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.ObjectDefinitionDao;
 import org.programmerplanet.crm.model.Application;
@@ -26,12 +27,12 @@ public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDef
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getObjectDefinition(java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getObjectDefinition(java.util.UUID)
 	 */
-	public ObjectDefinition getObjectDefinition(Long id) {
-		String sql = "SELECT * FROM crm_object WHERE id = ?";
+	public ObjectDefinition getObjectDefinition(UUID id) {
+		String sql = "SELECT * FROM crm_object WHERE id = ?::uuid";
 		RowMapper objectDefinitionRowMapper = new ObjectDefinitionRowMapper();
-		ObjectDefinition objectDefinition = (ObjectDefinition)this.getJdbcTemplate().queryForObject(sql, new Object[] { id }, objectDefinitionRowMapper);
+		ObjectDefinition objectDefinition = (ObjectDefinition)this.getJdbcTemplate().queryForObject(sql, new Object[] { id.toString() }, objectDefinitionRowMapper);
 		return objectDefinition;
 	}
 
@@ -49,9 +50,9 @@ public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDef
 	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getObjectDefinitionsForApplication(org.programmerplanet.crm.model.Application)
 	 */
 	public List getObjectDefinitionsForApplication(Application application) {
-		String sql = "SELECT o.* FROM crm_application_object AS ao INNER JOIN crm_object AS o ON (ao.object_id = o.id) WHERE ao.application_id = ? ORDER BY ao.view_index";
+		String sql = "SELECT o.* FROM crm_application_object AS ao INNER JOIN crm_object AS o ON (ao.object_id = o.id) WHERE ao.application_id = ?::uuid ORDER BY ao.view_index";
 		RowMapper objectDefinitionRowMapper = new ObjectDefinitionRowMapper();
-		List objectDefinition = this.getJdbcTemplate().query(sql, new Object[] { application.getId() }, objectDefinitionRowMapper);
+		List objectDefinition = this.getJdbcTemplate().query(sql, new Object[] { application.getId().toString() }, objectDefinitionRowMapper);
 		return objectDefinition;
 	}
 
@@ -59,19 +60,19 @@ public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDef
 	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#insertObjectDefinition(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public void insertObjectDefinition(ObjectDefinition objectDefinition) {
-		String sql = "INSERT INTO crm_object (object_name, table_name) VALUES (?, ?)";
-		Object[] params = new Object[] { objectDefinition.getObjectName(), objectDefinition.getTableName() };
+		UUID id = UUID.randomUUID();
+		String sql = "INSERT INTO crm_object (id, object_name, table_name) VALUES (?::uuid, ?, ?)";
+		Object[] params = new Object[] { id.toString(), objectDefinition.getObjectName(), objectDefinition.getTableName() };
 		this.getJdbcTemplate().update(sql, params);
-		int id = this.getJdbcTemplate().queryForInt("SELECT currval('crm_object_id_seq')");
-		objectDefinition.setId(new Long(id));
+		objectDefinition.setId(id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#updateObjectDefinition(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public void updateObjectDefinition(ObjectDefinition objectDefinition) {
-		String sql = "UPDATE crm_object SET object_name = ?, table_name = ? WHERE id = ?";
-		Object[] params = new Object[] { objectDefinition.getObjectName(), objectDefinition.getTableName(), objectDefinition.getId() };
+		String sql = "UPDATE crm_object SET object_name = ?, table_name = ? WHERE id = ?::uuid";
+		Object[] params = new Object[] { objectDefinition.getObjectName(), objectDefinition.getTableName(), objectDefinition.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -79,17 +80,25 @@ public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDef
 	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#deleteObjectDefinition(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public void deleteObjectDefinition(ObjectDefinition objectDefinition) {
-		String sql = "DELETE FROM crm_object WHERE id = ?";
-		Object[] params = new Object[] { objectDefinition.getId() };
+		String sql = "DELETE FROM crm_object WHERE id = ?::uuid";
+		Object[] params = new Object[] { objectDefinition.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#isObjectNameUnique(java.lang.Long, java.lang.String)
+	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#isObjectNameUnique(java.util.UUID, java.lang.String)
 	 */
-	public boolean isObjectNameUnique(Long id, String objectName) {
-		String sql = "SELECT COUNT(*) FROM crm_object WHERE object_name = ? AND id <> ?";
-		Object[] params = new Object[] { objectName, id != null ? id : new Long(0) };
+	public boolean isObjectNameUnique(UUID id, String objectName) {
+		String sql = null;
+		Object[] params = null;
+		if (id != null) {
+			sql = "SELECT COUNT(*) FROM crm_object WHERE object_name = ? AND id <> ?::uuid";
+			params = new Object[] { objectName, id.toString() };
+		}
+		else {
+			sql = "SELECT COUNT(*) FROM crm_object WHERE object_name = ?";
+			params = new Object[] { objectName };
+		}
 		int count = this.getJdbcTemplate().queryForInt(sql, params);
 		return count == 0;
 	}

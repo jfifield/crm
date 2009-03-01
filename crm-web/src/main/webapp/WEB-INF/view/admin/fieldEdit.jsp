@@ -108,10 +108,6 @@ function _deleteField(id) {
 					<c:when test="${fieldDefinition.dataType.value == 5}">Decimal Places:</c:when>
 					<%-- Percent --%>
 					<c:when test="${fieldDefinition.dataType.value == 6}">Decimal Places:</c:when>
-					<%-- Option List --%>
-					<c:when test="${fieldDefinition.dataType.value == 13}">Option List:</c:when>
-					<%-- Object --%>
-					<c:when test="${fieldDefinition.dataType.value == 15}">Object:</c:when>
 				</c:choose>
 			</td>
 			<td>
@@ -159,6 +155,65 @@ function _deleteField(id) {
 								<input type="text" name="${status.expression}" value="${status.value}" size="10"/>
 								(0-6)
 							</c:when>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<%-- Short Text --%>
+							<c:when test="${fieldDefinition.dataType.value == 1}">
+								${status.value}
+							</c:when>
+							<%-- Long Text --%>
+							<c:when test="${fieldDefinition.dataType.value == 2}">
+								<c:choose>
+									<c:when test="${status.value == 1}">Small</c:when>
+									<c:when test="${status.value == 2}">Medium</c:when>
+									<c:when test="${status.value == 3}">Large</c:when>
+								</c:choose>
+							</c:when>
+							<%-- Number --%>
+							<c:when test="${fieldDefinition.dataType.value == 4}">
+								${status.value}
+							</c:when>
+							<%-- Money --%>
+							<c:when test="${fieldDefinition.dataType.value == 5}">
+								${status.value}
+							</c:when>
+							<%-- Percent --%>
+							<c:when test="${fieldDefinition.dataType.value == 6}">
+								${status.value}
+							</c:when>
+						</c:choose>
+					</c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
+		<c:if test="${status.error}">
+		<tr>
+			<td></td>
+			<td>
+				<c:forEach var="errorMessage" items="${status.errorMessages}">
+					<span class="error">* ${errorMessage}</span><br/>
+				</c:forEach>
+			</td>
+		</tr>
+		</c:if>
+		</spring:bind>
+		
+		<spring:bind path="fieldDefinition.dataTypeExtId">
+		<tr>
+			<td class="label required">
+				<c:choose>
+					<%-- Option List --%>
+					<c:when test="${fieldDefinition.dataType.value == 13}">Option List:</c:when>
+					<%-- Object --%>
+					<c:when test="${fieldDefinition.dataType.value == 15}">Object:</c:when>
+				</c:choose>
+			</td>
+			<td>
+				<c:choose>
+					<c:when test="${fieldDefinition.id == null}">
+						<c:choose>
 							<%-- Option List --%>
 							<c:when test="${fieldDefinition.dataType.value == 13}">
 								<select name="${status.expression}">
@@ -189,30 +244,6 @@ function _deleteField(id) {
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<%-- Short Text --%>
-							<c:when test="${fieldDefinition.dataType.value == 1}">
-								${status.value}
-							</c:when>
-							<%-- Long Text --%>
-							<c:when test="${fieldDefinition.dataType.value == 2}">
-								<c:choose>
-									<c:when test="${status.value == 1}">Small</c:when>
-									<c:when test="${status.value == 2}">Medium</c:when>
-									<c:when test="${status.value == 3}">Large</c:when>
-								</c:choose>
-							</c:when>
-							<%-- Number --%>
-							<c:when test="${fieldDefinition.dataType.value == 4}">
-								${status.value}
-							</c:when>
-							<%-- Money --%>
-							<c:when test="${fieldDefinition.dataType.value == 5}">
-								${status.value}
-							</c:when>
-							<%-- Percent --%>
-							<c:when test="${fieldDefinition.dataType.value == 6}">
-								${status.value}
-							</c:when>
 							<%-- Option List --%>
 							<c:when test="${fieldDefinition.dataType.value == 13}">
 								<c:forEach var="optionList" items="${optionLists}">
@@ -279,7 +310,7 @@ function _deleteField(id) {
 			<td colspan="2" style="text-align: center;">
 				<input type="submit" class="button" value="Save" name="__save"/>
 				<c:if test="${fieldDefinition.id != null}">
-				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteField(${fieldDefinition.id}); return false;"/>
+				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteField('${fieldDefinition.id}'); return false;"/>
 				</c:if>
 				<input type="submit" class="button" value="Cancel" name="__cancel"/>
 			</td>

@@ -17,7 +17,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	 * @see org.programmerplanet.crm.schema.SchemaManager#createTable(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public void createTable(ObjectDefinition objectDefinition) {
-		String sql = "CREATE TABLE " + objectDefinition.getTableName() + " (id SERIAL, CONSTRAINT pk_" + objectDefinition.getTableName() + " PRIMARY KEY (id))";
+		String sql = "CREATE TABLE " + objectDefinition.getTableName() + " (id uuid NOT NULL, CONSTRAINT pk_" + objectDefinition.getTableName() + " PRIMARY KEY (id))";
 		this.getJdbcTemplate().execute(sql);
 	}
 
@@ -118,10 +118,10 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 			result += "varchar(255)";
 		}
 		else if (DataType.FILE.equals(fieldDefinition.getDataType())) {
-			result += "integer";
+			result += "uuid";
 		}
 		else if (DataType.OBJECT.equals(fieldDefinition.getDataType())) {
-			result += "integer";
+			result += "uuid";
 		}
 		else {
 			throw new IllegalArgumentException("Invalid data type: " + fieldDefinition.getDataType());
@@ -137,8 +137,8 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	 */
 	public void createTable(Relationship relationship, ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2) {
 		String sql = "CREATE TABLE " + relationship.getTableName() + " (";
-		sql += "" + objectDefinition1.getTableName() + "_id integer NOT NULL, ";
-		sql += "" + objectDefinition2.getTableName() + "_id integer NOT NULL)";
+		sql += "" + objectDefinition1.getTableName() + "_id uuid NOT NULL, ";
+		sql += "" + objectDefinition2.getTableName() + "_id uuid NOT NULL)";
 		this.getJdbcTemplate().execute(sql);
 	}
 

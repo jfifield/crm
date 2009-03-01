@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.ApplicationDao;
 import org.programmerplanet.crm.dao.CrmObjectDao;
@@ -79,16 +80,16 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getApplication(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getApplication(java.util.UUID)
 	 */
-	public Application getApplication(Long id) {
+	public Application getApplication(UUID id) {
 		return applicationDao.getApplication(id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getObjectDefinition(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getObjectDefinition(java.util.UUID)
 	 */
-	public ObjectDefinition getObjectDefinition(Long id) {
+	public ObjectDefinition getObjectDefinition(UUID id) {
 		return objectDefinitionDao.getObjectDefinition(id);
 	}
 
@@ -128,30 +129,30 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getRelatedCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getRelatedCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, Long id) {
+	public List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		return crmObjectDao.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObjectsAvailableForLinking(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObjectsAvailableForLinking(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, Long id) {
+	public List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		return crmObjectDao.getCrmObjectsAvailableForLinking(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Long id) {
+	public Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, UUID id) {
 		return crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getRelationship(java.lang.Long, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getRelationship(java.util.UUID, java.util.UUID)
 	 */
-	public Relationship getRelationship(Long parentObjectId, Long childObjectId) {
+	public Relationship getRelationship(UUID parentObjectId, UUID childObjectId) {
 		return relationshipDao.getRelationship(parentObjectId, childObjectId);
 	}
 
@@ -163,9 +164,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getFileInfo(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getFileInfo(java.util.UUID)
 	 */
-	public FileInfo getFileInfo(Long id) {
+	public FileInfo getFileInfo(UUID id) {
 		return fileDao.getFileInfo(id);
 	}
 
@@ -177,30 +178,30 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getFile(java.lang.Long, java.io.OutputStream)
+	 * @see org.programmerplanet.crm.service.ApplicationService#getFile(java.util.UUID, java.io.OutputStream)
 	 */
-	public void getFile(Long id, OutputStream outputStream) {
+	public void getFile(UUID id, OutputStream outputStream) {
 		fileDao.getFile(id, outputStream);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#insertCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map)
 	 */
-	public Long insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data) {
+	public UUID insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data) {
 		return crmObjectDao.insertCrmObject(objectDefinition, fieldDefinitions, data);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#updateCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#updateCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
 	 */
-	public void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, Long id) {
+	public void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, UUID id) {
 		crmObjectDao.updateCrmObject(objectDefinition, fieldDefinitions, data, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#deleteCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#deleteCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObject(ObjectDefinition objectDefinition, Long id) {
+	public void deleteCrmObject(ObjectDefinition objectDefinition, UUID id) {
 		List fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
 
 		Map crmObjectData = crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
@@ -209,9 +210,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
 			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
 			if (fieldDefinition.getDataType().equals(DataType.FILE)) {
-				Number fileId = (Number)crmObjectData.get(fieldDefinition.getColumnName());
+				UUID fileId = (UUID)crmObjectData.get(fieldDefinition.getColumnName());
 				if (fileId != null) {
-					fileDao.deleteFile(new Long(fileId.longValue()));
+					fileDao.deleteFile(fileId);
 				}
 			}
 		}
@@ -235,17 +236,17 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#insertCrmObjectRelationship(org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long, org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#insertCrmObjectRelationship(org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public void insertCrmObjectRelationship(ObjectDefinition parentObjectDefinition, Long parentId, ObjectDefinition childObjectDefinition, Long childId) {
+	public void insertCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
 		crmObjectDao.insertCrmObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#deleteCrmObjectRelationship(org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long, org.programmerplanet.crm.model.ObjectDefinition, java.lang.Long)
+	 * @see org.programmerplanet.crm.service.ApplicationService#deleteCrmObjectRelationship(org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, Long parentId, ObjectDefinition childObjectDefinition, Long childId) {
+	public void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
 		crmObjectDao.deleteCrmObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}

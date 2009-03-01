@@ -1,24 +1,27 @@
 package org.programmerplanet.crm.model;
 
+import java.util.UUID;
+
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
 public class FieldDefinition extends Entity {
 
-	private Long objectId;
+	private UUID objectId;
 	private String fieldName;
 	private String columnName;
 	private DataType dataType;
 	private Long dataTypeExt;
+	private UUID dataTypeExtId;
 	private boolean required;
 	private Integer listIndex;
 	private Integer viewIndex;
 
-	public Long getObjectId() {
+	public UUID getObjectId() {
 		return objectId;
 	}
 
-	public void setObjectId(Long objectId) {
+	public void setObjectId(UUID objectId) {
 		this.objectId = objectId;
 	}
 
@@ -52,6 +55,14 @@ public class FieldDefinition extends Entity {
 
 	public void setDataTypeExt(Long dataTypeExt) {
 		this.dataTypeExt = dataTypeExt;
+	}
+
+	public void setDataTypeExtId(UUID dataTypeExtId) {
+		this.dataTypeExtId = dataTypeExtId;
+	}
+
+	public UUID getDataTypeExtId() {
+		return dataTypeExtId;
 	}
 
 	public boolean isRequired() {

@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.web.admin;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,16 +49,16 @@ public class RelationshipEditController extends SimpleMultiActionFormController 
 	}
 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
 			Relationship relationship = administrationService.getRelationship(id);
 			return relationship;
 		}
 		else {
 			Relationship relationship = new Relationship();
-			Long parentObjectId = RequestUtil.getRequestId(request, "parent_object_id");
+			UUID parentObjectId = RequestUtil.getRequestId(request, "parent_object_id");
 			relationship.setParentObjectId(parentObjectId);
-			Long childObjectId = RequestUtil.getRequestId(request, "child_object_id");
+			UUID childObjectId = RequestUtil.getRequestId(request, "child_object_id");
 			relationship.setChildObjectId(childObjectId);
 			return relationship;
 		}

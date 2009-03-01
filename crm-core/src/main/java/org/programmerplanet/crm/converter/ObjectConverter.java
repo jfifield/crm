@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.converter;
 
+import java.util.UUID;
+
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.model.FieldDefinition;
 
@@ -15,13 +17,7 @@ public class ObjectConverter implements Converter {
 	 */
 	public String convert(Object value, FieldDefinition fieldDefinition) throws ConversionException {
 		if (value != null) {
-			if (value instanceof Number) {
-				Number number = (Number)value;
-				return Long.toString(number.intValue());
-			}
-			else {
-				return value.toString();
-			}
+			return value.toString();
 		}
 		return "";
 	}
@@ -30,9 +26,9 @@ public class ObjectConverter implements Converter {
 	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.model.FieldDefinition)
 	 */
 	public Object convert(String value, FieldDefinition fieldDefinition) throws ConversionException {
-		Long result = null;
+		UUID result = null;
 		if (StringUtils.isNotEmpty(value)) {
-			result = new Long(value);
+			result = UUID.fromString(value);
 		}
 		return result;
 	}

@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.RelationshipDao;
 import org.programmerplanet.crm.model.ObjectDefinition;
@@ -16,22 +17,22 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 public class JdbcRelationshipDao extends JdbcDaoSupport implements RelationshipDao {
 
 	/**
-	 * @see org.programmerplanet.crm.dao.RelationshipDao#getRelationship(java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.RelationshipDao#getRelationship(java.util.UUID)
 	 */
-	public Relationship getRelationship(Long id) {
-		String sql = "SELECT * FROM crm_relationship WHERE id = ?";
+	public Relationship getRelationship(UUID id) {
+		String sql = "SELECT * FROM crm_relationship WHERE id = ?::uuid";
 		RowMapper rowMapper = new RelationshipRowMapper();
-		Relationship relationship = (Relationship)this.getJdbcTemplate().queryForObject(sql, new Object[] { id }, rowMapper);
+		Relationship relationship = (Relationship)this.getJdbcTemplate().queryForObject(sql, new Object[] { id.toString() }, rowMapper);
 		return relationship;
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.RelationshipDao#getRelationship(java.lang.Long, java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.RelationshipDao#getRelationship(java.util.UUID, java.util.UUID)
 	 */
-	public Relationship getRelationship(Long parentObjectId, Long childObjectId) {
-		String sql = "SELECT * FROM crm_relationship WHERE parent_object_id = ? AND child_object_id = ?";
+	public Relationship getRelationship(UUID parentObjectId, UUID childObjectId) {
+		String sql = "SELECT * FROM crm_relationship WHERE parent_object_id = ?::uuid AND child_object_id = ?::uuid";
 		RowMapper rowMapper = new RelationshipRowMapper();
-		Object[] params = new Object[] { parentObjectId, childObjectId };
+		Object[] params = new Object[] { parentObjectId.toString(), childObjectId.toString() };
 		Relationship relationship = (Relationship)this.getJdbcTemplate().queryForObject(sql, params, rowMapper);
 		return relationship;
 	}
@@ -40,8 +41,8 @@ public class JdbcRelationshipDao extends JdbcDaoSupport implements RelationshipD
 	 * @see org.programmerplanet.crm.dao.RelationshipDao#getRelationshipsForObject(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public List getRelationshipsForObject(ObjectDefinition objectDefinition) {
-		String sql = "SELECT * FROM crm_relationship WHERE parent_object_id = ? AND view_index IS NOT NULL ORDER BY view_index";
-		Object[] params = new Object[] { objectDefinition.getId() };
+		String sql = "SELECT * FROM crm_relationship WHERE parent_object_id = ?::uuid AND view_index IS NOT NULL ORDER BY view_index";
+		Object[] params = new Object[] { objectDefinition.getId().toString() };
 		RowMapper rowMapper = new RelationshipRowMapper();
 		List relationships = this.getJdbcTemplate().query(sql, params, rowMapper);
 		return relationships;
@@ -51,19 +52,19 @@ public class JdbcRelationshipDao extends JdbcDaoSupport implements RelationshipD
 	 * @see org.programmerplanet.crm.dao.RelationshipDao#insertRelationship(org.programmerplanet.crm.model.Relationship)
 	 */
 	public void insertRelationship(Relationship relationship) {
-		String sql = "INSERT INTO crm_relationship (parent_object_id, child_object_id, view_index, table_name) VALUES (?, ?, ?, ?)";
-		Object[] params = new Object[] { relationship.getParentObjectId(), relationship.getChildObjectId(), relationship.getViewIndex(), relationship.getTableName() };
+		UUID id = UUID.randomUUID();
+		String sql = "INSERT INTO crm_relationship (id, parent_object_id, child_object_id, view_index, table_name) VALUES (?::uuid, ?::uuid, ?::uuid, ?, ?)";
+		Object[] params = new Object[] { id.toString(), relationship.getParentObjectId().toString(), relationship.getChildObjectId().toString(), relationship.getViewIndex(), relationship.getTableName() };
 		this.getJdbcTemplate().update(sql, params);
-		int id = this.getJdbcTemplate().queryForInt("SELECT currval('crm_relationship_id_seq')");
-		relationship.setId(new Long(id));
+		relationship.setId(id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.dao.RelationshipDao#updateRelationship(org.programmerplanet.crm.model.Relationship)
 	 */
 	public void updateRelationship(Relationship relationship) {
-		String sql = "UPDATE crm_relationship SET parent_object_id = ?, child_object_id = ?, view_index = ?, table_name = ? WHERE id = ?";
-		Object[] params = new Object[] { relationship.getParentObjectId(), relationship.getChildObjectId(), relationship.getViewIndex(), relationship.getTableName(), relationship.getId() };
+		String sql = "UPDATE crm_relationship SET parent_object_id = ?::uuid, child_object_id = ?::uuid, view_index = ?, table_name = ? WHERE id = ?::uuid";
+		Object[] params = new Object[] { relationship.getParentObjectId().toString(), relationship.getChildObjectId().toString(), relationship.getViewIndex(), relationship.getTableName(), relationship.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -71,8 +72,8 @@ public class JdbcRelationshipDao extends JdbcDaoSupport implements RelationshipD
 	 * @see org.programmerplanet.crm.dao.RelationshipDao#deleteRelationship(org.programmerplanet.crm.model.Relationship)
 	 */
 	public void deleteRelationship(Relationship relationship) {
-		String sql = "DELETE FROM crm_relationship WHERE id = ?";
-		Object[] params = new Object[] { relationship.getId() };
+		String sql = "DELETE FROM crm_relationship WHERE id = ?::uuid";
+		Object[] params = new Object[] { relationship.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 

@@ -28,7 +28,7 @@ Option Lists
 			<td>${optionList.name}</td>
 			<td>
 				<a href="optionListEdit?id=${optionList.id}"><img src="../theme/default/edit.png"/></a>
-				<a href="javascript:void(0);" onclick="_deleteOptionList(${optionList.id});"><img src="../theme/default/delete.png"/></a>
+				<a href="javascript:void(0);" onclick="_deleteOptionList('${optionList.id}');"><img src="../theme/default/delete.png"/></a>
 			</td>
 		</tr>
 	</c:forEach>

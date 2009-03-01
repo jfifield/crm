@@ -2,6 +2,7 @@ package org.programmerplanet.crm.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.ApplicationObject;
@@ -21,7 +22,7 @@ public interface AdministrationService {
 
 	List getAllApplications();
 
-	Application getApplication(Long id);
+	Application getApplication(UUID id);
 
 	void insertApplication(Application application);
 
@@ -37,7 +38,7 @@ public interface AdministrationService {
 
 	List getAllObjectDefinitions();
 
-	ObjectDefinition getObjectDefinition(Long id);
+	ObjectDefinition getObjectDefinition(UUID id);
 
 	void insertObjectDefinition(ObjectDefinition objectDefinition);
 
@@ -51,7 +52,7 @@ public interface AdministrationService {
 
 	void moveApplicationObjectViewIndex(ApplicationObject applicationObject, String direction);
 
-	FieldDefinition getFieldDefinition(Long id);
+	FieldDefinition getFieldDefinition(UUID id);
 
 	List getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
 
@@ -73,7 +74,7 @@ public interface AdministrationService {
 
 	List getAllOptionLists();
 
-	OptionList getOptionList(Long id);
+	OptionList getOptionList(UUID id);
 
 	void insertOptionList(OptionList optionList);
 
@@ -83,7 +84,7 @@ public interface AdministrationService {
 
 	List getOptionListItems(OptionList optionList);
 
-	OptionListItem getOptionListItem(Long id);
+	OptionListItem getOptionListItem(UUID id);
 
 	void insertOptionListItem(OptionListItem optionListItem);
 
@@ -93,7 +94,7 @@ public interface AdministrationService {
 
 	void moveOptionListItemViewIndex(OptionListItem optionListItem, String direction);
 
-	Relationship getRelationship(Long id);
+	Relationship getRelationship(UUID id);
 
 	void insertRelationship(Relationship relationship);
 
@@ -103,7 +104,7 @@ public interface AdministrationService {
 
 	List getAllUsers();
 
-	User getUser(Long id);
+	User getUser(UUID id);
 
 	void insertUser(User user);
 

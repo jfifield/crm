@@ -1,28 +1,30 @@
 package org.programmerplanet.crm.model;
 
+import java.util.UUID;
+
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
 public class Relationship extends Entity {
 
-	private Long parentObjectId;
-	private Long childObjectId;
+	private UUID parentObjectId;
+	private UUID childObjectId;
 	private Integer viewIndex;
 	private String tableName;
 
-	public Long getParentObjectId() {
+	public UUID getParentObjectId() {
 		return parentObjectId;
 	}
 
-	public void setParentObjectId(Long parentObjectId) {
+	public void setParentObjectId(UUID parentObjectId) {
 		this.parentObjectId = parentObjectId;
 	}
 
-	public Long getChildObjectId() {
+	public UUID getChildObjectId() {
 		return childObjectId;
 	}
 
-	public void setChildObjectId(Long childObjectId) {
+	public void setChildObjectId(UUID childObjectId) {
 		this.childObjectId = childObjectId;
 	}
 

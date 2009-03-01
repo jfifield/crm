@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.model;
 
+import java.util.UUID;
+
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
  * 
@@ -7,15 +9,15 @@ package org.programmerplanet.crm.model;
  */
 public class OptionListItem extends Entity {
 
-	private Long optionListId;
+	private UUID optionListId;
 	private String value;
 	private Integer viewIndex;
 
-	public void setOptionListId(Long optionListId) {
+	public void setOptionListId(UUID optionListId) {
 		this.optionListId = optionListId;
 	}
 
-	public Long getOptionListId() {
+	public UUID getOptionListId() {
 		return optionListId;
 	}
 

@@ -88,14 +88,14 @@ public class FieldValidator implements Validator {
 			}
 			else if (DataType.OPTION_LIST.equals(fieldDefinition.getDataType())) {
 				// list id
-				if (fieldDefinition.getDataTypeExt() == null) {
-					errors.rejectValue("dataTypeExt", "error.required");
+				if (fieldDefinition.getDataTypeExtId() == null) {
+					errors.rejectValue("dataTypeExtId", "error.required");
 				}
 			}
 			else if (DataType.OBJECT.equals(fieldDefinition.getDataType())) {
 				// object id
-				if (fieldDefinition.getDataTypeExt() == null) {
-					errors.rejectValue("dataTypeExt", "error.required");
+				if (fieldDefinition.getDataTypeExtId() == null) {
+					errors.rejectValue("dataTypeExtId", "error.required");
 				}
 			}
 		}

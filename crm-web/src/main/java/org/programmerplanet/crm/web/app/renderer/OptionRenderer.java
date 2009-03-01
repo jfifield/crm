@@ -64,7 +64,7 @@ public class OptionRenderer implements FieldRenderer {
 		
 		String str = getAsString(value, fieldDefinition);
 		
-		OptionList optionList = optionListDao.getOptionList(fieldDefinition.getDataTypeExt());
+		OptionList optionList = optionListDao.getOptionList(fieldDefinition.getDataTypeExtId());
 		List optionListItems = optionListItemDao.getOptionListItems(optionList);
 		
 		for (Iterator i = optionListItems.iterator(); i.hasNext();) {

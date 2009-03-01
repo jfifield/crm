@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.OptionListItemDao;
 import org.programmerplanet.crm.model.OptionList;
@@ -19,19 +20,19 @@ public class JdbcOptionListItemDao extends JdbcDaoSupport implements OptionListI
 	 * @see org.programmerplanet.crm.dao.OptionListItemDao#getOptionListItems(org.programmerplanet.crm.model.OptionList)
 	 */
 	public List getOptionListItems(OptionList optionList) {
-		String sql = "SELECT * FROM crm_option_list_item WHERE option_list_id = ? ORDER BY view_index, item_value";
+		String sql = "SELECT * FROM crm_option_list_item WHERE option_list_id = ?::uuid ORDER BY view_index, item_value";
 		RowMapper rowMapper = new OptionListItemRowMapper();
-		List optionListItems = this.getJdbcTemplate().query(sql, new Object[] { optionList.getId() }, rowMapper);
+		List optionListItems = this.getJdbcTemplate().query(sql, new Object[] { optionList.getId().toString() }, rowMapper);
 		return optionListItems;
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.OptionListItemDao#getOptionListItem(java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.OptionListItemDao#getOptionListItem(java.util.UUID)
 	 */
-	public OptionListItem getOptionListItem(Long id) {
-		String sql = "SELECT * FROM crm_option_list_item WHERE id = ?";
+	public OptionListItem getOptionListItem(UUID id) {
+		String sql = "SELECT * FROM crm_option_list_item WHERE id = ?::uuid";
 		RowMapper rowMapper = new OptionListItemRowMapper();
-		OptionListItem optionListItem = (OptionListItem)this.getJdbcTemplate().queryForObject(sql, new Object[] { id }, rowMapper);
+		OptionListItem optionListItem = (OptionListItem)this.getJdbcTemplate().queryForObject(sql, new Object[] { id.toString() }, rowMapper);
 		return optionListItem;
 	}
 
@@ -39,19 +40,19 @@ public class JdbcOptionListItemDao extends JdbcDaoSupport implements OptionListI
 	 * @see org.programmerplanet.crm.dao.OptionListItemDao#insertOptionListItem(org.programmerplanet.crm.model.OptionListItem)
 	 */
 	public void insertOptionListItem(OptionListItem optionListItem) {
-		String sql = "INSERT INTO crm_option_list_item (option_list_id, item_value, view_index) VALUES (?, ?, ?)";
-		Object[] params = new Object[] { optionListItem.getOptionListId(), optionListItem.getValue(), optionListItem.getViewIndex() };
+		UUID id = UUID.randomUUID();
+		String sql = "INSERT INTO crm_option_list_item (id, option_list_id, item_value, view_index) VALUES (?::uuid, ?::uuid, ?, ?)";
+		Object[] params = new Object[] { id.toString(), optionListItem.getOptionListId().toString(), optionListItem.getValue(), optionListItem.getViewIndex() };
 		this.getJdbcTemplate().update(sql, params);
-		int id = this.getJdbcTemplate().queryForInt("SELECT currval('crm_option_list_item_id_seq')");
-		optionListItem.setId(new Long(id));
+		optionListItem.setId(id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.dao.OptionListItemDao#updateOptionListItem(org.programmerplanet.crm.model.OptionListItem)
 	 */
 	public void updateOptionListItem(OptionListItem optionListItem) {
-		String sql = "UPDATE crm_option_list_item SET item_value = ?, view_index = ? WHERE id = ?";
-		Object[] params = new Object[] { optionListItem.getValue(), optionListItem.getViewIndex(), optionListItem.getId() };
+		String sql = "UPDATE crm_option_list_item SET item_value = ?, view_index = ? WHERE id = ?::uuid";
+		Object[] params = new Object[] { optionListItem.getValue(), optionListItem.getViewIndex(), optionListItem.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -59,17 +60,25 @@ public class JdbcOptionListItemDao extends JdbcDaoSupport implements OptionListI
 	 * @see org.programmerplanet.crm.dao.OptionListItemDao#deleteOptionListItem(org.programmerplanet.crm.model.OptionListItem)
 	 */
 	public void deleteOptionListItem(OptionListItem optionListItem) {
-		String sql = "DELETE FROM crm_option_list_item WHERE id = ?";
-		Object[] params = new Object[] { optionListItem.getId() };
+		String sql = "DELETE FROM crm_option_list_item WHERE id = ?::uuid";
+		Object[] params = new Object[] { optionListItem.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.OptionListItemDao#isValueUnique(java.lang.Long, java.lang.Long, java.lang.String)
+	 * @see org.programmerplanet.crm.dao.OptionListItemDao#isValueUnique(java.util.UUID, java.util.UUID, java.lang.String)
 	 */
-	public boolean isValueUnique(Long optionListId, Long id, String value) {
-		String sql = "SELECT COUNT(*) FROM crm_option_list_item WHERE option_list_id = ? AND item_value = ? AND id <> ?";
-		Object[] params = new Object[] { optionListId, value, id != null ? id : new Long(0) };
+	public boolean isValueUnique(UUID optionListId, UUID id, String value) {
+		String sql = null;
+		Object[] params = null;
+		if (id != null) {
+			sql = "SELECT COUNT(*) FROM crm_option_list_item WHERE option_list_id = ?::uuid AND item_value = ? AND id <> ?::uuid";
+			params = new Object[] { optionListId.toString(), value, id.toString() };
+		}
+		else {
+			sql = "SELECT COUNT(*) FROM crm_option_list_item WHERE option_list_id = ?::uuid AND item_value = ?";
+			params = new Object[] { optionListId.toString(), value };
+		}
 		int count = this.getJdbcTemplate().queryForInt(sql, params);
 		return count == 0;
 	}

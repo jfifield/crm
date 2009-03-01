@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.ObjectDefinition;
@@ -14,7 +15,7 @@ public interface ObjectDefinitionDao {
 
 	List getAllObjectDefinitions();
 
-	ObjectDefinition getObjectDefinition(Long id);
+	ObjectDefinition getObjectDefinition(UUID id);
 
 	ObjectDefinition getObjectDefinition(String objectName);
 
@@ -26,6 +27,6 @@ public interface ObjectDefinitionDao {
 
 	void deleteObjectDefinition(ObjectDefinition objectDefinition);
 
-	boolean isObjectNameUnique(Long id, String objectName);
+	boolean isObjectNameUnique(UUID id, String objectName);
 
 }

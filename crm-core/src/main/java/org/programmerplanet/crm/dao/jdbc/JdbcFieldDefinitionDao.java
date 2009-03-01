@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.FieldDefinitionDao;
 import org.programmerplanet.crm.model.DataType;
@@ -18,12 +19,12 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefinitionDao {
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#getFieldDefinition(java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#getFieldDefinition(java.util.UUID)
 	 */
-	public FieldDefinition getFieldDefinition(Long id) {
-		String sql = "SELECT * FROM crm_field WHERE id = ?";
+	public FieldDefinition getFieldDefinition(UUID id) {
+		String sql = "SELECT * FROM crm_field WHERE id = ?::uuid";
 		RowMapper fieldDefinitionRowMapper = new FieldDefinitionRowMapper();
-		FieldDefinition fieldDefinition = (FieldDefinition)this.getJdbcTemplate().queryForObject(sql, new Object[] { id }, fieldDefinitionRowMapper);
+		FieldDefinition fieldDefinition = (FieldDefinition)this.getJdbcTemplate().queryForObject(sql, new Object[] { id.toString() }, fieldDefinitionRowMapper);
 		return fieldDefinition;
 	}
 
@@ -31,9 +32,9 @@ public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefin
 	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#getFieldDefinitionsForObject(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public List getFieldDefinitionsForObject(ObjectDefinition objectDefinition) {
-		String sql = "SELECT * FROM crm_field WHERE object_id = ? ORDER BY view_index, field_name";
+		String sql = "SELECT * FROM crm_field WHERE object_id = ?::uuid ORDER BY view_index, field_name";
 		RowMapper fieldDefinitionRowMapper = new FieldDefinitionRowMapper();
-		List fieldDefinitions = this.getJdbcTemplate().query(sql, new Object[] { objectDefinition.getId() }, fieldDefinitionRowMapper);
+		List fieldDefinitions = this.getJdbcTemplate().query(sql, new Object[] { objectDefinition.getId().toString() }, fieldDefinitionRowMapper);
 		return fieldDefinitions;
 	}
 
@@ -41,9 +42,9 @@ public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefin
 	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#getFieldDefinitionsForObjectList(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public List getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition) {
-		String sql = "SELECT * FROM crm_field WHERE object_id = ? AND list_index IS NOT NULL ORDER BY list_index";
+		String sql = "SELECT * FROM crm_field WHERE object_id = ?::uuid AND list_index IS NOT NULL ORDER BY list_index";
 		RowMapper fieldDefinitionRowMapper = new FieldDefinitionRowMapper();
-		List fieldDefinitions = this.getJdbcTemplate().query(sql, new Object[] { objectDefinition.getId() }, fieldDefinitionRowMapper);
+		List fieldDefinitions = this.getJdbcTemplate().query(sql, new Object[] { objectDefinition.getId().toString() }, fieldDefinitionRowMapper);
 		return fieldDefinitions;
 	}
 
@@ -51,9 +52,9 @@ public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefin
 	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#getFieldDefinitionsForObjectView(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public List getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition) {
-		String sql = "SELECT * FROM crm_field WHERE object_id = ? AND view_index IS NOT NULL ORDER BY view_index";
+		String sql = "SELECT * FROM crm_field WHERE object_id = ?::uuid AND view_index IS NOT NULL ORDER BY view_index";
 		RowMapper fieldDefinitionRowMapper = new FieldDefinitionRowMapper();
-		List fieldDefinitions = this.getJdbcTemplate().query(sql, new Object[] { objectDefinition.getId() }, fieldDefinitionRowMapper);
+		List fieldDefinitions = this.getJdbcTemplate().query(sql, new Object[] { objectDefinition.getId().toString() }, fieldDefinitionRowMapper);
 		return fieldDefinitions;
 	}
 
@@ -61,19 +62,19 @@ public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefin
 	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#insertFieldDefinition(org.programmerplanet.crm.model.FieldDefinition)
 	 */
 	public void insertFieldDefinition(FieldDefinition fieldDefinition) {
-		String sql = "INSERT INTO crm_field (object_id, field_name, column_name, data_type, data_type_ext, required, list_index, view_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] params = new Object[] { fieldDefinition.getObjectId(), fieldDefinition.getFieldName(), fieldDefinition.getColumnName(), new Integer(fieldDefinition.getDataType().getValue()), fieldDefinition.getDataTypeExt(), new Boolean(fieldDefinition.isRequired()), fieldDefinition.getListIndex(), fieldDefinition.getViewIndex() };
+		UUID id = UUID.randomUUID();
+		String sql = "INSERT INTO crm_field (id, object_id, field_name, column_name, data_type, data_type_ext, data_type_ext_id, required, list_index, view_index) VALUES (?::uuid, ?::uuid, ?, ?, ?, ?, ?::uuid, ?, ?, ?)";
+		Object[] params = new Object[] { id.toString(), fieldDefinition.getObjectId().toString(), fieldDefinition.getFieldName(), fieldDefinition.getColumnName(), new Integer(fieldDefinition.getDataType().getValue()), fieldDefinition.getDataTypeExt(), fieldDefinition.getDataTypeExtId() != null ? fieldDefinition.getDataTypeExtId().toString() : null, new Boolean(fieldDefinition.isRequired()), fieldDefinition.getListIndex(), fieldDefinition.getViewIndex() };
 		this.getJdbcTemplate().update(sql, params);
-		int id = this.getJdbcTemplate().queryForInt("SELECT currval('crm_field_id_seq')");
-		fieldDefinition.setId(new Long(id));
+		fieldDefinition.setId(id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#updateFieldDefinition(org.programmerplanet.crm.model.FieldDefinition)
 	 */
 	public void updateFieldDefinition(FieldDefinition fieldDefinition) {
-		String sql = "UPDATE crm_field SET field_name = ?, column_name = ?, data_type = ?, data_type_ext = ?, required = ?, list_index = ?, view_index = ? WHERE id = ?";
-		Object[] params = new Object[] { fieldDefinition.getFieldName(), fieldDefinition.getColumnName(), new Integer(fieldDefinition.getDataType().getValue()), fieldDefinition.getDataTypeExt(), new Boolean(fieldDefinition.isRequired()), fieldDefinition.getListIndex(), fieldDefinition.getViewIndex(), fieldDefinition.getId() };
+		String sql = "UPDATE crm_field SET field_name = ?, column_name = ?, data_type = ?, data_type_ext = ?, data_type_ext_id = ?::uuid, required = ?, list_index = ?, view_index = ? WHERE id = ?::uuid";
+		Object[] params = new Object[] { fieldDefinition.getFieldName(), fieldDefinition.getColumnName(), new Integer(fieldDefinition.getDataType().getValue()), fieldDefinition.getDataTypeExt(), fieldDefinition.getDataTypeExtId() != null ? fieldDefinition.getDataTypeExtId().toString() : null, new Boolean(fieldDefinition.isRequired()), fieldDefinition.getListIndex(), fieldDefinition.getViewIndex(), fieldDefinition.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -81,17 +82,25 @@ public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefin
 	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#deleteFieldDefinition(org.programmerplanet.crm.model.FieldDefinition)
 	 */
 	public void deleteFieldDefinition(FieldDefinition fieldDefinition) {
-		String sql = "DELETE FROM crm_field WHERE id = ?";
-		Object[] params = new Object[] { fieldDefinition.getId() };
+		String sql = "DELETE FROM crm_field WHERE id = ?::uuid";
+		Object[] params = new Object[] { fieldDefinition.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#isFieldNameUnique(java.lang.Long, java.lang.Long, java.lang.String)
+	 * @see org.programmerplanet.crm.dao.FieldDefinitionDao#isFieldNameUnique(java.util.UUID, java.util.UUID, java.lang.String)
 	 */
-	public boolean isFieldNameUnique(Long objectId, Long id, String fieldName) {
-		String sql = "SELECT COUNT(*) FROM crm_field WHERE object_id = ? AND field_name = ? AND id <> ?";
-		Object[] params = new Object[] { objectId, fieldName, id != null ? id : new Long(0) };
+	public boolean isFieldNameUnique(UUID objectId, UUID id, String fieldName) {
+		String sql = null;
+		Object[] params = null;
+		if (id != null) {
+			sql = "SELECT COUNT(*) FROM crm_field WHERE object_id = ?::uuid AND field_name = ? AND id <> ?::uuid";
+			params = new Object[] { objectId.toString(), fieldName, id.toString() };
+		}
+		else {
+			sql = "SELECT COUNT(*) FROM crm_field WHERE object_id = ?::uuid AND field_name = ?";
+			params = new Object[] { objectId.toString(), fieldName };
+		}
 		int count = this.getJdbcTemplate().queryForInt(sql, params);
 		return count == 0;
 	}
@@ -110,9 +119,9 @@ public class JdbcFieldDefinitionDao extends JdbcDaoSupport implements FieldDefin
 		return getFieldMedatataOfType(DataType.OPTION_LIST, optionList.getId());
 	}
 
-	private List getFieldMedatataOfType(DataType dataType, Long dataTypeExt) {
-		String sql = "SELECT * FROM crm_field WHERE data_type = ? AND data_type_ext = ?";
-		Object[] params = new Object[] { new Integer(dataType.getValue()), dataTypeExt };
+	private List getFieldMedatataOfType(DataType dataType, UUID dataTypeExtId) {
+		String sql = "SELECT * FROM crm_field WHERE data_type = ? AND data_type_ext_id = ?::uuid";
+		Object[] params = new Object[] { new Integer(dataType.getValue()), dataTypeExtId.toString() };
 		RowMapper fieldDefinitionRowMapper = new FieldDefinitionRowMapper();
 		List fieldDefinitions = this.getJdbcTemplate().query(sql, params, fieldDefinitionRowMapper);
 		return fieldDefinitions;

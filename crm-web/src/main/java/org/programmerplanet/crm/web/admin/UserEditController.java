@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.web.admin;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,7 +54,7 @@ public class UserEditController extends SimpleMultiActionFormController {
 	}
 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
 			User user = administrationService.getUser(id);
 			return user;

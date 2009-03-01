@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.model;
 
+import java.util.UUID;
+
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
  * 
@@ -7,13 +9,13 @@ package org.programmerplanet.crm.model;
  */
 public abstract class Entity {
 
-	private Long id;
+	private UUID id;
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 

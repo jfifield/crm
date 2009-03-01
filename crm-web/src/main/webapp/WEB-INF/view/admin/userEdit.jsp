@@ -152,7 +152,7 @@ function _deleteUser(id) {
 			<td colspan="2" style="text-align: center;">
 				<input type="submit" class="button" value="Save" name="__save"/>
 				<c:if test="${user.id != null}">
-				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteUser(${user.id}); return false;"/>
+				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteUser('${user.id}'); return false;"/>
 				</c:if>
 				<input type="submit" class="button" value="Cancel" name="__cancel"/>
 			</td>

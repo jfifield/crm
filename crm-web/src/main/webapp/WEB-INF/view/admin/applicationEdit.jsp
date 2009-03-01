@@ -56,7 +56,7 @@ function _deleteApplication(id) {
 			<td colspan="2" style="text-align: center;">
 				<input type="submit" class="button" value="Save" name="__save"/>
 				<c:if test="${application.id != null}">
-				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteApplication(${application.id}); return false;"/>
+				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteApplication('${application.id}'); return false;"/>
 				</c:if>
 				<input type="submit" class="button" value="Cancel" name="__cancel"/>
 			</td>
@@ -83,7 +83,7 @@ function _deleteApplication(id) {
 							<td width="1%">
 								<c:choose>
 									<c:when test="${!status.first}">
-										<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:${application.id},objectId:${object.id},__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
+										<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:'${application.id}',objectId:'${object.id}',__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
 									</c:when>
 									<c:otherwise>
 										<img src="../theme/default/blank.gif"/>
@@ -91,7 +91,7 @@ function _deleteApplication(id) {
 								</c:choose>
 								<c:choose>
 									<c:when test="${!status.last}">
-										<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:${application.id},objectId:${object.id},__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
+										<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:'${application.id}',objectId:'${object.id}',__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
 									</c:when>
 									<c:otherwise>
 										<img src="../theme/default/blank.gif"/>
@@ -99,7 +99,7 @@ function _deleteApplication(id) {
 								</c:choose>
 							</td>
 							<td width="1%">
-								<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:${application.id},objectId:${object.id},__remove:true});"><img src="../theme/default/arrow_right.png"/></a>
+								<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:'${application.id}',objectId:'${object.id}',__remove:true});"><img src="../theme/default/arrow_right.png"/></a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -110,7 +110,7 @@ function _deleteApplication(id) {
 					<c:forEach var="object" items="${availableObjectDefinition}">
 						<tr>
 							<td width="1%">
-								<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:${application.id},objectId:${object.id},__add:true});"><img src="../theme/default/arrow_left.png"/></a>
+								<a href="javascript:void(0);" onclick="post('applicationObjectEdit', {applicationId:'${application.id}',objectId:'${object.id}',__add:true});"><img src="../theme/default/arrow_left.png"/></a>
 							</td>
 							<td>${object.objectName}</td>
 						</tr>

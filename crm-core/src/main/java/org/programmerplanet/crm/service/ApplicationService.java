@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.FileInfo;
@@ -22,9 +23,9 @@ public interface ApplicationService {
 
 	List getAllApplications();
 
-	Application getApplication(Long id);
+	Application getApplication(UUID id);
 
-	ObjectDefinition getObjectDefinition(Long id);
+	ObjectDefinition getObjectDefinition(UUID id);
 
 	ObjectDefinition getObjectDefinition(String objectName);
 
@@ -36,30 +37,30 @@ public interface ApplicationService {
 
 	List getCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions);
 
-	List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, Long id);
+	List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, Long id);
+	List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Long id);
+	Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, UUID id);
 
-	Relationship getRelationship(Long parentObjectId, Long childObjectId);
+	Relationship getRelationship(UUID parentObjectId, UUID childObjectId);
 
 	List getRelationshipsForObject(ObjectDefinition objectDefinition);
 
-	FileInfo getFileInfo(Long id);
+	FileInfo getFileInfo(UUID id);
 
 	void insertFile(FileInfo fileInfo, InputStream inputStream);
 
-	void getFile(Long id, OutputStream outputStream);
+	void getFile(UUID id, OutputStream outputStream);
 
-	Long insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data);
+	UUID insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data);
 
-	void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, Long id);
+	void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, UUID id);
 
-	void deleteCrmObject(ObjectDefinition objectDefinition, Long id);
+	void deleteCrmObject(ObjectDefinition objectDefinition, UUID id);
 
-	void insertCrmObjectRelationship(ObjectDefinition parentObjectDefinition, Long parentId, ObjectDefinition childObjectDefinition, Long childId);
+	void insertCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
 
-	void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, Long parentId, ObjectDefinition childObjectDefinition, Long childId);
+	void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
 
 }

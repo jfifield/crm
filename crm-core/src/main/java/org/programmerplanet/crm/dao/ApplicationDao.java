@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.Application;
 
@@ -13,7 +14,7 @@ public interface ApplicationDao {
 
 	List getAllApplications();
 
-	Application getApplication(Long id);
+	Application getApplication(UUID id);
 
 	void insertApplication(Application application);
 
@@ -21,6 +22,6 @@ public interface ApplicationDao {
 
 	void deleteApplication(Application application);
 
-	boolean isApplicationNameUnique(Long id, String applicationName);
+	boolean isApplicationNameUnique(UUID id, String applicationName);
 
 }

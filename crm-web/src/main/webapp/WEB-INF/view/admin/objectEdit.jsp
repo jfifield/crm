@@ -62,7 +62,7 @@ function _deleteRelationship(id) {
 			<td colspan="2" style="text-align: center;">
 				<input type="submit" class="button" value="Save" name="__save"/>
 				<c:if test="${objectDefinition.id != null}">
-				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteObject(${objectDefinition.id}); return false;"/>
+				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteObject('${objectDefinition.id}'); return false;"/>
 				</c:if>
 				<input type="submit" class="button" value="Cancel" name="__cancel"/>
 			</td>
@@ -89,7 +89,7 @@ function _deleteRelationship(id) {
 				<td>
 					<c:choose>
 						<c:when test="${!status.first}">
-							<a href="javascript:void(0);" onclick="post('fieldEdit', {id:${field.id},__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
+							<a href="javascript:void(0);" onclick="post('fieldEdit', {id:'${field.id}',__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
 						</c:when>
 						<c:otherwise>
 							<img src="../theme/default/blank.gif"/>
@@ -97,7 +97,7 @@ function _deleteRelationship(id) {
 					</c:choose>
 					<c:choose>
 						<c:when test="${!status.last}">
-							<a href="javascript:void(0);" onclick="post('fieldEdit', {id:${field.id},__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
+							<a href="javascript:void(0);" onclick="post('fieldEdit', {id:'${field.id}',__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
 						</c:when>
 						<c:otherwise>
 							<img src="../theme/default/blank.gif"/>
@@ -106,7 +106,7 @@ function _deleteRelationship(id) {
 				</td>
 				<td>
 					<a href="fieldEdit?id=${field.id}"><img src="../theme/default/edit.png"/></a>
-					<a href="javascript:void(0);" onclick="_deleteField(${field.id});"><img src="../theme/default/delete.png"/></a>
+					<a href="javascript:void(0);" onclick="_deleteField('${field.id}');"><img src="../theme/default/delete.png"/></a>
 				</td>
 			</tr>
 		</c:forEach>
@@ -129,7 +129,7 @@ function _deleteRelationship(id) {
 							<td width="1%">
 								<c:choose>
 									<c:when test="${!status.first}">
-										<a href="javascript:void(0);" onclick="post('fieldEdit', {id:${field.id},__moveList:'up'});"><img src="../theme/default/arrow_up.png"/></a>
+										<a href="javascript:void(0);" onclick="post('fieldEdit', {id:'${field.id}',__moveList:'up'});"><img src="../theme/default/arrow_up.png"/></a>
 									</c:when>
 									<c:otherwise>
 										<img src="../theme/default/blank.gif"/>
@@ -137,7 +137,7 @@ function _deleteRelationship(id) {
 								</c:choose>
 								<c:choose>
 									<c:when test="${!status.last}">
-										<a href="javascript:void(0);" onclick="post('fieldEdit', {id:${field.id},__moveList:'down'});"><img src="../theme/default/arrow_down.png"/></a>
+										<a href="javascript:void(0);" onclick="post('fieldEdit', {id:'${field.id}',__moveList:'down'});"><img src="../theme/default/arrow_down.png"/></a>
 									</c:when>
 									<c:otherwise>
 										<img src="../theme/default/blank.gif"/>
@@ -145,7 +145,7 @@ function _deleteRelationship(id) {
 								</c:choose>
 							</td>
 							<td width="1%">
-								<a href="javascript:void(0);" onclick="post('fieldEdit', {id:${field.id},__removeList:true});"><img src="../theme/default/arrow_right.png"/></a>
+								<a href="javascript:void(0);" onclick="post('fieldEdit', {id:'${field.id}',__removeList:true});"><img src="../theme/default/arrow_right.png"/></a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -156,7 +156,7 @@ function _deleteRelationship(id) {
 					<c:forEach var="field" items="${availableListFieldDefinition}">
 						<tr>
 							<td width="1%">
-								<a href="javascript:void(0);" onclick="post('fieldEdit', {id:${field.id},__addList:true});"><img src="../theme/default/arrow_left.png"/></a>
+								<a href="javascript:void(0);" onclick="post('fieldEdit', {id:'${field.id}',__addList:true});"><img src="../theme/default/arrow_left.png"/></a>
 							</td>
 							<td>${field.fieldName}</td>
 						</tr>
@@ -185,7 +185,7 @@ function _deleteRelationship(id) {
 							<td width="1%">
 								<c:choose>
 									<c:when test="${!status.first}">
-										<a href="javascript:void(0);" onclick="post('relationshipEdit', {id:${relationship.id},__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
+										<a href="javascript:void(0);" onclick="post('relationshipEdit', {id:'${relationship.id}',__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
 									</c:when>
 									<c:otherwise>
 										<img src="../theme/default/blank.gif"/>
@@ -193,7 +193,7 @@ function _deleteRelationship(id) {
 								</c:choose>
 								<c:choose>
 									<c:when test="${!status.last}">
-										<a href="javascript:void(0);" onclick="post('relationshipEdit', {id:${relationship.id},__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
+										<a href="javascript:void(0);" onclick="post('relationshipEdit', {id:'${relationship.id}',__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
 									</c:when>
 									<c:otherwise>
 										<img src="../theme/default/blank.gif"/>
@@ -201,7 +201,7 @@ function _deleteRelationship(id) {
 								</c:choose>
 							</td>
 							<td width="1%">
-								<a href="javascript:void(0);" onclick="_deleteRelationship(${relationship.id});"><img src="../theme/default/arrow_right.png"/></a>
+								<a href="javascript:void(0);" onclick="_deleteRelationship('${relationship.id}');"><img src="../theme/default/arrow_right.png"/></a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -212,7 +212,7 @@ function _deleteRelationship(id) {
 					<c:forEach var="object" items="${availableObjectDefinition}">
 						<tr>
 							<td width="1%">
-								<a href="javascript:void(0);" onclick="post('relationshipEdit', {parent_object_id:${objectDefinition.id},child_object_id:${object.id},__add:true});"><img src="../theme/default/arrow_left.png"/></a>
+								<a href="javascript:void(0);" onclick="post('relationshipEdit', {parent_object_id:'${objectDefinition.id}',child_object_id:'${object.id}',__add:true});"><img src="../theme/default/arrow_left.png"/></a>
 							</td>
 							<td>${object.objectName}</td>
 						</tr>

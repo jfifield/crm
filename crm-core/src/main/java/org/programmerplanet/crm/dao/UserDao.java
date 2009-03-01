@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.User;
 
@@ -13,7 +14,7 @@ public interface UserDao {
 
 	List getAllUsers();
 
-	User getUser(Long id);
+	User getUser(UUID id);
 	
 	User getUser(String username, String password);
 
@@ -23,6 +24,6 @@ public interface UserDao {
 
 	void deleteUser(User user);
 	
-	boolean isUsernameUnique(Long id, String username);
+	boolean isUsernameUnique(UUID id, String username);
 
 }

@@ -1,11 +1,14 @@
 package org.programmerplanet.crm.web.app;
 
+import java.util.UUID;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.programmerplanet.crm.model.FileInfo;
 import org.programmerplanet.crm.service.ApplicationService;
+import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -26,7 +29,7 @@ public class DownloadController implements Controller {
 	 * @see org.springframework.web.servlet.mvc.Controller#handleRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Long id = new Long(request.getParameter("id"));
+		UUID id = RequestUtil.getRequestId(request);
 
 		FileInfo fileInfo = applicationService.getFileInfo(id);
 

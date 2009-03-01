@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.programmerplanet.crm.dao.ApplicationDao;
@@ -95,9 +96,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getApplication(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getApplication(java.util.UUID)
 	 */
-	public Application getApplication(Long id) {
+	public Application getApplication(UUID id) {
 		return applicationDao.getApplication(id);
 	}
 
@@ -176,9 +177,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getObjectDefinition(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getObjectDefinition(java.util.UUID)
 	 */
-	public ObjectDefinition getObjectDefinition(Long id) {
+	public ObjectDefinition getObjectDefinition(UUID id) {
 		return objectDefinitionDao.getObjectDefinition(id);
 	}
 
@@ -284,9 +285,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getFieldDefinition(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getFieldDefinition(java.util.UUID)
 	 */
-	public FieldDefinition getFieldDefinition(Long id) {
+	public FieldDefinition getFieldDefinition(UUID id) {
 		return fieldDefinitionDao.getFieldDefinition(id);
 	}
 
@@ -417,9 +418,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getOptionList(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getOptionList(java.util.UUID)
 	 */
-	public OptionList getOptionList(Long id) {
+	public OptionList getOptionList(UUID id) {
 		return optionListDao.getOptionList(id);
 	}
 
@@ -458,9 +459,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getOptionListItem(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getOptionListItem(java.util.UUID)
 	 */
-	public OptionListItem getOptionListItem(Long id) {
+	public OptionListItem getOptionListItem(UUID id) {
 		return optionListItemDao.getOptionListItem(id);
 	}
 
@@ -513,9 +514,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getRelationship(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getRelationship(java.util.UUID)
 	 */
-	public Relationship getRelationship(Long id) {
+	public Relationship getRelationship(UUID id) {
 		return relationshipDao.getRelationship(id);
 	}
 
@@ -594,9 +595,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getUser(java.lang.Long)
+	 * @see org.programmerplanet.crm.service.AdministrationService#getUser(java.util.UUID)
 	 */
-	public User getUser(Long id) {
+	public User getUser(UUID id) {
 		return userDao.getUser(id);
 	}
 

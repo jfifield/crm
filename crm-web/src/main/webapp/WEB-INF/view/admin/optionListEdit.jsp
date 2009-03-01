@@ -59,7 +59,7 @@ function _deleteItem(id) {
 			<td colspan="2" style="text-align: center;">
 				<input type="submit" class="button" value="Save" name="__save"/>
 				<c:if test="${optionList.id != null}">
-				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteOptionList(${optionList.id}); return false;"/>
+				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteOptionList('${optionList.id}'); return false;"/>
 				</c:if>
 				<input type="submit" class="button" value="Cancel" name="__cancel"/>
 			</td>
@@ -84,7 +84,7 @@ function _deleteItem(id) {
 				<td>
 					<c:choose>
 						<c:when test="${!status.first}">
-							<a href="javascript:void(0);" onclick="post('optionListItemEdit', {id:${item.id},__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
+							<a href="javascript:void(0);" onclick="post('optionListItemEdit', {id:'${item.id}',__move:'up'});"><img src="../theme/default/arrow_up.png"/></a>
 						</c:when>
 						<c:otherwise>
 							<img src="../theme/default/blank.gif"/>
@@ -92,7 +92,7 @@ function _deleteItem(id) {
 					</c:choose>
 					<c:choose>
 						<c:when test="${!status.last}">
-							<a href="javascript:void(0);" onclick="post('optionListItemEdit', {id:${item.id},__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
+							<a href="javascript:void(0);" onclick="post('optionListItemEdit', {id:'${item.id}',__move:'down'});"><img src="../theme/default/arrow_down.png"/></a>
 						</c:when>
 						<c:otherwise>
 							<img src="../theme/default/blank.gif"/>
@@ -101,7 +101,7 @@ function _deleteItem(id) {
 				</td>
 				<td>
 					<a href="optionListItemEdit?id=${item.id}"><img src="../theme/default/edit.png"/></a>
-					<a href="javascript:void(0);" onclick="_deleteItem(${item.id});"><img src="../theme/default/delete.png"/></a>
+					<a href="javascript:void(0);" onclick="_deleteItem('${item.id}');"><img src="../theme/default/delete.png"/></a>
 				</td>
 			</tr>
 		</c:forEach>

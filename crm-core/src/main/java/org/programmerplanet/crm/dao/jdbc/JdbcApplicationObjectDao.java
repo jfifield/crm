@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao.jdbc;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.dao.ApplicationObjectDao;
 import org.programmerplanet.crm.model.Application;
@@ -20,19 +21,19 @@ public class JdbcApplicationObjectDao extends JdbcDaoSupport implements Applicat
 	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#getApplicationObjectsForApplication(org.programmerplanet.crm.model.Application)
 	 */
 	public List getApplicationObjectsForApplication(Application application) {
-		String sql = "SELECT * FROM crm_application_object WHERE application_id = ? ORDER BY view_index";
+		String sql = "SELECT * FROM crm_application_object WHERE application_id = ?::uuid ORDER BY view_index";
 		RowMapper applicationObjectRowMapper = new ApplicationObjectRowMapper();
-		List applicationObjects = this.getJdbcTemplate().query(sql, new Object[] { application.getId() }, applicationObjectRowMapper);
+		List applicationObjects = this.getJdbcTemplate().query(sql, new Object[] { application.getId().toString() }, applicationObjectRowMapper);
 		return applicationObjects;
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#getApplicationObject(java.lang.Long, java.lang.Long)
+	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#getApplicationObject(java.util.UUID, java.util.UUID)
 	 */
-	public ApplicationObject getApplicationObject(Long applicationId, Long objectId) {
-		String sql = "SELECT * FROM crm_application_object WHERE application_id = ? AND object_id = ?";
+	public ApplicationObject getApplicationObject(UUID applicationId, UUID objectId) {
+		String sql = "SELECT * FROM crm_application_object WHERE application_id = ?::uuid AND object_id = ?::uuid";
 		RowMapper applicationObjectRowMapper = new ApplicationObjectRowMapper();
-		Object[] params = new Object[] { applicationId, objectId };
+		Object[] params = new Object[] { applicationId.toString(), objectId.toString() };
 		ApplicationObject applicationObject = (ApplicationObject)this.getJdbcTemplate().queryForObject(sql, params, applicationObjectRowMapper);
 		return applicationObject;
 	}
@@ -41,8 +42,8 @@ public class JdbcApplicationObjectDao extends JdbcDaoSupport implements Applicat
 	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#insertApplicationObject(org.programmerplanet.crm.model.ApplicationObject)
 	 */
 	public void insertApplicationObject(ApplicationObject applicationObject) {
-		String sql = "INSERT INTO crm_application_object (application_id, object_id, view_index) VALUES (?, ?, ?)";
-		Object[] params = new Object[] { applicationObject.getApplicationId(), applicationObject.getObjectId(), applicationObject.getViewIndex() };
+		String sql = "INSERT INTO crm_application_object (application_id, object_id, view_index) VALUES (?::uuid, ?::uuid, ?)";
+		Object[] params = new Object[] { applicationObject.getApplicationId().toString(), applicationObject.getObjectId().toString(), applicationObject.getViewIndex() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -50,8 +51,8 @@ public class JdbcApplicationObjectDao extends JdbcDaoSupport implements Applicat
 	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#updateApplicationObject(org.programmerplanet.crm.model.ApplicationObject)
 	 */
 	public void updateApplicationObject(ApplicationObject applicationObject) {
-		String sql = "UPDATE crm_application_object SET view_index = ? WHERE application_id = ? AND object_id = ?";
-		Object[] params = new Object[] { applicationObject.getViewIndex(), applicationObject.getApplicationId(), applicationObject.getObjectId() };
+		String sql = "UPDATE crm_application_object SET view_index = ? WHERE application_id = ?::uuid AND object_id = ?::uuid";
+		Object[] params = new Object[] { applicationObject.getViewIndex(), applicationObject.getApplicationId().toString(), applicationObject.getObjectId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -59,8 +60,8 @@ public class JdbcApplicationObjectDao extends JdbcDaoSupport implements Applicat
 	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#deleteApplicationObject(org.programmerplanet.crm.model.ApplicationObject)
 	 */
 	public void deleteApplicationObject(ApplicationObject applicationObject) {
-		String sql = "DELETE FROM crm_application_object WHERE application_id = ? AND object_id = ?";
-		Object[] params = new Object[] { applicationObject.getApplicationId(), applicationObject.getObjectId() };
+		String sql = "DELETE FROM crm_application_object WHERE application_id = ?::uuid AND object_id = ?::uuid";
+		Object[] params = new Object[] { applicationObject.getApplicationId().toString(), applicationObject.getObjectId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
@@ -68,8 +69,8 @@ public class JdbcApplicationObjectDao extends JdbcDaoSupport implements Applicat
 	 * @see org.programmerplanet.crm.dao.ApplicationObjectDao#deleteApplicationObjects(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
 	public void deleteApplicationObjects(ObjectDefinition objectDefinition) {
-		String sql = "DELETE FROM crm_application_object WHERE object_id = ?";
-		Object[] params = new Object[] { objectDefinition.getId() };
+		String sql = "DELETE FROM crm_application_object WHERE object_id = ?::uuid";
+		Object[] params = new Object[] { objectDefinition.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 

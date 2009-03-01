@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.web;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -11,15 +13,15 @@ import org.apache.commons.lang.StringUtils;
  */
 public final class RequestUtil {
 
-	public static Long getRequestId(HttpServletRequest request) {
+	public static UUID getRequestId(HttpServletRequest request) {
 		return getRequestId(request, "id");
 	}
 
-	public static Long getRequestId(HttpServletRequest request, String name) {
-		Long id = null;
+	public static UUID getRequestId(HttpServletRequest request, String name) {
+		UUID id = null;
 		String sid = request.getParameter(name);
 		if (StringUtils.isNotEmpty(sid)) {
-			id = new Long(sid);
+			id = UUID.fromString(sid);
 		}
 		return id;
 	}

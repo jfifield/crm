@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +47,7 @@ public class ListTableRenderer {
 	private int pageSize;
 	private String source;
 	private String sourceObject;
-	private Long sourceObjectId;
+	private UUID sourceObjectId;
 
 	public void setFieldRenderers(Map fieldRenderers) {
 		this.fieldRenderers = fieldRenderers;
@@ -116,11 +117,11 @@ public class ListTableRenderer {
 		this.sourceObject = sourceObject;
 	}
 
-	public Long getSourceObjectId() {
+	public UUID getSourceObjectId() {
 		return sourceObjectId;
 	}
 
-	public void setSourceObjectId(Long sourceObjectId) {
+	public void setSourceObjectId(UUID sourceObjectId) {
 		this.sourceObjectId = sourceObjectId;
 	}
 
@@ -313,19 +314,19 @@ public class ListTableRenderer {
 
 			if ("view".equals(source)) {
 				writer.write("<td>\n");
-				writer.write("<a href=\"javascript:void(0);\" onclick=\"post('" + objectDefinition.getObjectName() + ".link', {id:" + row.get("id") + ",source_object:'" + sourceObject + "',source_object_id:" + sourceObjectId + ",__delete:true});\"><img src=\"../theme/default/link_delete.png\"/></a>\n");
+				writer.write("<a href=\"javascript:void(0);\" onclick=\"post('" + objectDefinition.getObjectName() + ".link', {id:'" + row.get("id") + "',source_object:'" + sourceObject + "',source_object_id:'" + sourceObjectId + "',__delete:true});\"><img src=\"../theme/default/link_delete.png\"/></a>\n");
 				writer.write("</td>\n");
 				writer.write("<td>\n");
 				writer.write("<a href=\"" + objectDefinition.getObjectName() + ".view?id=" + row.get("id") + "\"><img src=\"../theme/default/view.png\"/></a>\n");
-				writer.write("<a href=\"" + objectDefinition.getObjectName() + ".edit?id=" + row.get("id") + "&source=view&source_object=" + sourceObject + "&source_object_id=" + sourceObjectId + "\"><img src=\"../theme/default/edit.png\"/></a>\n");
-				writer.write("<a href=\"javascript:void(0);\" onclick=\"deleteObject('" + objectDefinition.getObjectName() + "', " + row.get("id") + ", 'view', '" + sourceObject + "', '" + sourceObjectId + "');\"><img src=\"../theme/default/delete.png\"/></a>\n");
+				writer.write("<a href=\"" + objectDefinition.getObjectName() + ".edit?id=" + row.get("id") + "&source=view&source_object=" + sourceObject + "&source_object_id='" + sourceObjectId + "'\"><img src=\"../theme/default/edit.png\"/></a>\n");
+				writer.write("<a href=\"javascript:void(0);\" onclick=\"deleteObject('" + objectDefinition.getObjectName() + "', '" + row.get("id") + "', 'view', '" + sourceObject + "', '" + sourceObjectId + "');\"><img src=\"../theme/default/delete.png\"/></a>\n");
 				writer.write("</td>\n");
 			}
 			else {
 				writer.write("<td>\n");
 				writer.write("<a href=\"" + objectDefinition.getObjectName() + ".view?id=" + row.get("id") + "&source=list\"><img src=\"../theme/default/view.png\"/></a>\n");
 				writer.write("<a href=\"" + objectDefinition.getObjectName() + ".edit?id=" + row.get("id") + "&source=list\"><img src=\"../theme/default/edit.png\"/></a>\n");
-				writer.write("<a href=\"javascript:void(0);\" onclick=\"deleteObject('" + objectDefinition.getObjectName() + "', " + row.get("id") + ");\"><img src=\"../theme/default/delete.png\"/></a>\n");
+				writer.write("<a href=\"javascript:void(0);\" onclick=\"deleteObject('" + objectDefinition.getObjectName() + "', '" + row.get("id") + "');\"><img src=\"../theme/default/delete.png\"/></a>\n");
 				writer.write("</td>\n");
 			}
 

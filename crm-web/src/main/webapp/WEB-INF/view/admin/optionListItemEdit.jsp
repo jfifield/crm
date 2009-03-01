@@ -63,7 +63,7 @@ function _deleteItem(id) {
 			<td colspan="2" style="text-align: center;">
 				<input type="submit" class="button" value="Save" name="__save"/>
 				<c:if test="${optionListItem.id != null}">
-				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteItem(${optionListItem.id}); return false;"/>
+				<input type="submit" class="button" value="Delete" name="__delete" onclick="_deleteItem('${optionListItem.id}'); return false;"/>
 				</c:if>
 				<input type="submit" class="button" value="Cancel" name="__cancel"/>
 			</td>

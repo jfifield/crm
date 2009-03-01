@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.web;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +17,7 @@ public class UserSession {
 	private static final String USER_SESSION_KEY = UserSession.class.getName();
 
 	private User user;
-	private Long selectedApplicationId;
+	private UUID selectedApplicationId;
 
 	public static void initialize(HttpServletRequest request, User user) {
 		UserSession userSession = new UserSession(user);
@@ -47,11 +49,11 @@ public class UserSession {
 		return user;
 	}
 
-	public void setSelectedApplicationId(Long selectedApplicationId) {
+	public void setSelectedApplicationId(UUID selectedApplicationId) {
 		this.selectedApplicationId = selectedApplicationId;
 	}
 
-	public Long getSelectedApplicationId() {
+	public UUID getSelectedApplicationId() {
 		return selectedApplicationId;
 	}
 

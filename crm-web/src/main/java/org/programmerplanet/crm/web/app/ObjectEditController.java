@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,7 +77,7 @@ public class ObjectEditController extends ObjectController {
 
 	public ModelAndView handleCancel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 
 		String source = request.getParameter("source");
 		String sourceObject = request.getParameter("source_object");
@@ -149,7 +150,7 @@ public class ObjectEditController extends ObjectController {
 			}
 		}
 
-		Long id = crmObject.getId();
+		UUID id = crmObject.getId();
 		boolean newObject = (id == null);
 		if (newObject) {
 			id = applicationService.insertCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData());
@@ -160,7 +161,7 @@ public class ObjectEditController extends ObjectController {
 
 		String source = request.getParameter("source");
 		String sourceObject = request.getParameter("source_object");
-		Long sourceObjectId = RequestUtil.getRequestId(request, "source_object_id");
+		UUID sourceObjectId = RequestUtil.getRequestId(request, "source_object_id");
 
 		if (StringUtils.isNotEmpty(sourceObject) && newObject) {
 			String parentObjectName = sourceObject;
@@ -169,8 +170,8 @@ public class ObjectEditController extends ObjectController {
 			ObjectDefinition parentObjectDefinition = applicationService.getObjectDefinition(parentObjectName);
 			ObjectDefinition childObjectDefinition = applicationService.getObjectDefinition(childObjectName);
 
-			Long parentId = sourceObjectId;
-			Long childId = id;
+			UUID parentId = sourceObjectId;
+			UUID childId = id;
 
 			applicationService.insertCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 		}
@@ -214,7 +215,7 @@ public class ObjectEditController extends ObjectController {
 		List fieldDefinitions = applicationService.getFieldDefinitionsForObjectView(objectDefinition);
 
 		Map data = null;
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
 			data = applicationService.getCrmObject(objectDefinition, fieldDefinitions, id);
 		}
@@ -276,7 +277,7 @@ public class ObjectEditController extends ObjectController {
 	public ModelAndView handleDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
 		ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectName);
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		applicationService.deleteCrmObject(objectDefinition, id);
 
 		String source = request.getParameter("source");

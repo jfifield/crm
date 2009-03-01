@@ -9,7 +9,7 @@
 <%@attribute name="pageSize" type="java.lang.Integer" required="true"%>
 <%@attribute name="source" type="java.lang.String" required="true"%>
 <%@attribute name="sourceObject" type="java.lang.String" required="false"%>
-<%@attribute name="sourceObjectId" type="java.lang.Long" required="false"%>
+<%@attribute name="sourceObjectId" type="java.util.UUID" required="false"%>
 
 <%
 	ApplicationContext applicationContext = RequestContextUtils.getWebApplicationContext(request);

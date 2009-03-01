@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.Relationship;
@@ -12,9 +13,9 @@ import org.programmerplanet.crm.model.Relationship;
  */
 public interface RelationshipDao {
 
-	Relationship getRelationship(Long id);
+	Relationship getRelationship(UUID id);
 
-	Relationship getRelationship(Long parentObjectId, Long childObjectId);
+	Relationship getRelationship(UUID parentObjectId, UUID childObjectId);
 
 	List getRelationshipsForObject(ObjectDefinition objectDefinition);
 

@@ -2,6 +2,7 @@ package org.programmerplanet.crm.dao;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
@@ -14,13 +15,13 @@ import org.programmerplanet.crm.model.ObjectDefinition;
  */
 public interface FileDao {
 	
-	FileInfo getFileInfo(Long id);
+	FileInfo getFileInfo(UUID id);
 
 	void insertFile(FileInfo fileInfo, InputStream inputStream);
 
-	void getFile(Long id, OutputStream outputStream);
+	void getFile(UUID id, OutputStream outputStream);
 
-	void deleteFile(Long id);
+	void deleteFile(UUID id);
 
 	void deleteFiles(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition);
 	

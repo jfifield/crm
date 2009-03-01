@@ -32,7 +32,7 @@
 				</td>
 			</c:forEach>
 			<td>
-				<a href="javascript:void(0);" onclick="post('${childObjectDefinition.objectName}.link', {id:${row['id']},source_object:'${parentObjectDefinition.objectName}',source_object_id:${id},__save:true});"><img src="../theme/default/add.png"/></a>
+				<a href="javascript:void(0);" onclick="post('${childObjectDefinition.objectName}.link', {id:'${row['id']}',source_object:'${parentObjectDefinition.objectName}',source_object_id:'${id}',__save:true});"><img src="../theme/default/add.png"/></a>
 			</td>
 		</tr>
 	</c:forEach>

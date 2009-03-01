@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.OptionList;
 
@@ -13,7 +14,7 @@ public interface OptionListDao {
 
 	List getAllOptionLists();
 
-	OptionList getOptionList(Long id);
+	OptionList getOptionList(UUID id);
 
 	void insertOptionList(OptionList optionList);
 
@@ -21,6 +22,6 @@ public interface OptionListDao {
 
 	void deleteOptionList(OptionList optionList);
 
-	boolean isNameUnique(Long id, String name);
+	boolean isNameUnique(UUID id, String name);
 
 }

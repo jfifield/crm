@@ -1,27 +1,29 @@
 package org.programmerplanet.crm.model;
 
+import java.util.UUID;
+
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
 public class ApplicationObject {
 
-	private Long applicationId;
-	private Long objectId;
+	private UUID applicationId;
+	private UUID objectId;
 	private Integer viewIndex;
 
-	public Long getApplicationId() {
+	public UUID getApplicationId() {
 		return applicationId;
 	}
 
-	public void setApplicationId(Long applicationId) {
+	public void setApplicationId(UUID applicationId) {
 		this.applicationId = applicationId;
 	}
 
-	public Long getObjectId() {
+	public UUID getObjectId() {
 		return objectId;
 	}
 
-	public void setObjectId(Long objectId) {
+	public void setObjectId(UUID objectId) {
 		this.objectId = objectId;
 	}
 

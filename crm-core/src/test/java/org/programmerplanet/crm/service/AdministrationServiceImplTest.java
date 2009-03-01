@@ -3,6 +3,7 @@ package org.programmerplanet.crm.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.easymock.AbstractMatcher;
 import org.easymock.MockControl;
@@ -91,15 +92,15 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		List list = new ArrayList();
 		Application application1 = new Application();
-		application1.setId(new Long(1));
+		application1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		application1.setViewIndex(new Integer(0));
 		list.add(application1);
 		Application application2 = new Application();
-		application2.setId(new Long(2));
+		application2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		application2.setViewIndex(new Integer(1));
 		list.add(application2);
 		Application application3 = new Application();
-		application3.setId(new Long(3));
+		application3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		application3.setViewIndex(new Integer(2));
 		list.add(application3);
 		applicationDaoControl.setReturnValue(list);
@@ -126,15 +127,15 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		List list = new ArrayList();
 		Application application1 = new Application();
-		application1.setId(new Long(1));
+		application1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		application1.setViewIndex(new Integer(0));
 		list.add(application1);
 		Application application2 = new Application();
-		application2.setId(new Long(2));
+		application2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		application2.setViewIndex(new Integer(1));
 		list.add(application2);
 		Application application3 = new Application();
-		application3.setId(new Long(3));
+		application3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		application3.setViewIndex(new Integer(2));
 		list.add(application3);
 		applicationDaoControl.setReturnValue(list);
@@ -153,7 +154,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertApplicationObject_NoExisting() {
-		Long applicationId = new Long(1);
+		UUID applicationId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		ApplicationObject applicationObject = new ApplicationObject();
 		applicationObject.setApplicationId(applicationId);
 
@@ -185,7 +186,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertApplicationObject_WithExisting() {
-		Long applicationId = new Long(1);
+		UUID applicationId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		ApplicationObject applicationObject = new ApplicationObject();
 		applicationObject.setApplicationId(applicationId);
 
@@ -228,7 +229,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveApplicationObjectViewIndex_MoveUp() {
-		Long applicationId = new Long(1);
+		UUID applicationId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -248,17 +249,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		ApplicationObject applicationObject1 = new ApplicationObject();
 		applicationObject1.setApplicationId(applicationId);
-		applicationObject1.setObjectId(new Long(1));
+		applicationObject1.setObjectId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		applicationObject1.setViewIndex(new Integer(0));
 		list.add(applicationObject1);
 		ApplicationObject applicationObject2 = new ApplicationObject();
 		applicationObject2.setApplicationId(applicationId);
-		applicationObject2.setObjectId(new Long(2));
+		applicationObject2.setObjectId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		applicationObject2.setViewIndex(new Integer(3));
 		list.add(applicationObject2);
 		ApplicationObject applicationObject3 = new ApplicationObject();
 		applicationObject3.setApplicationId(applicationId);
-		applicationObject3.setObjectId(new Long(3));
+		applicationObject3.setObjectId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		applicationObject3.setViewIndex(new Integer(2));
 		list.add(applicationObject3);
 		applicationObjectDaoControl.setReturnValue(list);
@@ -278,7 +279,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveApplicationObjectViewIndex_MoveDown() {
-		Long applicationId = new Long(1);
+		UUID applicationId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -298,17 +299,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		ApplicationObject applicationObject1 = new ApplicationObject();
 		applicationObject1.setApplicationId(applicationId);
-		applicationObject1.setObjectId(new Long(1));
+		applicationObject1.setObjectId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		applicationObject1.setViewIndex(new Integer(0));
 		list.add(applicationObject1);
 		ApplicationObject applicationObject2 = new ApplicationObject();
 		applicationObject2.setApplicationId(applicationId);
-		applicationObject2.setObjectId(new Long(2));
+		applicationObject2.setObjectId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		applicationObject2.setViewIndex(new Integer(3));
 		list.add(applicationObject2);
 		ApplicationObject applicationObject3 = new ApplicationObject();
 		applicationObject3.setApplicationId(applicationId);
-		applicationObject3.setObjectId(new Long(3));
+		applicationObject3.setObjectId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		applicationObject3.setViewIndex(new Integer(2));
 		list.add(applicationObject3);
 		applicationObjectDaoControl.setReturnValue(list);
@@ -328,7 +329,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertFieldDefinition_NoExisting() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		FieldDefinition fieldDefinition = new FieldDefinition();
 		fieldDefinition.setObjectId(objectId);
 
@@ -368,7 +369,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertFieldDefinition_WithExisting() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		FieldDefinition fieldDefinition = new FieldDefinition();
 		fieldDefinition.setObjectId(objectId);
 
@@ -419,7 +420,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveFieldDefinitionViewIndex_MoveUp() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -439,17 +440,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(1));
+		fieldDefinition1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		fieldDefinition1.setViewIndex(new Integer(0));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		fieldDefinition2.setViewIndex(new Integer(3));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		fieldDefinition3.setViewIndex(new Integer(2));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
@@ -469,7 +470,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveFieldDefinitionViewIndex_MoveDown() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -489,17 +490,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(1));
+		fieldDefinition1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		fieldDefinition1.setViewIndex(new Integer(0));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		fieldDefinition2.setViewIndex(new Integer(3));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		fieldDefinition3.setViewIndex(new Integer(2));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
@@ -519,7 +520,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveFieldDefinitionListIndex_MoveUp() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -539,17 +540,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(1));
+		fieldDefinition1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		fieldDefinition1.setListIndex(new Integer(0));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		fieldDefinition2.setListIndex(new Integer(3));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		fieldDefinition3.setListIndex(new Integer(2));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
@@ -569,7 +570,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveFieldDefinitionListIndex_MoveDown() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -589,17 +590,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(1));
+		fieldDefinition1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		fieldDefinition1.setListIndex(new Integer(0));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		fieldDefinition2.setListIndex(new Integer(3));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		fieldDefinition3.setListIndex(new Integer(2));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
@@ -619,7 +620,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testAddFieldDefinitionListIndex_NoExisting() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -639,15 +640,15 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(1));
+		fieldDefinition1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
 
@@ -665,7 +666,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testAddFieldDefinitionListIndex_WithExisting() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -685,16 +686,16 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(0));
+		fieldDefinition1.setId(UUID.fromString("f77d8832-62e8-467f-88ea-526398dce0f9"));
 		fieldDefinition1.setListIndex(new Integer(0));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
 
@@ -712,7 +713,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testRemoveFieldDefinitionListIndex() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -732,17 +733,17 @@ public class AdministrationServiceImplTest extends TestCase {
 		List list = new ArrayList();
 		FieldDefinition fieldDefinition1 = new FieldDefinition();
 		fieldDefinition1.setObjectId(objectId);
-		fieldDefinition1.setId(new Long(0));
+		fieldDefinition1.setId(UUID.fromString("f77d8832-62e8-467f-88ea-526398dce0f9"));
 		fieldDefinition1.setListIndex(new Integer(0));
 		list.add(fieldDefinition1);
 		FieldDefinition fieldDefinition2 = new FieldDefinition();
 		fieldDefinition2.setObjectId(objectId);
-		fieldDefinition2.setId(new Long(2));
+		fieldDefinition2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		fieldDefinition2.setListIndex(new Integer(1));
 		list.add(fieldDefinition2);
 		FieldDefinition fieldDefinition3 = new FieldDefinition();
 		fieldDefinition3.setObjectId(objectId);
-		fieldDefinition3.setId(new Long(3));
+		fieldDefinition3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		list.add(fieldDefinition3);
 		fieldDefinitionDaoControl.setReturnValue(list);
 
@@ -760,7 +761,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertOptionListItem_NoExisting() {
-		Long optionListId = new Long(1);
+		UUID optionListId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		OptionListItem optionListItem = new OptionListItem();
 		optionListItem.setOptionListId(optionListId);
 
@@ -792,7 +793,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertOptionListItem_WithExisting() {
-		Long optionListId = new Long(1);
+		UUID optionListId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		OptionListItem optionListItem = new OptionListItem();
 		optionListItem.setOptionListId(optionListId);
 
@@ -835,7 +836,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveOptionListItemViewIndex_MoveUp() {
-		Long optionListId = new Long(1);
+		UUID optionListId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -854,17 +855,17 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		List list = new ArrayList();
 		OptionListItem optionListItem1 = new OptionListItem();
-		optionListItem1.setId(new Long(1));
+		optionListItem1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		optionListItem1.setOptionListId(optionListId);
 		optionListItem1.setViewIndex(new Integer(0));
 		list.add(optionListItem1);
 		OptionListItem optionListItem2 = new OptionListItem();
-		optionListItem2.setId(new Long(2));
+		optionListItem2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		optionListItem2.setOptionListId(optionListId);
 		optionListItem2.setViewIndex(new Integer(1));
 		list.add(optionListItem2);
 		OptionListItem optionListItem3 = new OptionListItem();
-		optionListItem3.setId(new Long(3));
+		optionListItem3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		optionListItem3.setOptionListId(optionListId);
 		optionListItem3.setViewIndex(new Integer(2));
 		list.add(optionListItem3);
@@ -885,7 +886,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveOptionListItemViewIndex_MoveDown() {
-		Long optionListId = new Long(1);
+		UUID optionListId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -904,17 +905,17 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		List list = new ArrayList();
 		OptionListItem optionListItem1 = new OptionListItem();
-		optionListItem1.setId(new Long(1));
+		optionListItem1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		optionListItem1.setOptionListId(optionListId);
 		optionListItem1.setViewIndex(new Integer(0));
 		list.add(optionListItem1);
 		OptionListItem optionListItem2 = new OptionListItem();
-		optionListItem2.setId(new Long(2));
+		optionListItem2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		optionListItem2.setOptionListId(optionListId);
 		optionListItem2.setViewIndex(new Integer(1));
 		list.add(optionListItem2);
 		OptionListItem optionListItem3 = new OptionListItem();
-		optionListItem3.setId(new Long(3));
+		optionListItem3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		optionListItem3.setOptionListId(optionListId);
 		optionListItem3.setViewIndex(new Integer(2));
 		list.add(optionListItem3);
@@ -935,8 +936,8 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertRelationship_NoExisting() {
-		Long objectId1 = new Long(1);
-		Long objectId2 = new Long(2);
+		UUID objectId1 = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
+		UUID objectId2 = UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402");
 		Relationship relationship1 = new Relationship();
 		relationship1.setParentObjectId(objectId1);
 		relationship1.setChildObjectId(objectId2);
@@ -987,8 +988,8 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testInsertRelationship_WithExisting() {
-		Long objectId1 = new Long(1);
-		Long objectId2 = new Long(2);
+		UUID objectId1 = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
+		UUID objectId2 = UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402");
 		Relationship relationship1 = new Relationship();
 		relationship1.setParentObjectId(objectId1);
 		relationship1.setChildObjectId(objectId2);
@@ -1060,7 +1061,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveRelationshipViewIndex_MoveUp() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -1079,17 +1080,17 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		List list = new ArrayList();
 		Relationship relationship1 = new Relationship();
-		relationship1.setId(new Long(1));
+		relationship1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		relationship1.setParentObjectId(objectId);
 		relationship1.setViewIndex(new Integer(0));
 		list.add(relationship1);
 		Relationship relationship2 = new Relationship();
-		relationship2.setId(new Long(2));
+		relationship2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		relationship2.setParentObjectId(objectId);
 		relationship2.setViewIndex(new Integer(3));
 		list.add(relationship2);
 		Relationship relationship3 = new Relationship();
-		relationship3.setId(new Long(3));
+		relationship3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		relationship3.setParentObjectId(objectId);
 		relationship3.setViewIndex(new Integer(2));
 		list.add(relationship3);
@@ -1110,7 +1111,7 @@ public class AdministrationServiceImplTest extends TestCase {
 	}
 
 	public void testMoveRelationshipViewIndex_MoveDown() {
-		Long objectId = new Long(1);
+		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
@@ -1129,17 +1130,17 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		List list = new ArrayList();
 		Relationship relationship1 = new Relationship();
-		relationship1.setId(new Long(1));
+		relationship1.setId(UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc"));
 		relationship1.setParentObjectId(objectId);
 		relationship1.setViewIndex(new Integer(0));
 		list.add(relationship1);
 		Relationship relationship2 = new Relationship();
-		relationship2.setId(new Long(2));
+		relationship2.setId(UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402"));
 		relationship2.setParentObjectId(objectId);
 		relationship2.setViewIndex(new Integer(3));
 		list.add(relationship2);
 		Relationship relationship3 = new Relationship();
-		relationship3.setId(new Long(3));
+		relationship3.setId(UUID.fromString("f3db28bb-76e7-49ee-88fd-10a8a9a204db"));
 		relationship3.setParentObjectId(objectId);
 		relationship3.setViewIndex(new Integer(2));
 		list.add(relationship3);

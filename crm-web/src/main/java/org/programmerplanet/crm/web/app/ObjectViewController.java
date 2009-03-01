@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +34,7 @@ public class ObjectViewController extends ObjectController {
 	 */
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 
 		ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectName);
 		List fieldDefinitions = applicationService.getFieldDefinitionsForObjectView(objectDefinition);
@@ -50,17 +51,17 @@ public class ObjectViewController extends ObjectController {
 		return new ModelAndView("view", model);
 	}
 
-	private List getRelationshipModel(ObjectDefinition parentObjectDefinition, Long id) {
+	private List getRelationshipModel(ObjectDefinition parentObjectDefinition, UUID id) {
 		List relationshipModel = new ArrayList();
 
-		Long parentObjectId = parentObjectDefinition.getId();
+		UUID parentObjectId = parentObjectDefinition.getId();
 
 		List relationships = applicationService.getRelationshipsForObject(parentObjectDefinition);
 		
 		for (Iterator i = relationships.iterator(); i.hasNext();) {
 			Relationship relationship = (Relationship)i.next();
 
-			Long objectId = relationship.getChildObjectId();
+			UUID objectId = relationship.getChildObjectId();
 			ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectId);
 			List fieldDefinitions = applicationService.getFieldDefinitionsForObjectList(objectDefinition);
 

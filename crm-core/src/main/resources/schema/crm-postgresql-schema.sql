@@ -1,6 +1,6 @@
 /****** Object: Table crm_user ******/
 CREATE TABLE crm_user (
-	id SERIAL,
+	id uuid NOT NULL,
 	username varchar(32) NOT NULL,
 	password varchar(32) NOT NULL,
 	first_name varchar(32) NULL,
@@ -13,7 +13,7 @@ CREATE TABLE crm_user (
 
 /****** Object: Table crm_object ******/
 CREATE TABLE crm_object (
-	id SERIAL,
+	id uuid NOT NULL,
 	object_name varchar(64) NOT NULL,
 	table_name varchar(64) NOT NULL,
 	CONSTRAINT pk_crm_object PRIMARY KEY (id),
@@ -22,12 +22,13 @@ CREATE TABLE crm_object (
 
 /****** Object: Table crm_field ******/
 CREATE TABLE crm_field (
-	id SERIAL,
-	object_id integer NOT NULL,
+	id uuid NOT NULL,
+	object_id uuid NOT NULL,
 	field_name varchar(64) NOT NULL,
 	column_name varchar(64) NOT NULL,
 	data_type smallint NOT NULL,
 	data_type_ext integer NULL,
+	data_type_ext_id uuid NULL,
 	required boolean NOT NULL DEFAULT false,
 	list_index smallint NULL,
 	view_index smallint NULL,
@@ -38,7 +39,7 @@ CREATE TABLE crm_field (
 
 /****** Object: Table crm_application ******/
 CREATE TABLE crm_application (
-	id SERIAL,
+	id uuid NOT NULL,
 	application_name varchar(64) NOT NULL,
 	view_index smallint NULL,
 	CONSTRAINT pk_crm_application PRIMARY KEY (id),
@@ -47,8 +48,8 @@ CREATE TABLE crm_application (
 
 /****** Object: Table crm_application_object ******/
 CREATE TABLE crm_application_object (
-	application_id integer NOT NULL,
-	object_id integer NOT NULL,
+	application_id uuid NOT NULL,
+	object_id uuid NOT NULL,
 	view_index smallint NULL,
 	CONSTRAINT pk_crm_application_object PRIMARY KEY (application_id, object_id),
 	CONSTRAINT fk_crm_application_object_crm_application FOREIGN KEY (application_id) REFERENCES crm_application (id) ON DELETE CASCADE,
@@ -57,9 +58,9 @@ CREATE TABLE crm_application_object (
 
 /****** Object: Table crm_relationship ******/
 CREATE TABLE crm_relationship (
-	id SERIAL,
-	parent_object_id integer NOT NULL,
-	child_object_id integer NOT NULL,
+	id uuid NOT NULL,
+	parent_object_id uuid NOT NULL,
+	child_object_id uuid NOT NULL,
 	view_index smallint NULL,
 	table_name varchar(64) NOT NULL,
 	CONSTRAINT pk_crm_relationship PRIMARY KEY (id),
@@ -69,15 +70,15 @@ CREATE TABLE crm_relationship (
 
 /****** Object: Table crm_option_list ******/
 CREATE TABLE crm_option_list(
-	id SERIAL,
+	id uuid NOT NULL,
 	option_list_name varchar(64) NOT NULL,
 	CONSTRAINT pk_crm_option_list PRIMARY KEY (id) 
 );
 
 /****** Object: Table crm_option_list_item ******/
 CREATE TABLE crm_option_list_item (
-	id SERIAL,
-	option_list_id integer NOT NULL,
+	id uuid NOT NULL,
+	option_list_id uuid NOT NULL,
 	item_value varchar(64) NOT NULL,
 	view_index smallint NULL,
 	CONSTRAINT pk_crm_option_list_item PRIMARY KEY (id),
@@ -86,7 +87,7 @@ CREATE TABLE crm_option_list_item (
 
 /****** Object: Table crm_file ******/
 CREATE TABLE crm_file (
-	id SERIAL,
+	id uuid NOT NULL,
 	file_name varchar(255) NOT NULL,
 	file_size integer NOT NULL,
 	mime_type varchar(255) NOT NULL,
@@ -95,5 +96,5 @@ CREATE TABLE crm_file (
 );
 
 /****** Data: default user 'admin' ******/
-INSERT INTO crm_user (username, password, first_name, email_address, administrator)
-VALUES ('admin', 'admin', 'Administrator', 'admin@localhost', true);
+INSERT INTO crm_user (id, username, password, first_name, email_address, administrator)
+VALUES ('2da6114b-3c40-4a43-8be1-362399b575c8', 'admin', 'admin', 'Administrator', 'admin@localhost', true);

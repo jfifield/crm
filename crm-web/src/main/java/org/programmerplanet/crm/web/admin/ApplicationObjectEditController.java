@@ -1,5 +1,7 @@
 package org.programmerplanet.crm.web.admin;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,8 +45,8 @@ public class ApplicationObjectEditController extends SimpleMultiActionFormContro
 	}
 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		Long applicationId = RequestUtil.getRequestId(request, "applicationId");
-		Long objectId = RequestUtil.getRequestId(request, "objectId");
+		UUID applicationId = RequestUtil.getRequestId(request, "applicationId");
+		UUID objectId = RequestUtil.getRequestId(request, "objectId");
 		ApplicationObject applicationObject = new ApplicationObject();
 		applicationObject.setApplicationId(applicationId);
 		applicationObject.setObjectId(objectId);

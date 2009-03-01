@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
@@ -64,7 +65,7 @@ public class ObjectRenderer implements FieldRenderer {
 		if (StringUtils.isNotEmpty(str)) {
 
 			// get metadata required to build object title link
-			ObjectDefinition refObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getDataTypeExt());
+			ObjectDefinition refObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getDataTypeExtId());
 			List refFieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(refObjectDefinition);
 			FieldDefinition refFieldDefinition = (FieldDefinition)refFieldDefinitions.get(0);
 			refFieldDefinitions.clear();
@@ -72,7 +73,7 @@ public class ObjectRenderer implements FieldRenderer {
 			Converter objectTitleConverter = (Converter)converters.get(refFieldDefinition.getDataType());
 
 			// get object data to build object title link
-			Long id = new Long(str);
+			UUID id = UUID.fromString(str);
 			Map objectData = crmObjectDao.getCrmObject(refObjectDefinition, refFieldDefinitions, id);
 			Object objectTitleValue = objectData.get(refFieldDefinition.getColumnName());
 			String objectTitle = null;
@@ -103,7 +104,7 @@ public class ObjectRenderer implements FieldRenderer {
 		String str = getAsString(value, fieldDefinition);
 
 		// get metadata required to build object title link
-		ObjectDefinition refObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getDataTypeExt());
+		ObjectDefinition refObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getDataTypeExtId());
 		List refFieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(refObjectDefinition);
 		FieldDefinition refFieldDefinition = (FieldDefinition)refFieldDefinitions.get(0);
 		refFieldDefinitions.clear();

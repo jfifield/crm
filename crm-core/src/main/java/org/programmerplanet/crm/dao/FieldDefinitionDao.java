@@ -1,6 +1,7 @@
 package org.programmerplanet.crm.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.ObjectDefinition;
@@ -13,7 +14,7 @@ import org.programmerplanet.crm.model.OptionList;
  */
 public interface FieldDefinitionDao {
 
-	FieldDefinition getFieldDefinition(Long id);
+	FieldDefinition getFieldDefinition(UUID id);
 
 	List getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
 
@@ -27,7 +28,7 @@ public interface FieldDefinitionDao {
 
 	void deleteFieldDefinition(FieldDefinition fieldDefinition);
 
-	boolean isFieldNameUnique(Long objectId, Long id, String fieldName);
+	boolean isFieldNameUnique(UUID objectId, UUID id, String fieldName);
 
 	List getFieldDefinitionsOfObjectType(ObjectDefinition objectDefinition);
 

@@ -2,6 +2,7 @@ package org.programmerplanet.crm.web.admin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,14 +66,14 @@ public class OptionListItemEditController extends SimpleMultiActionFormControlle
 	}
 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
-		Long id = RequestUtil.getRequestId(request);
+		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
 			OptionListItem optionListItem = administrationService.getOptionListItem(id);
 			return optionListItem;
 		}
 		else {
 			OptionListItem optionListItem = new OptionListItem();
-			Long optionListId = RequestUtil.getRequestId(request, "option_list_id");
+			UUID optionListId = RequestUtil.getRequestId(request, "option_list_id");
 			optionListItem.setOptionListId(optionListId);
 			return optionListItem;
 		}

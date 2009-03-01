@@ -2,6 +2,7 @@ package org.programmerplanet.crm.web.app.renderer;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
@@ -44,7 +45,7 @@ public class FileRenderer implements FieldRenderer {
 		if (StringUtils.isNotEmpty(str)) {
 
 			// get metadata required to build file download link
-			Long id = new Long(str);
+			UUID id = UUID.fromString(str);
 			FileInfo fileInfo = fileDao.getFileInfo(id);
 
 			// build file download link
