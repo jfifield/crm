@@ -19,7 +19,7 @@ public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDef
 	/**
 	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getAllObjectDefinitions()
 	 */
-	public List getAllObjectDefinitions() {
+	public List<ObjectDefinition> getAllObjectDefinitions() {
 		String sql = "SELECT * FROM crm_object ORDER BY object_name";
 		RowMapper objectDefinitionRowMapper = new ObjectDefinitionRowMapper();
 		List objectDefinition = this.getJdbcTemplate().query(sql, objectDefinitionRowMapper);
@@ -49,7 +49,7 @@ public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDef
 	/**
 	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getObjectDefinitionsForApplication(org.programmerplanet.crm.model.Application)
 	 */
-	public List getObjectDefinitionsForApplication(Application application) {
+	public List<ObjectDefinition> getObjectDefinitionsForApplication(Application application) {
 		String sql = "SELECT o.* FROM crm_application_object AS ao INNER JOIN crm_object AS o ON (ao.object_id = o.id) WHERE ao.application_id = ?::uuid ORDER BY ao.view_index";
 		RowMapper objectDefinitionRowMapper = new ObjectDefinitionRowMapper();
 		List objectDefinition = this.getJdbcTemplate().query(sql, new Object[] { application.getId().toString() }, objectDefinitionRowMapper);

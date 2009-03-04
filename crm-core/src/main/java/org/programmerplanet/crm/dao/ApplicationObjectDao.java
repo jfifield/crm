@@ -14,7 +14,7 @@ import org.programmerplanet.crm.model.ObjectDefinition;
  */
 public interface ApplicationObjectDao {
 
-	List getApplicationObjectsForApplication(Application application);
+	List<ApplicationObject> getApplicationObjectsForApplication(Application application);
 
 	ApplicationObject getApplicationObject(UUID applicationId, UUID objectId);
 

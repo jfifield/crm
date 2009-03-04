@@ -16,11 +16,11 @@ public interface FieldDefinitionDao {
 
 	FieldDefinition getFieldDefinition(UUID id);
 
-	List getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
 
-	List getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
 
-	List getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
 
 	void insertFieldDefinition(FieldDefinition fieldDefinition);
 
@@ -30,8 +30,8 @@ public interface FieldDefinitionDao {
 
 	boolean isFieldNameUnique(UUID objectId, UUID id, String fieldName);
 
-	List getFieldDefinitionsOfObjectType(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsOfObjectType(ObjectDefinition objectDefinition);
 
-	List getFieldDefinitionsOfOptionListType(OptionList optionList);
+	List<FieldDefinition> getFieldDefinitionsOfOptionListType(OptionList optionList);
 
 }

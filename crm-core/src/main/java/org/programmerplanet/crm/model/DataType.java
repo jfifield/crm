@@ -43,7 +43,7 @@ public class DataType extends ValuedEnum {
 		return (DataType)ValuedEnum.getEnum(DataType.class, value);
 	}
 
-	public static List getEnumList() {
+	public static List<DataType> getEnumList() {
 		return Enum.getEnumList(DataType.class);
 	}
 

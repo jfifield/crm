@@ -23,7 +23,7 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.CrmObjectDao#getCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List)
 	 */
-	public List getCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions) {
+	public List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
 		String sql = getBasicSelectSql(objectDefinition, fieldDefinitions);
 		List data = this.getJdbcTemplate().queryForList(sql);
 		convertUUIDValues(data, fieldDefinitions);
@@ -33,11 +33,10 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.CrmObjectDao#getRelatedCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ot.id, ");
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			String columnName = fieldDefinition.getColumnName();
 			sql.append("ot.");
 			sql.append(columnName);
@@ -65,11 +64,10 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.CrmObjectDao#getCrmObjectsAvailableForLinking(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ot.id, ");
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			String columnName = fieldDefinition.getColumnName();
 			sql.append("ot.");
 			sql.append(columnName);
@@ -97,7 +95,7 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.CrmObjectDao#getCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, UUID id) {
+	public Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
 		String sql = getBasicSelectSql(objectDefinition, fieldDefinitions);
 		sql += " WHERE id = ?::uuid";
 		List data = this.getJdbcTemplate().queryForList(sql, new Object[] { id.toString() });
@@ -106,12 +104,11 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 		return map;
 	}
 
-	private String getBasicSelectSql(ObjectDefinition objectDefinition, List fieldDefinitions) {
+	private String getBasicSelectSql(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT id, ");
-	
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			String columnName = fieldDefinition.getColumnName();
 			sql.append(columnName);
 			sql.append(", ");
@@ -124,17 +121,16 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 		return sql.toString();
 	}
 
-	private void convertUUIDValues(List crmObjects, List fieldDefinitions) {
+	private void convertUUIDValues(List crmObjects, List<FieldDefinition> fieldDefinitions) {
 		for (Iterator i = crmObjects.iterator(); i.hasNext();) {
 			Map crmObject = (Map) i.next();
 			convertUUIDValues(crmObject, fieldDefinitions);
 		}
 	}
 
-	private void convertUUIDValues(Map crmObject, List fieldDefinitions) {
+	private void convertUUIDValues(Map crmObject, List<FieldDefinition> fieldDefinitions) {
 		convertUUIDValue(crmObject, "id");
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			if (fieldDefinition.getDataType().equals(DataType.OBJECT)) {
 				String columnName = fieldDefinition.getColumnName();
 				convertUUIDValue(crmObject, columnName);
@@ -153,7 +149,7 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.CrmObjectDao#insertCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map)
 	 */
-	public UUID insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data) {
+	public UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
 		UUID id = UUID.randomUUID();
 		List parameters = new ArrayList();
 		StringBuffer sql = new StringBuffer();
@@ -161,8 +157,7 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 		sql.append(objectDefinition.getTableName());
 		sql.append(" (id, ");
 		parameters.add(id);
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			String columnName = fieldDefinition.getColumnName();
 			sql.append(columnName);
 			sql.append(", ");
@@ -206,15 +201,14 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.CrmObjectDao#updateCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
 	 */
-	public void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, UUID id) {
+	public void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
 		List parameters = new ArrayList();
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE ");
 		sql.append(objectDefinition.getTableName());
 		sql.append(" SET ");
 
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			// special case - skip update of autonumber field
 			if (fieldDefinition.getDataType().equals(DataType.AUTO_NUMBER)) {
 				continue;

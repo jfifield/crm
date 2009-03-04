@@ -56,9 +56,8 @@ public class LuceneSearchService extends AbstractSearchService {
 	 * @see org.programmerplanet.crm.service.SearchService#index()
 	 */
 	public void index() {
-		List objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
-		for (Iterator i = objectDefinitions.iterator(); i.hasNext();) {
-			ObjectDefinition objectDefinition = (ObjectDefinition)i.next();
+		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			try {
 				index(objectDefinition);
 			}
@@ -75,13 +74,11 @@ public class LuceneSearchService extends AbstractSearchService {
 			return;
 		}
 
-		List crmObjects = crmObjectDao.getCrmObjects(objectDefinition, fieldDefinitions);
+		List<Map> crmObjects = crmObjectDao.getCrmObjects(objectDefinition, fieldDefinitions);
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexModifier indexModifier = new IndexModifier(getIndexDirectoryForObject(objectDefinition), analyzer, true);
 		try {
-			for (Iterator i = crmObjects.iterator(); i.hasNext();) {
-				Map data = (Map)i.next();
-
+			for (Map data : crmObjects) {
 				CrmObject crmObject = new CrmObject();
 				crmObject.setObjectDefinition(objectDefinition);
 				crmObject.setFieldDefinitions(fieldDefinitions);
@@ -99,8 +96,7 @@ public class LuceneSearchService extends AbstractSearchService {
 
 	private Document createDocument(CrmObject crmObject) {
 		Document document = new Document();
-		for (Iterator i = crmObject.getFieldDefinitions().iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : crmObject.getFieldDefinitions()) {
 			Object value = crmObject.getData().get(fieldDefinition.getColumnName());
 			if (value != null) {
 				String fieldName = fieldDefinition.getColumnName();
@@ -127,14 +123,13 @@ public class LuceneSearchService extends AbstractSearchService {
 	/**
 	 * @see org.programmerplanet.crm.service.AbstractSearchService#search(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.service.SearchCriteria)
 	 */
-	protected List search(ObjectDefinition objectDefinition, List fieldDefinitionsForSearch, List fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
+	protected List search(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitionsForSearch, List<FieldDefinition> fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
 		List results = new LinkedList();
 		Analyzer analyzer = new StandardAnalyzer();
 		Searcher searcher = new IndexSearcher(getIndexDirectoryForObject(objectDefinition));
 		try {
 			List fields = new ArrayList();
-			for (Iterator i = fieldDefinitionsForSearch.iterator(); i.hasNext();) {
-				FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+			for (FieldDefinition fieldDefinition : fieldDefinitionsForSearch) {
 				fields.add(fieldDefinition.getColumnName());
 			}
 			QueryParser queryParser = new MultiFieldQueryParser((String[])fields.toArray(new String[0]), analyzer);

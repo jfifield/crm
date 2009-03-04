@@ -40,7 +40,7 @@ public class JdbcRelationshipDao extends JdbcDaoSupport implements RelationshipD
 	/**
 	 * @see org.programmerplanet.crm.dao.RelationshipDao#getRelationshipsForObject(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
-	public List getRelationshipsForObject(ObjectDefinition objectDefinition) {
+	public List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition) {
 		String sql = "SELECT * FROM crm_relationship WHERE parent_object_id = ?::uuid AND view_index IS NOT NULL ORDER BY view_index";
 		Object[] params = new Object[] { objectDefinition.getId().toString() };
 		RowMapper rowMapper = new RelationshipRowMapper();

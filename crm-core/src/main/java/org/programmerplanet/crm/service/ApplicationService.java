@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.programmerplanet.crm.model.Application;
+import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
 import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.Relationship;
@@ -21,7 +22,7 @@ public interface ApplicationService {
 
 	User getUser(String username, String password);
 
-	List getAllApplications();
+	List<Application> getAllApplications();
 
 	Application getApplication(UUID id);
 
@@ -29,23 +30,23 @@ public interface ApplicationService {
 
 	ObjectDefinition getObjectDefinition(String objectName);
 
-	List getObjectDefinitionsForApplication(Application application);
+	List<ObjectDefinition> getObjectDefinitionsForApplication(Application application);
 
-	List getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
 
-	List getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
 
-	List getCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions);
+	List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions);
 
-	List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
+	List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
+	List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, UUID id);
+	Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id);
 
 	Relationship getRelationship(UUID parentObjectId, UUID childObjectId);
 
-	List getRelationshipsForObject(ObjectDefinition objectDefinition);
+	List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition);
 
 	FileInfo getFileInfo(UUID id);
 
@@ -53,9 +54,9 @@ public interface ApplicationService {
 
 	void getFile(UUID id, OutputStream outputStream);
 
-	UUID insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data);
+	UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data);
 
-	void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, UUID id);
+	void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id);
 
 	void deleteCrmObject(ObjectDefinition objectDefinition, UUID id);
 

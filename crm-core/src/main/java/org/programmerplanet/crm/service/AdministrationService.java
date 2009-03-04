@@ -20,7 +20,7 @@ import org.programmerplanet.crm.model.User;
  */
 public interface AdministrationService {
 
-	List getAllApplications();
+	List<Application> getAllApplications();
 
 	Application getApplication(UUID id);
 
@@ -32,11 +32,11 @@ public interface AdministrationService {
 
 	void moveApplicationViewIndex(Application application, String direction);
 
-	List getObjectDefinitionsForApplication(Application application);
+	List<ObjectDefinition> getObjectDefinitionsForApplication(Application application);
 
-	Map getRelatedObjectDefinitionsForObject(ObjectDefinition objectDefinition);
+	Map<Relationship, ObjectDefinition> getRelatedObjectDefinitionsForObject(ObjectDefinition objectDefinition);
 
-	List getAllObjectDefinitions();
+	List<ObjectDefinition> getAllObjectDefinitions();
 
 	ObjectDefinition getObjectDefinition(UUID id);
 
@@ -54,9 +54,9 @@ public interface AdministrationService {
 
 	FieldDefinition getFieldDefinition(UUID id);
 
-	List getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
 
-	List getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
+	List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
 
 	void insertFieldDefinition(FieldDefinition fieldDefinition);
 
@@ -72,7 +72,7 @@ public interface AdministrationService {
 
 	void removeFieldDefinitionListIndex(FieldDefinition fieldDefinition);
 
-	List getAllOptionLists();
+	List<OptionList> getAllOptionLists();
 
 	OptionList getOptionList(UUID id);
 
@@ -82,7 +82,7 @@ public interface AdministrationService {
 
 	void deleteOptionList(OptionList optionList);
 
-	List getOptionListItems(OptionList optionList);
+	List<OptionListItem> getOptionListItems(OptionList optionList);
 
 	OptionListItem getOptionListItem(UUID id);
 
@@ -102,7 +102,7 @@ public interface AdministrationService {
 
 	void moveRelationshipViewIndex(Relationship relationship, String direction);
 
-	List getAllUsers();
+	List<User> getAllUsers();
 
 	User getUser(UUID id);
 

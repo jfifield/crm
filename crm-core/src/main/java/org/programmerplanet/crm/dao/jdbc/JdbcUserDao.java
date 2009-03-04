@@ -19,7 +19,7 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	/**
 	 * @see org.programmerplanet.crm.dao.UserDao#getAllUsers()
 	 */
-	public List getAllUsers() {
+	public List<User> getAllUsers() {
 		String sql = "SELECT * FROM crm_user ORDER BY username";
 		RowMapper userRowMapper = new UserRowMapper();
 		List users = this.getJdbcTemplate().query(sql, userRowMapper);

@@ -19,7 +19,7 @@ public class JdbcOptionListItemDao extends JdbcDaoSupport implements OptionListI
 	/**
 	 * @see org.programmerplanet.crm.dao.OptionListItemDao#getOptionListItems(org.programmerplanet.crm.model.OptionList)
 	 */
-	public List getOptionListItems(OptionList optionList) {
+	public List<OptionListItem> getOptionListItems(OptionList optionList) {
 		String sql = "SELECT * FROM crm_option_list_item WHERE option_list_id = ?::uuid ORDER BY view_index, item_value";
 		RowMapper rowMapper = new OptionListItemRowMapper();
 		List optionListItems = this.getJdbcTemplate().query(sql, new Object[] { optionList.getId().toString() }, rowMapper);

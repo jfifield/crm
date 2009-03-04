@@ -12,7 +12,7 @@ import org.programmerplanet.crm.model.User;
  */
 public interface UserDao {
 
-	List getAllUsers();
+	List<User> getAllUsers();
 
 	User getUser(UUID id);
 	

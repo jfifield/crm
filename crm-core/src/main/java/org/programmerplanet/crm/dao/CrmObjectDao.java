@@ -15,17 +15,17 @@ import org.programmerplanet.crm.model.Relationship;
  */
 public interface CrmObjectDao {
 
-	List getCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions);
+	List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions);
 
-	List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
+	List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
+	List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, UUID id);
+	Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id);
 
-	UUID insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data);
+	UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data);
 
-	void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, UUID id);
+	void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id);
 
 	void deleteCrmObject(ObjectDefinition objectDefinition, UUID id);
 

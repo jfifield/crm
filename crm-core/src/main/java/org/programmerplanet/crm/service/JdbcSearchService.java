@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,12 +54,11 @@ public class JdbcSearchService extends AbstractSearchService {
 	/**
 	 * @see org.programmerplanet.crm.service.AbstractSearchService#search(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.service.SearchCriteria)
 	 */
-	protected List search(ObjectDefinition objectDefinition, List fieldDefinitionsForSearch, List fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
+	protected List search(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitionsForSearch, List<FieldDefinition> fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT id, ");
 
-		for (Iterator i = fieldDefinitionsForDisplay.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitionsForDisplay) {
 			String columnName = fieldDefinition.getColumnName();
 			sql.append(columnName);
 			sql.append(", ");
@@ -76,8 +74,7 @@ public class JdbcSearchService extends AbstractSearchService {
 
 		List params = new LinkedList();
 
-		for (Iterator i = fieldDefinitionsForSearch.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitionsForSearch) {
 			String columnName = fieldDefinition.getColumnName();
 			for (int j = 0; j < terms.length; j++) {
 				String term = terms[j];

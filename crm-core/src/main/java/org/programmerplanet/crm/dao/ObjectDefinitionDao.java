@@ -13,13 +13,13 @@ import org.programmerplanet.crm.model.ObjectDefinition;
  */
 public interface ObjectDefinitionDao {
 
-	List getAllObjectDefinitions();
+	List<ObjectDefinition> getAllObjectDefinitions();
 
 	ObjectDefinition getObjectDefinition(UUID id);
 
 	ObjectDefinition getObjectDefinition(String objectName);
 
-	List getObjectDefinitionsForApplication(Application application);
+	List<ObjectDefinition> getObjectDefinitionsForApplication(Application application);
 
 	void insertObjectDefinition(ObjectDefinition objectDefinition);
 

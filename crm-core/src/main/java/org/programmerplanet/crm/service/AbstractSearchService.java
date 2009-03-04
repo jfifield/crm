@@ -44,9 +44,8 @@ public abstract class AbstractSearchService implements SearchService {
 	 */
 	public List search(SearchCriteria searchCriteria) {
 		List results = new LinkedList();
-		List objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
-		for (Iterator i = objectDefinitions.iterator(); i.hasNext();) {
-			ObjectDefinition objectDefinition = (ObjectDefinition)i.next();
+		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			List fieldDefinitionsForSearch = getFieldDefinitionsForSearch(objectDefinition);
 			if (fieldDefinitionsForSearch.isEmpty()) {
 				continue;
@@ -68,9 +67,9 @@ public abstract class AbstractSearchService implements SearchService {
 		return results;
 	}
 
-	protected abstract List search(ObjectDefinition objectDefinition, List fieldDefinitionsForSearch, List fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception;
+	protected abstract List search(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitionsForSearch, List<FieldDefinition> fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception;
 
-	protected List getFieldDefinitionsForSearch(ObjectDefinition objectDefinition) {
+	protected List<FieldDefinition> getFieldDefinitionsForSearch(ObjectDefinition objectDefinition) {
 		List fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
 		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
 			FieldDefinition fieldDefinition = (FieldDefinition)i.next();

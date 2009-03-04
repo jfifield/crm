@@ -12,9 +12,9 @@ import java.util.UUID;
 public class CrmObject {
 
 	private UUID id;
-	private Map data;
+	private Map<String, Object> data;
 	private ObjectDefinition objectDefinition;
-	private List fieldDefinitions;
+	private List<FieldDefinition> fieldDefinitions;
 
 	public void setId(UUID id) {
 		this.id = id;
@@ -24,11 +24,11 @@ public class CrmObject {
 		return id;
 	}
 
-	public void setData(Map data) {
+	public void setData(Map<String, Object> data) {
 		this.data = data;
 	}
 
-	public Map getData() {
+	public Map<String, Object> getData() {
 		return data;
 	}
 
@@ -40,11 +40,11 @@ public class CrmObject {
 		return objectDefinition;
 	}
 
-	public void setFieldDefinitions(List fieldDefinitions) {
+	public void setFieldDefinitions(List<FieldDefinition> fieldDefinitions) {
 		this.fieldDefinitions = fieldDefinitions;
 	}
 
-	public List getFieldDefinitions() {
+	public List<FieldDefinition> getFieldDefinitions() {
 		return fieldDefinitions;
 	}
 

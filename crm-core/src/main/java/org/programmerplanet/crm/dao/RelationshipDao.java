@@ -17,7 +17,7 @@ public interface RelationshipDao {
 
 	Relationship getRelationship(UUID parentObjectId, UUID childObjectId);
 
-	List getRelationshipsForObject(ObjectDefinition objectDefinition);
+	List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition);
 
 	void insertRelationship(Relationship relationship);
 

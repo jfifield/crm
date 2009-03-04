@@ -12,7 +12,7 @@ import org.programmerplanet.crm.model.Application;
  */
 public interface ApplicationDao {
 
-	List getAllApplications();
+	List<Application> getAllApplications();
 
 	Application getApplication(UUID id);
 

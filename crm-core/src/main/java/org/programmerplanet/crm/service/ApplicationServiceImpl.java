@@ -2,7 +2,6 @@ package org.programmerplanet.crm.service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -75,7 +74,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getAllApplications()
 	 */
-	public List getAllApplications() {
+	public List<Application> getAllApplications() {
 		return applicationDao.getAllApplications();
 	}
 
@@ -103,49 +102,49 @@ public class ApplicationServiceImpl implements ApplicationService {
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getObjectDefinitionsForApplication(org.programmerplanet.crm.model.Application)
 	 */
-	public List getObjectDefinitionsForApplication(Application application) {
+	public List<ObjectDefinition> getObjectDefinitionsForApplication(Application application) {
 		return objectDefinitionDao.getObjectDefinitionsForApplication(application);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getFieldDefinitionsForObjectList(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
-	public List getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition) {
+	public List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition) {
 		return fieldDefinitionDao.getFieldDefinitionsForObjectList(objectDefinition);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getFieldDefinitionsForObjectView(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
-	public List getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition) {
+	public List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition) {
 		return fieldDefinitionDao.getFieldDefinitionsForObjectView(objectDefinition);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List)
 	 */
-	public List getCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions) {
+	public List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
 		return crmObjectDao.getCrmObjects(objectDefinition, fieldDefinitions);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getRelatedCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public List getRelatedCrmObjects(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		return crmObjectDao.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObjectsAvailableForLinking(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public List getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		return crmObjectDao.getCrmObjectsAvailableForLinking(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, UUID id) {
+	public Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
 		return crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
 	}
 
@@ -159,7 +158,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getRelationshipsForObject(org.programmerplanet.crm.model.ObjectDefinition)
 	 */
-	public List getRelationshipsForObject(ObjectDefinition objectDefinition) {
+	public List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition) {
 		return relationshipDao.getRelationshipsForObject(objectDefinition);
 	}
 
@@ -187,14 +186,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#insertCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map)
 	 */
-	public UUID insertCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data) {
+	public UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
 		return crmObjectDao.insertCrmObject(objectDefinition, fieldDefinitions, data);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#updateCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
 	 */
-	public void updateCrmObject(ObjectDefinition objectDefinition, List fieldDefinitions, Map data, UUID id) {
+	public void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
 		crmObjectDao.updateCrmObject(objectDefinition, fieldDefinitions, data, id);
 	}
 
@@ -202,13 +201,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * @see org.programmerplanet.crm.service.ApplicationService#deleteCrmObject(org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
 	public void deleteCrmObject(ObjectDefinition objectDefinition, UUID id) {
-		List fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
+		List<FieldDefinition> fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
 
 		Map crmObjectData = crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
 
 		// delete referenced files
-		for (Iterator i = fieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			if (fieldDefinition.getDataType().equals(DataType.FILE)) {
 				UUID fileId = (UUID)crmObjectData.get(fieldDefinition.getColumnName());
 				if (fileId != null) {
@@ -218,16 +216,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 
 		// delete 'many' relationships
-		List relationships = relationshipDao.getRelationshipsForObject(objectDefinition);
-		for (Iterator i = relationships.iterator(); i.hasNext();) {
-			Relationship relationship = (Relationship)i.next();
+		List<Relationship> relationships = relationshipDao.getRelationshipsForObject(objectDefinition);
+		for (Relationship relationship : relationships) {
 			crmObjectDao.deleteCrmObjectRelationships(relationship, objectDefinition, id);
 		}
 
 		// null 'one' relationships
-		List objectFieldDefinitions = fieldDefinitionDao.getFieldDefinitionsOfObjectType(objectDefinition);
-		for (Iterator i = objectFieldDefinitions.iterator(); i.hasNext();) {
-			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
+		List<FieldDefinition> objectFieldDefinitions = fieldDefinitionDao.getFieldDefinitionsOfObjectType(objectDefinition);
+		for (FieldDefinition fieldDefinition : objectFieldDefinitions) {
 			ObjectDefinition ownerObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getObjectId());
 			crmObjectDao.clearCrmObjectValue(ownerObjectDefinition, fieldDefinition, id);
 		}
