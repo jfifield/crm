@@ -12,7 +12,7 @@ import org.programmerplanet.crm.metadata.ObjectDefinition;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class CrmObject {
+public class ObjectData {
 
 	private UUID id;
 	private Map<String, Object> data;

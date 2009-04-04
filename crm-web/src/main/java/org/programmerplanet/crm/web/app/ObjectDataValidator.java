@@ -2,7 +2,7 @@ package org.programmerplanet.crm.web.app;
 
 import java.util.Iterator;
 
-import org.programmerplanet.crm.data.CrmObject;
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -12,31 +12,31 @@ import org.springframework.validation.Validator;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class CrmObjectValidator implements Validator {
+public class ObjectDataValidator implements Validator {
 
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	public boolean supports(Class clazz) {
-		return clazz.equals(CrmObject.class);
+		return clazz.equals(ObjectData.class);
 	}
 
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
 	 */
 	public void validate(Object obj, Errors errors) {
-		CrmObject crmObject = (CrmObject) obj;
-		for (Iterator i = crmObject.getFieldDefinitions().iterator(); i.hasNext();) {
+		ObjectData objectData = (ObjectData) obj;
+		for (Iterator i = objectData.getFieldDefinitions().iterator(); i.hasNext();) {
 			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
-			validateField(crmObject, fieldDefinition, errors);
+			validateField(objectData, fieldDefinition, errors);
 		}
 	}
 
-	private void validateField(CrmObject crmObject, FieldDefinition fieldDefinition, Errors errors) {
+	private void validateField(ObjectData objectData, FieldDefinition fieldDefinition, Errors errors) {
 		boolean required = fieldDefinition.isRequired();
 		if (required) {
 			String columnName = fieldDefinition.getColumnName();
-			Object value = crmObject.getData().get(columnName);
+			Object value = objectData.getData().get(columnName);
 			if (value == null) {
 				errors.rejectValue("data[" + columnName + "]", "error.required");
 			}

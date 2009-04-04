@@ -13,7 +13,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.ConversionException;
 import org.programmerplanet.crm.converter.Converter;
-import org.programmerplanet.crm.data.CrmObject;
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.data.DataManager;
 import org.programmerplanet.crm.data.FileInfo;
 import org.programmerplanet.crm.metadata.FieldDefinition;
@@ -70,13 +70,13 @@ public class ObjectEditController extends ObjectController {
 	public ModelAndView handleDefault(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
 
-		CrmObject crmObject = formBackingObject(request);
+		ObjectData objectData = formBackingObject(request);
 
 		Map model = new HashMap();
-		model.put("objectDefinition", crmObject.getObjectDefinition());
-		model.put("fieldDefinitions", crmObject.getFieldDefinitions());
-		model.put("data", crmObject.getData());
-		model.put("object", crmObject);
+		model.put("objectDefinition", objectData.getObjectDefinition());
+		model.put("fieldDefinitions", objectData.getFieldDefinitions());
+		model.put("data", objectData.getData());
+		model.put("object", objectData);
 
 		return new ModelAndView("edit", model);
 	}
@@ -120,8 +120,8 @@ public class ObjectEditController extends ObjectController {
 	public ModelAndView handleSave(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
 
-		CrmObject crmObject = formBackingObject(request);
-		BindException bindException = bindAndValidate(request, crmObject);
+		ObjectData objectData = formBackingObject(request);
+		BindException bindException = bindAndValidate(request, objectData);
 
 		if (bindException.hasErrors()) {
 			Map model = new HashMap();
@@ -129,9 +129,9 @@ public class ObjectEditController extends ObjectController {
 			Map errorsModel = bindException.getModel();
 			model.putAll(errorsModel);
 
-			model.put("objectDefinition", crmObject.getObjectDefinition());
-			model.put("fieldDefinitions", crmObject.getFieldDefinitions());
-			model.put("data", crmObject.getData());
+			model.put("objectDefinition", objectData.getObjectDefinition());
+			model.put("fieldDefinitions", objectData.getFieldDefinitions());
+			model.put("data", objectData.getData());
 
 			return new ModelAndView("edit", model);
 		}
@@ -151,18 +151,18 @@ public class ObjectEditController extends ObjectController {
 					fileInfo.setFileSize(multipartFile.getSize());
 					fileInfo.setMimeType(multipartFile.getContentType());
 					dataManager.saveFile(fileInfo, multipartFile.getInputStream());
-					crmObject.getData().put(name, fileInfo.getId());
+					objectData.getData().put(name, fileInfo.getId());
 				}
 			}
 		}
 
-		UUID id = crmObject.getId();
+		UUID id = objectData.getId();
 		boolean newObject = (id == null);
 		if (newObject) {
-			id = dataManager.insertCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData());
+			id = dataManager.insertObject(objectData.getObjectDefinition(), objectData.getFieldDefinitions(), objectData.getData());
 		}
 		else {
-			dataManager.updateCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData(), id);
+			dataManager.updateObject(objectData.getObjectDefinition(), objectData.getFieldDefinitions(), objectData.getData(), id);
 		}
 
 		String source = request.getParameter("source");
@@ -179,7 +179,7 @@ public class ObjectEditController extends ObjectController {
 			UUID parentId = sourceObjectId;
 			UUID childId = id;
 
-			dataManager.saveCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
+			dataManager.saveObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 		}
 
 		String destinationObject = null;
@@ -214,7 +214,7 @@ public class ObjectEditController extends ObjectController {
 		return new ModelAndView(view);
 	}
 
-	private CrmObject formBackingObject(HttpServletRequest request) throws Exception {
+	private ObjectData formBackingObject(HttpServletRequest request) throws Exception {
 		String objectName = getObjectName(request);
 
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
@@ -223,36 +223,36 @@ public class ObjectEditController extends ObjectController {
 		Map data = null;
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			data = dataManager.getCrmObject(objectDefinition, fieldDefinitions, id);
+			data = dataManager.getObject(objectDefinition, fieldDefinitions, id);
 		}
 		else {
 			data = new HashMap();
 		}
 
-		CrmObject crmObject = new CrmObject();
-		crmObject.setId(id);
-		crmObject.setData(data);
-		crmObject.setObjectDefinition(objectDefinition);
-		crmObject.setFieldDefinitions(fieldDefinitions);
+		ObjectData objectData = new ObjectData();
+		objectData.setId(id);
+		objectData.setData(data);
+		objectData.setObjectDefinition(objectDefinition);
+		objectData.setFieldDefinitions(fieldDefinitions);
 
-		return crmObject;
+		return objectData;
 	}
 
-	private BindException bindAndValidate(HttpServletRequest request, CrmObject crmObject) {
-		BindException bindException = new BindException(crmObject, "object");
+	private BindException bindAndValidate(HttpServletRequest request, ObjectData objectData) {
+		BindException bindException = new BindException(objectData, "object");
 
 		// convert values
-		bind(request, crmObject, bindException);
+		bind(request, objectData, bindException);
 
 		// validate object
 		if (!bindException.hasErrors()) {
-			validate(crmObject, bindException);
+			validate(objectData, bindException);
 		}
 		return bindException;
 	}
 
-	private void bind(HttpServletRequest request, CrmObject crmObject, BindException bindException) {
-		for (Iterator i = crmObject.getFieldDefinitions().iterator(); i.hasNext();) {
+	private void bind(HttpServletRequest request, ObjectData objectData, BindException bindException) {
+		for (Iterator i = objectData.getFieldDefinitions().iterator(); i.hasNext();) {
 			FieldDefinition fieldDefinition = (FieldDefinition)i.next();
 			String columnName = fieldDefinition.getColumnName();
 			Object value = request.getParameter(columnName);
@@ -271,20 +271,20 @@ public class ObjectEditController extends ObjectController {
 			}
 
 			// set value
-			crmObject.getData().put(columnName, value);
+			objectData.getData().put(columnName, value);
 		}
 	}
 
-	private void validate(CrmObject crmObject, BindException bindException) {
-		CrmObjectValidator objectValidator = new CrmObjectValidator();
-		objectValidator.validate(crmObject, bindException);
+	private void validate(ObjectData objectData, BindException bindException) {
+		ObjectDataValidator objectValidator = new ObjectDataValidator();
+		objectValidator.validate(objectData, bindException);
 	}
 
 	public ModelAndView handleDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		UUID id = RequestUtil.getRequestId(request);
-		dataManager.deleteCrmObject(objectDefinition, id);
+		dataManager.deleteObject(objectDefinition, id);
 
 		String source = request.getParameter("source");
 		String sourceObject = request.getParameter("source_object");

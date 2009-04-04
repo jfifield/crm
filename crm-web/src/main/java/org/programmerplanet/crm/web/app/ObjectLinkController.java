@@ -59,7 +59,7 @@ public class ObjectLinkController extends ObjectController {
 		ObjectDefinition childObjectDefinition = metadataManager.getObjectDefinition(childObjectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(childObjectDefinition);
 		Relationship relationship = metadataManager.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
-		List data = dataManager.getCrmObjectsAvailableForLinking(childObjectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+		List data = dataManager.getObjectsAvailableForLinking(childObjectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 
 		Map model = new HashMap();
 		model.put("objectDefinition", parentObjectDefinition);
@@ -82,7 +82,7 @@ public class ObjectLinkController extends ObjectController {
 		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
 		UUID childId = RequestUtil.getRequestId(request);
 
-		dataManager.saveCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
+		dataManager.saveObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 
 		String view = "redirect:" + parentObjectName + ".view?id=" + parentId;
 		return new ModelAndView(view);
@@ -98,7 +98,7 @@ public class ObjectLinkController extends ObjectController {
 		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
 		UUID childId = RequestUtil.getRequestId(request);
 
-		dataManager.deleteCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
+		dataManager.deleteObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 
 		String view = "redirect:" + parentObjectName + ".view?id=" + parentId;
 		return new ModelAndView(view);

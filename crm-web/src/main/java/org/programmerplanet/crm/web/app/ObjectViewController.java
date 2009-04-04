@@ -44,7 +44,7 @@ public class ObjectViewController extends ObjectController {
 
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectView(objectDefinition);
-		Map data = dataManager.getCrmObject(objectDefinition, fieldDefinitions, id);
+		Map data = dataManager.getObject(objectDefinition, fieldDefinitions, id);
 
 		Map model = new HashMap();
 		model.put("objectDefinition", objectDefinition);
@@ -71,7 +71,7 @@ public class ObjectViewController extends ObjectController {
 			ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectId);
 			List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(objectDefinition);
 
-			List data = dataManager.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+			List data = dataManager.getRelatedObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 
 			Map model = new HashMap();
 			model.put("objectDefinition", objectDefinition);

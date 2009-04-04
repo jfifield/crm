@@ -62,7 +62,7 @@
 
 	<bean id="fileDao" class="org.programmerplanet.crm.data.dao.jdbc.JdbcFileDao"/>
 	
-	<bean id="crmObjectDao" class="org.programmerplanet.crm.data.dao.jdbc.JdbcCrmObjectDao"/>
+	<bean id="objectDataDao" class="org.programmerplanet.crm.data.dao.jdbc.JdbcObjectDataDao"/>
 	
 	<bean id="schemaManager" class="org.programmerplanet.crm.schema.PostgresqlSchemaManager"/>
 	

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.programmerplanet.crm.data.dao.CrmObjectDao;
+import org.programmerplanet.crm.data.dao.ObjectDataDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
@@ -18,12 +18,12 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
+public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#getCrmObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List)
 	 */
-	public List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
+	public List<Map> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
 		String sql = getBasicSelectSql(objectDefinition, fieldDefinitions);
 		List data = this.getJdbcTemplate().queryForList(sql);
 		convertUUIDValues(data, fieldDefinitions);
@@ -31,9 +31,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#getRelatedCrmObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getRelatedObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<Map> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ot.id, ");
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
@@ -62,9 +62,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#getCrmObjectsAvailableForLinking(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getObjectsAvailableForLinking(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<Map> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ot.id, ");
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
@@ -93,9 +93,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#getCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
+	public Map getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
 		String sql = getBasicSelectSql(objectDefinition, fieldDefinitions);
 		sql += " WHERE id = ?::uuid";
 		List data = this.getJdbcTemplate().queryForList(sql, new Object[] { id.toString() });
@@ -121,35 +121,35 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 		return sql.toString();
 	}
 
-	private void convertUUIDValues(List crmObjects, List<FieldDefinition> fieldDefinitions) {
-		for (Iterator i = crmObjects.iterator(); i.hasNext();) {
-			Map crmObject = (Map) i.next();
-			convertUUIDValues(crmObject, fieldDefinitions);
+	private void convertUUIDValues(List objects, List<FieldDefinition> fieldDefinitions) {
+		for (Iterator i = objects.iterator(); i.hasNext();) {
+			Map object = (Map) i.next();
+			convertUUIDValues(object, fieldDefinitions);
 		}
 	}
 
-	private void convertUUIDValues(Map crmObject, List<FieldDefinition> fieldDefinitions) {
-		convertUUIDValue(crmObject, "id");
+	private void convertUUIDValues(Map object, List<FieldDefinition> fieldDefinitions) {
+		convertUUIDValue(object, "id");
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			if (fieldDefinition.getDataType().equals(DataType.OBJECT)) {
 				String columnName = fieldDefinition.getColumnName();
-				convertUUIDValue(crmObject, columnName);
+				convertUUIDValue(object, columnName);
 			}
 		}
 	}
 
-	private void convertUUIDValue(Map crmObject, String columnName) {
-		Object uuidValue = crmObject.get(columnName);
+	private void convertUUIDValue(Map object, String columnName) {
+		Object uuidValue = object.get(columnName);
 		if (uuidValue != null) {
 			uuidValue = UUID.fromString(uuidValue.toString());
-			crmObject.put(columnName, uuidValue);
+			object.put(columnName, uuidValue);
 		}
 	}
 	
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#insertCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#insertObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map)
 	 */
-	public UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
+	public UUID insertObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
 		UUID id = UUID.randomUUID();
 		List parameters = new ArrayList();
 		StringBuffer sql = new StringBuffer();
@@ -199,9 +199,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#updateCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#updateObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
 	 */
-	public void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
+	public void updateObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
 		List parameters = new ArrayList();
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE ");
@@ -232,18 +232,18 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#deleteCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#deleteObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObject(ObjectDefinition objectDefinition, UUID id) {
+	public void deleteObject(ObjectDefinition objectDefinition, UUID id) {
 		String tableName = objectDefinition.getTableName();
 		String sql = "DELETE FROM " + tableName + " WHERE id = ?::uuid";
 		this.getJdbcTemplate().update(sql, new Object[] { id.toString() });
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#insertCrmObjectRelationship(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#insertObjectRelationship(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void insertCrmObjectRelationship(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
+	public void insertObjectRelationship(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		String sql = "INSERT INTO " + relationship.getTableName();
 		sql += " (" + parentObjectDefinition.getTableName() + "_id, " + childObjectDefinition.getTableName() + "_id)";
 		sql += " VALUES (?::uuid, ?::uuid)";
@@ -252,9 +252,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#deleteCrmObjectRelationship(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#deleteObjectRelationship(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObjectRelationship(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
+	public void deleteObjectRelationship(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		String sql = "DELETE FROM " + relationship.getTableName();
 		sql += " WHERE " + parentObjectDefinition.getTableName() + "_id = ?::uuid AND " + childObjectDefinition.getTableName() + "_id = ?::uuid";
 		Object[] params = new Object[] { parentId.toString(), childId.toString() };
@@ -262,9 +262,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#deleteCrmObjectRelationships(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#deleteObjectRelationships(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObjectRelationships(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId) {
+	public void deleteObjectRelationships(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId) {
 		String sql = "DELETE FROM " + relationship.getTableName();
 		sql += " WHERE " + parentObjectDefinition.getTableName() + "_id = ?::uuid";
 		Object[] params = new Object[] { parentId.toString() };
@@ -272,9 +272,9 @@ public class JdbcCrmObjectDao extends JdbcDaoSupport implements CrmObjectDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.CrmObjectDao#clearCrmObjectValue(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition, java.lang.Object)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#clearObjectValue(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition, java.lang.Object)
 	 */
-	public void clearCrmObjectValue(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition, Object value) {
+	public void clearObjectValue(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition, Object value) {
 		String sql = "UPDATE " + objectDefinition.getTableName();
 		sql += " SET " + fieldDefinition.getColumnName() + " = NULL";
 		sql += " WHERE " + fieldDefinition.getColumnName() + " = ?";

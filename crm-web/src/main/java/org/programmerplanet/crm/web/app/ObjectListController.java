@@ -38,7 +38,7 @@ public class ObjectListController extends ObjectController {
 
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(objectDefinition);
-		List data = dataManager.getCrmObjects(objectDefinition, fieldDefinitions);
+		List data = dataManager.getObjects(objectDefinition, fieldDefinitions);
 
 		Map model = new HashMap();
 		model.put("objectDefinition", objectDefinition);

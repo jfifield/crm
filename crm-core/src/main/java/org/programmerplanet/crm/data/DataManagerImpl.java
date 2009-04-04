@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.programmerplanet.crm.data.dao.CrmObjectDao;
+import org.programmerplanet.crm.data.dao.ObjectDataDao;
 import org.programmerplanet.crm.data.dao.FileDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
@@ -28,7 +28,7 @@ public class DataManagerImpl implements DataManager {
 	private FieldDefinitionDao fieldDefinitionDao;
 	private ApplicationDao applicationDao;
 	private RelationshipDao relationshipDao;
-	private CrmObjectDao crmObjectDao;
+	private ObjectDataDao objectDataDao;
 	private FileDao fileDao;
 
 	public void setObjectDefinitionDao(ObjectDefinitionDao objectDefinitionDao) {
@@ -47,8 +47,8 @@ public class DataManagerImpl implements DataManager {
 		this.relationshipDao = relationshipDao;
 	}
 
-	public void setCrmObjectDao(CrmObjectDao crmObjectDao) {
-		this.crmObjectDao = crmObjectDao;
+	public void setObjectDataDao(ObjectDataDao objectDataDao) {
+		this.objectDataDao = objectDataDao;
 	}
 
 	public void setFileDao(FileDao fileDao) {
@@ -56,31 +56,31 @@ public class DataManagerImpl implements DataManager {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#getCrmObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List)
+	 * @see org.programmerplanet.crm.data.DataManager#getObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List)
 	 */
-	public List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
-		return crmObjectDao.getCrmObjects(objectDefinition, fieldDefinitions);
+	public List<Map> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
+		return objectDataDao.getObjects(objectDefinition, fieldDefinitions);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#getRelatedCrmObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#getRelatedObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
-		return crmObjectDao.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+	public List<Map> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+		return objectDataDao.getRelatedObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#getCrmObjectsAvailableForLinking(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#getObjectsAvailableForLinking(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
-		return crmObjectDao.getCrmObjectsAvailableForLinking(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+	public List<Map> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+		return objectDataDao.getObjectsAvailableForLinking(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#getCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#getObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
-		return crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
+	public Map getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
+		return objectDataDao.getObject(objectDefinition, fieldDefinitions, id);
 	}
 
 	/**
@@ -105,31 +105,31 @@ public class DataManagerImpl implements DataManager {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#insertCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map)
+	 * @see org.programmerplanet.crm.data.DataManager#insertObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map)
 	 */
-	public UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
-		return crmObjectDao.insertCrmObject(objectDefinition, fieldDefinitions, data);
+	public UUID insertObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
+		return objectDataDao.insertObject(objectDefinition, fieldDefinitions, data);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#updateCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#updateObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
 	 */
-	public void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
-		crmObjectDao.updateCrmObject(objectDefinition, fieldDefinitions, data, id);
+	public void updateObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
+		objectDataDao.updateObject(objectDefinition, fieldDefinitions, data, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#deleteCrmObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#deleteObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObject(ObjectDefinition objectDefinition, UUID id) {
+	public void deleteObject(ObjectDefinition objectDefinition, UUID id) {
 		List<FieldDefinition> fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
 
-		Map crmObjectData = crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
+		Map object = objectDataDao.getObject(objectDefinition, fieldDefinitions, id);
 
 		// delete referenced files
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			if (fieldDefinition.getDataType().equals(DataType.FILE)) {
-				UUID fileId = (UUID)crmObjectData.get(fieldDefinition.getColumnName());
+				UUID fileId = (UUID)object.get(fieldDefinition.getColumnName());
 				if (fileId != null) {
 					fileDao.deleteFile(fileId);
 				}
@@ -139,33 +139,33 @@ public class DataManagerImpl implements DataManager {
 		// delete 'many' relationships
 		List<Relationship> relationships = relationshipDao.getRelationshipsForObject(objectDefinition);
 		for (Relationship relationship : relationships) {
-			crmObjectDao.deleteCrmObjectRelationships(relationship, objectDefinition, id);
+			objectDataDao.deleteObjectRelationships(relationship, objectDefinition, id);
 		}
 
 		// null 'one' relationships
 		List<FieldDefinition> objectFieldDefinitions = fieldDefinitionDao.getFieldDefinitionsOfObjectType(objectDefinition);
 		for (FieldDefinition fieldDefinition : objectFieldDefinitions) {
 			ObjectDefinition ownerObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getObjectId());
-			crmObjectDao.clearCrmObjectValue(ownerObjectDefinition, fieldDefinition, id);
+			objectDataDao.clearObjectValue(ownerObjectDefinition, fieldDefinition, id);
 		}
 
-		crmObjectDao.deleteCrmObject(objectDefinition, id);
+		objectDataDao.deleteObject(objectDefinition, id);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#saveCrmObjectRelationship(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#saveObjectRelationship(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void saveCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
+	public void saveObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
-		crmObjectDao.insertCrmObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
+		objectDataDao.insertObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#deleteCrmObjectRelationship(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.DataManager#deleteObjectRelationship(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
+	public void deleteObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
-		crmObjectDao.deleteCrmObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
+		objectDataDao.deleteObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}
 
 }

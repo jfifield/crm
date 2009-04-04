@@ -22,8 +22,8 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
-import org.programmerplanet.crm.data.CrmObject;
-import org.programmerplanet.crm.data.dao.CrmObjectDao;
+import org.programmerplanet.crm.data.ObjectData;
+import org.programmerplanet.crm.data.dao.ObjectDataDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
@@ -38,7 +38,7 @@ public class LuceneSearchService extends AbstractSearchService {
 
 	private File indexDirectory;
 	private ObjectDefinitionDao objectDefinitionDao;
-	private CrmObjectDao crmObjectDao;
+	private ObjectDataDao objectDataDao;
 
 	public void setIndexDirectory(File indexDirectory) {
 		this.indexDirectory = indexDirectory;
@@ -48,8 +48,8 @@ public class LuceneSearchService extends AbstractSearchService {
 		this.objectDefinitionDao = objectDefinitionDao;
 	}
 
-	public void setCrmObjectDao(CrmObjectDao crmObjectDao) {
-		this.crmObjectDao = crmObjectDao;
+	public void setObjectDataDao(ObjectDataDao objectDataDao) {
+		this.objectDataDao = objectDataDao;
 	}
 
 	/**
@@ -74,18 +74,18 @@ public class LuceneSearchService extends AbstractSearchService {
 			return;
 		}
 
-		List<Map> crmObjects = crmObjectDao.getCrmObjects(objectDefinition, fieldDefinitions);
+		List<Map> objects = objectDataDao.getObjects(objectDefinition, fieldDefinitions);
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexModifier indexModifier = new IndexModifier(getIndexDirectoryForObject(objectDefinition), analyzer, true);
 		try {
-			for (Map data : crmObjects) {
-				CrmObject crmObject = new CrmObject();
-				crmObject.setObjectDefinition(objectDefinition);
-				crmObject.setFieldDefinitions(fieldDefinitions);
-				crmObject.setData(data);
-				crmObject.setId((UUID)data.get("id"));
+			for (Map data : objects) {
+				ObjectData objectData = new ObjectData();
+				objectData.setObjectDefinition(objectDefinition);
+				objectData.setFieldDefinitions(fieldDefinitions);
+				objectData.setData(data);
+				objectData.setId((UUID)data.get("id"));
 
-				Document document = createDocument(crmObject);
+				Document document = createDocument(objectData);
 				indexModifier.addDocument(document);
 			}
 		}
@@ -94,10 +94,10 @@ public class LuceneSearchService extends AbstractSearchService {
 		}
 	}
 
-	private Document createDocument(CrmObject crmObject) {
+	private Document createDocument(ObjectData objectData) {
 		Document document = new Document();
-		for (FieldDefinition fieldDefinition : crmObject.getFieldDefinitions()) {
-			Object value = crmObject.getData().get(fieldDefinition.getColumnName());
+		for (FieldDefinition fieldDefinition : objectData.getFieldDefinitions()) {
+			Object value = objectData.getData().get(fieldDefinition.getColumnName());
 			if (value != null) {
 				String fieldName = fieldDefinition.getColumnName();
 				String fieldValue = null;
@@ -114,7 +114,7 @@ public class LuceneSearchService extends AbstractSearchService {
 				document.add(field);
 			}
 		}
-		UUID id = crmObject.getId();
+		UUID id = objectData.getId();
 		Field field = new Field("id", id.toString(), Field.Store.YES, Field.Index.NO);
 		document.add(field);
 		return document;
@@ -140,8 +140,8 @@ public class LuceneSearchService extends AbstractSearchService {
 				Hit hit = (Hit)h.next();
 				String idValue = hit.get("id");
 				UUID id = UUID.fromString(idValue);
-				Map crmObject = crmObjectDao.getCrmObject(objectDefinition, fieldDefinitionsForDisplay, id);
-				results.add(crmObject);
+				Map object = objectDataDao.getObject(objectDefinition, fieldDefinitionsForDisplay, id);
+				results.add(object);
 			}
 		}
 		finally {
