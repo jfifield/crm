@@ -3,7 +3,7 @@
 <%@tag import="org.springframework.web.servlet.support.RequestContextUtils"%>
 <%@tag import="org.programmerplanet.crm.web.app.renderer.ListTableRenderer"%>
 
-<%@attribute name="objectDefinition" type="org.programmerplanet.crm.model.ObjectDefinition" required="true"%>
+<%@attribute name="objectDefinition" type="org.programmerplanet.crm.metadata.ObjectDefinition" required="true"%>
 <%@attribute name="fieldDefinitions" type="java.util.List" required="true"%>
 <%@attribute name="data" type="java.util.List" required="true"%>
 <%@attribute name="pageSize" type="java.lang.Integer" required="true"%>

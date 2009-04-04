@@ -1,11 +1,11 @@
 <%@tag import="java.util.Map"%>
-<%@tag import="org.programmerplanet.crm.model.DataType"%>
+<%@tag import="org.programmerplanet.crm.metadata.DataType"%>
 <%@tag import="org.springframework.context.ApplicationContext"%>
 <%@tag import="org.springframework.web.servlet.support.RequestContextUtils"%>
 <%@tag import="org.programmerplanet.crm.web.app.renderer.FieldRenderer"%>
 
 <%@attribute name="value" type="java.lang.Object" required="true"%>
-<%@attribute name="fieldDefinition" type="org.programmerplanet.crm.model.FieldDefinition" required="true"%>
+<%@attribute name="fieldDefinition" type="org.programmerplanet.crm.metadata.FieldDefinition" required="true"%>
 
 <%
 	ApplicationContext applicationContext = RequestContextUtils.getWebApplicationContext(request);
