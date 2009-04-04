@@ -11,10 +11,10 @@ import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.ObjectConverter;
 import org.programmerplanet.crm.dao.CrmObjectDao;
-import org.programmerplanet.crm.dao.FieldDefinitionDao;
-import org.programmerplanet.crm.dao.ObjectDefinitionDao;
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;
+import org.programmerplanet.crm.metadata.dao.ObjectDefinitionDao;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -47,14 +47,14 @@ public class ObjectRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderListField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderListField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderListField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		renderListOrViewField(writer, value, fieldDefinition);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderViewField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderViewField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderViewField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		renderListOrViewField(writer, value, fieldDefinition);
@@ -94,7 +94,7 @@ public class ObjectRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderEditField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderEditField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderEditField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		writer.write("<select");

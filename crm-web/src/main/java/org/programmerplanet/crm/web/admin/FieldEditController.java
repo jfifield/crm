@@ -8,10 +8,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.DataType;
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.DataType;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.MetadataManager;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.programmerplanet.crm.web.SimpleMultiActionFormController;
 import org.programmerplanet.crm.web.propertyeditor.ValuedEnumPropertyEditor;
@@ -29,10 +29,10 @@ import org.springframework.web.util.WebUtils;
  */
 public class FieldEditController extends SimpleMultiActionFormController {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
@@ -78,14 +78,14 @@ public class FieldEditController extends SimpleMultiActionFormController {
 		String generatedColumnName = fieldDefinition.generateColumnName();
 		fieldDefinition.setColumnName(generatedColumnName);
 
-		administrationService.saveFieldDefinition(fieldDefinition);
+		metadataManager.saveFieldDefinition(fieldDefinition);
 
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
 
 	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		FieldDefinition fieldDefinition = (FieldDefinition)command;
-		administrationService.deleteFieldDefinition(fieldDefinition);
+		metadataManager.deleteFieldDefinition(fieldDefinition);
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
 
@@ -97,26 +97,26 @@ public class FieldEditController extends SimpleMultiActionFormController {
 	public ModelAndView move(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		FieldDefinition fieldDefinition = (FieldDefinition)command;
 		String direction = request.getParameter("__move");
-		administrationService.moveFieldDefinitionViewIndex(fieldDefinition, direction);
+		metadataManager.moveFieldDefinitionViewIndex(fieldDefinition, direction);
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
 
 	public ModelAndView addList(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		FieldDefinition fieldDefinition = (FieldDefinition)command;
-		administrationService.addFieldDefinitionListIndex(fieldDefinition);
+		metadataManager.addFieldDefinitionListIndex(fieldDefinition);
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
 
 	public ModelAndView removeList(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		FieldDefinition fieldDefinition = (FieldDefinition)command;
-		administrationService.removeFieldDefinitionListIndex(fieldDefinition);
+		metadataManager.removeFieldDefinitionListIndex(fieldDefinition);
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
 
 	public ModelAndView moveList(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		FieldDefinition fieldDefinition = (FieldDefinition)command;
 		String direction = request.getParameter("__moveList");
-		administrationService.moveFieldDefinitionListIndex(fieldDefinition, direction);
+		metadataManager.moveFieldDefinitionListIndex(fieldDefinition, direction);
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
 
@@ -127,7 +127,7 @@ public class FieldEditController extends SimpleMultiActionFormController {
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			FieldDefinition fieldDefinition = administrationService.getFieldDefinition(id);
+			FieldDefinition fieldDefinition = metadataManager.getFieldDefinition(id);
 			return fieldDefinition;
 		}
 		else {
@@ -142,15 +142,15 @@ public class FieldEditController extends SimpleMultiActionFormController {
 		FieldDefinition fieldDefinition = (FieldDefinition)command;
 		Map data = new HashMap();
 
-		ObjectDefinition objectDefinition = administrationService.getObjectDefinition(fieldDefinition.getObjectId());
+		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(fieldDefinition.getObjectId());
 		data.put("objectDefinition", objectDefinition);
 
 		data.put("dataTypes", DataType.getEnumList());
 
-		List optionLists = administrationService.getOptionLists();
+		List optionLists = metadataManager.getOptionLists();
 		data.put("optionLists", optionLists);
 
-		List objectDefinitions = administrationService.getObjectDefinitions();
+		List objectDefinitions = metadataManager.getObjectDefinitions();
 		data.put("objectDefinitions", objectDefinitions);
 
 		return data;

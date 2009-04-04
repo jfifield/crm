@@ -14,9 +14,9 @@ import javax.sql.DataSource;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.DateConverter;
 import org.programmerplanet.crm.converter.DateTimeConverter;
-import org.programmerplanet.crm.model.DataType;
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
+import org.programmerplanet.crm.metadata.DataType;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -52,7 +52,7 @@ public class JdbcSearchService extends AbstractSearchService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.search.AbstractSearchService#search(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.search.SearchCriteria)
+	 * @see org.programmerplanet.crm.search.AbstractSearchService#search(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.search.SearchCriteria)
 	 */
 	protected List search(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitionsForSearch, List<FieldDefinition> fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
 		StringBuffer sql = new StringBuffer();

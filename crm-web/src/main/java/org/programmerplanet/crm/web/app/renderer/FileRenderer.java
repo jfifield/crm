@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.FileConverter;
 import org.programmerplanet.crm.dao.FileDao;
-import org.programmerplanet.crm.model.FieldDefinition;
+import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
 
 /**
@@ -27,14 +27,14 @@ public class FileRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderListField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderListField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderListField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		renderListOrViewField(writer, value, fieldDefinition);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderViewField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderViewField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderViewField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		renderListOrViewField(writer, value, fieldDefinition);
@@ -59,7 +59,7 @@ public class FileRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderEditField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderEditField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderEditField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		String str = getAsString(value, fieldDefinition);

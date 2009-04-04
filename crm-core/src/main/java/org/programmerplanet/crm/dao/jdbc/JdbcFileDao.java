@@ -10,9 +10,9 @@ import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.programmerplanet.crm.dao.FileDao;
-import org.programmerplanet.crm.model.FieldDefinition;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.model.FileInfo;
-import org.programmerplanet.crm.model.ObjectDefinition;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -80,7 +80,7 @@ public class JdbcFileDao extends JdbcDaoSupport implements FileDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FileDao#deleteFiles(org.programmerplanet.crm.model.ObjectDefinition, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.dao.FileDao#deleteFiles(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void deleteFiles(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition) {
 		String sql = "DELETE FROM crm_file AS f USING " + objectDefinition.getTableName() + " AS o";

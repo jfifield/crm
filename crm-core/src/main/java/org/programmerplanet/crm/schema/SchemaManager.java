@@ -1,8 +1,8 @@
 package org.programmerplanet.crm.schema;
 
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
-import org.programmerplanet.crm.model.Relationship;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+import org.programmerplanet.crm.metadata.Relationship;
 
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>

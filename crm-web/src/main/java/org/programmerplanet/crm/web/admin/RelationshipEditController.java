@@ -5,8 +5,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.Relationship;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.MetadataManager;
+import org.programmerplanet.crm.metadata.Relationship;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.programmerplanet.crm.web.SimpleMultiActionFormController;
 import org.springframework.validation.BindException;
@@ -19,28 +19,28 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class RelationshipEditController extends SimpleMultiActionFormController {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Relationship relationship = (Relationship)command;
-		administrationService.saveRelationship(relationship);
+		metadataManager.saveRelationship(relationship);
 		return new ModelAndView(getSuccessView(), "id", relationship.getParentObjectId());
 	}
 
 	public ModelAndView remove(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Relationship relationship = (Relationship)command;
-		administrationService.deleteRelationship(relationship);
+		metadataManager.deleteRelationship(relationship);
 		return new ModelAndView(getSuccessView(), "id", relationship.getParentObjectId());
 	}
 
 	public ModelAndView move(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Relationship relationship = (Relationship)command;
 		String direction = request.getParameter("__move");
-		administrationService.moveRelationshipViewIndex(relationship, direction);
+		metadataManager.moveRelationshipViewIndex(relationship, direction);
 		return new ModelAndView(getSuccessView(), "id", relationship.getParentObjectId());
 	}
 
@@ -51,7 +51,7 @@ public class RelationshipEditController extends SimpleMultiActionFormController 
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			Relationship relationship = administrationService.getRelationship(id);
+			Relationship relationship = metadataManager.getRelationship(id);
 			return relationship;
 		}
 		else {

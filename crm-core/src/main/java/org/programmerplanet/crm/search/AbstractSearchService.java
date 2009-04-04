@@ -7,11 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.programmerplanet.crm.dao.FieldDefinitionDao;
-import org.programmerplanet.crm.dao.ObjectDefinitionDao;
-import org.programmerplanet.crm.model.DataType;
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
+import org.programmerplanet.crm.metadata.DataType;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;
+import org.programmerplanet.crm.metadata.dao.ObjectDefinitionDao;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

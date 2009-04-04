@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.TextConverter;
-import org.programmerplanet.crm.model.FieldDefinition;
+import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.user.User;
 import org.programmerplanet.crm.user.UserManager;
 
@@ -28,7 +28,7 @@ public class UserRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderListField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderListField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderListField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		String str = getAsString(value, fieldDefinition);
@@ -38,7 +38,7 @@ public class UserRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderViewField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderViewField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderViewField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		String str = getAsString(value, fieldDefinition);
@@ -48,7 +48,7 @@ public class UserRenderer implements FieldRenderer {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderEditField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.app.renderer.FieldRenderer#renderEditField(java.io.Writer, java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renderEditField(Writer writer, Object value, FieldDefinition fieldDefinition) throws IOException {
 		writer.write("<select");

@@ -23,11 +23,11 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.programmerplanet.crm.dao.CrmObjectDao;
-import org.programmerplanet.crm.dao.ObjectDefinitionDao;
+import org.programmerplanet.crm.metadata.DataType;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+import org.programmerplanet.crm.metadata.dao.ObjectDefinitionDao;
 import org.programmerplanet.crm.model.CrmObject;
-import org.programmerplanet.crm.model.DataType;
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -121,7 +121,7 @@ public class LuceneSearchService extends AbstractSearchService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.search.AbstractSearchService#search(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.search.SearchCriteria)
+	 * @see org.programmerplanet.crm.search.AbstractSearchService#search(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.search.SearchCriteria)
 	 */
 	protected List search(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitionsForSearch, List<FieldDefinition> fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
 		List results = new LinkedList();

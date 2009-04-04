@@ -1,9 +1,9 @@
 package org.programmerplanet.crm.web.admin;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.dao.FieldDefinitionDao;
-import org.programmerplanet.crm.model.DataType;
-import org.programmerplanet.crm.model.FieldDefinition;
+import org.programmerplanet.crm.metadata.DataType;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

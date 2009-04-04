@@ -46,19 +46,19 @@
 	
 	<bean id="userManager" class="org.programmerplanet.crm.user.JdbcUserManager"/>
 
-	<bean id="applicationDao" class="org.programmerplanet.crm.dao.jdbc.JdbcApplicationDao"/>
+	<bean id="applicationDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcApplicationDao"/>
 
-	<bean id="applicationObjectDao" class="org.programmerplanet.crm.dao.jdbc.JdbcApplicationObjectDao"/>
+	<bean id="applicationObjectDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcApplicationObjectDao"/>
 
-	<bean id="objectDefinitionDao" class="org.programmerplanet.crm.dao.jdbc.JdbcObjectDefinitionDao"/>
+	<bean id="objectDefinitionDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcObjectDefinitionDao"/>
 	
-	<bean id="fieldDefinitionDao" class="org.programmerplanet.crm.dao.jdbc.JdbcFieldDefinitionDao"/>
+	<bean id="fieldDefinitionDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcFieldDefinitionDao"/>
 	
-	<bean id="relationshipDao" class="org.programmerplanet.crm.dao.jdbc.JdbcRelationshipDao"/>
+	<bean id="relationshipDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcRelationshipDao"/>
 
-	<bean id="optionListDao" class="org.programmerplanet.crm.dao.jdbc.JdbcOptionListDao"/>
+	<bean id="optionListDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcOptionListDao"/>
 
-	<bean id="optionListItemDao" class="org.programmerplanet.crm.dao.jdbc.JdbcOptionListItemDao"/>
+	<bean id="optionListItemDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcOptionListItemDao"/>
 
 	<bean id="fileDao" class="org.programmerplanet.crm.dao.jdbc.JdbcFileDao"/>
 	
@@ -66,7 +66,7 @@
 	
 	<bean id="schemaManager" class="org.programmerplanet.crm.schema.PostgresqlSchemaManager"/>
 	
-	<bean id="administrationService" class="org.programmerplanet.crm.service.AdministrationServiceImpl"/>
+	<bean id="metadataManager" class="org.programmerplanet.crm.metadata.MetadataManagerImpl"/>
 
 	<bean id="applicationService" class="org.programmerplanet.crm.service.ApplicationServiceImpl"/>
 	

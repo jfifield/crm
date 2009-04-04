@@ -1,8 +1,8 @@
 package org.programmerplanet.crm.web.admin;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.dao.OptionListDao;
-import org.programmerplanet.crm.model.OptionList;
+import org.programmerplanet.crm.metadata.OptionList;
+import org.programmerplanet.crm.metadata.dao.OptionListDao;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

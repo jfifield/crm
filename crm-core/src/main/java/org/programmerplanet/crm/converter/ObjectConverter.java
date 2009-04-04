@@ -3,7 +3,7 @@ package org.programmerplanet.crm.converter;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.model.FieldDefinition;
+import org.programmerplanet.crm.metadata.FieldDefinition;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -13,7 +13,7 @@ import org.programmerplanet.crm.model.FieldDefinition;
 public class ObjectConverter implements Converter {
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public String convert(Object value, FieldDefinition fieldDefinition) throws ConversionException {
 		if (value != null) {
@@ -23,7 +23,7 @@ public class ObjectConverter implements Converter {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public Object convert(String value, FieldDefinition fieldDefinition) throws ConversionException {
 		UUID result = null;

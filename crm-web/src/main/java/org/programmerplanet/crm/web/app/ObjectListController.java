@@ -7,8 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.ObjectDefinition;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.MetadataManager;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.service.ApplicationService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,11 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ObjectListController extends ObjectController {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 	private ApplicationService applicationService;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public void setApplicationService(ApplicationService applicationService) {
@@ -36,8 +36,8 @@ public class ObjectListController extends ObjectController {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
 
-		ObjectDefinition objectDefinition = administrationService.getObjectDefinition(objectName);
-		List fieldDefinitions = administrationService.getFieldDefinitionsForObjectList(objectDefinition);
+		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
+		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(objectDefinition);
 		List data = applicationService.getCrmObjects(objectDefinition, fieldDefinitions);
 
 		Map model = new HashMap();

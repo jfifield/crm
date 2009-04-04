@@ -6,8 +6,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.Application;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.Application;
+import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.programmerplanet.crm.web.UserSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -19,17 +19,17 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		UserSession userSession = UserSession.getUserSession(request);
 		request.setAttribute("userSession", userSession);
 
-		List applications = administrationService.getApplications();
+		List applications = metadataManager.getApplications();
 		request.setAttribute("crm_applications", applications);
 
 		// change selected application if requested...
@@ -46,8 +46,8 @@ public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 
 		UUID selectedApplicationId = userSession.getSelectedApplicationId();
 		if (selectedApplicationId != null) {
-			Application application = administrationService.getApplication(selectedApplicationId);
-			List objects = administrationService.getObjectDefinitionsForApplication(application);
+			Application application = metadataManager.getApplication(selectedApplicationId);
+			List objects = metadataManager.getObjectDefinitionsForApplication(application);
 			request.setAttribute("crm_objects", objects);
 		}
 

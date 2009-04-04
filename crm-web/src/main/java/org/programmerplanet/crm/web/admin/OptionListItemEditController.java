@@ -7,9 +7,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.OptionList;
-import org.programmerplanet.crm.model.OptionListItem;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.MetadataManager;
+import org.programmerplanet.crm.metadata.OptionList;
+import org.programmerplanet.crm.metadata.OptionListItem;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.programmerplanet.crm.web.SimpleMultiActionFormController;
 import org.springframework.validation.BindException;
@@ -24,21 +24,21 @@ import org.springframework.web.util.WebUtils;
  */
 public class OptionListItemEditController extends SimpleMultiActionFormController {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		OptionListItem optionListItem = (OptionListItem)command;
-		administrationService.saveOptionListItem(optionListItem);
+		metadataManager.saveOptionListItem(optionListItem);
 		return new ModelAndView(getSuccessView(), "id", optionListItem.getOptionListId());
 	}
 
 	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		OptionListItem optionListItem = (OptionListItem)command;
-		administrationService.deleteOptionListItem(optionListItem);
+		metadataManager.deleteOptionListItem(optionListItem);
 		return new ModelAndView(getSuccessView(), "id", optionListItem.getOptionListId());
 	}
 
@@ -50,7 +50,7 @@ public class OptionListItemEditController extends SimpleMultiActionFormControlle
 	public ModelAndView move(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		OptionListItem optionListItem = (OptionListItem)command;
 		String direction = request.getParameter("__move");
-		administrationService.moveOptionListItemViewIndex(optionListItem, direction);
+		metadataManager.moveOptionListItemViewIndex(optionListItem, direction);
 		return new ModelAndView(getSuccessView(), "id", optionListItem.getOptionListId());
 	}
 
@@ -61,7 +61,7 @@ public class OptionListItemEditController extends SimpleMultiActionFormControlle
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			OptionListItem optionListItem = administrationService.getOptionListItem(id);
+			OptionListItem optionListItem = metadataManager.getOptionListItem(id);
 			return optionListItem;
 		}
 		else {
@@ -76,7 +76,7 @@ public class OptionListItemEditController extends SimpleMultiActionFormControlle
 		OptionListItem optionListItem = (OptionListItem)command;
 		Map data = new HashMap();
 
-		OptionList optionList = administrationService.getOptionList(optionListItem.getOptionListId());
+		OptionList optionList = metadataManager.getOptionList(optionListItem.getOptionListId());
 		data.put("optionList", optionList);
 
 		return data;

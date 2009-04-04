@@ -8,8 +8,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.Application;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.Application;
+import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.programmerplanet.crm.web.SimpleMultiActionFormController;
 import org.springframework.validation.BindException;
@@ -24,17 +24,17 @@ import org.springframework.web.util.WebUtils;
  */
 public class ApplicationEditController extends SimpleMultiActionFormController {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Application application = (Application)command;
 
 		boolean isNew = (application.getId() == null);
-		administrationService.saveApplication(application);
+		metadataManager.saveApplication(application);
 		if (isNew) {
 			return new ModelAndView("redirect:applicationEdit", "id", application.getId());
 		}
@@ -45,7 +45,7 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 
 	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Application application = (Application)command;
-		administrationService.deleteApplication(application);
+		metadataManager.deleteApplication(application);
 		return new ModelAndView(getSuccessView());
 	}
 
@@ -56,7 +56,7 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 	public ModelAndView move(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Application application = (Application)command;
 		String direction = request.getParameter("__move");
-		administrationService.moveApplicationViewIndex(application, direction);
+		metadataManager.moveApplicationViewIndex(application, direction);
 		return new ModelAndView(getSuccessView());
 	}
 
@@ -67,7 +67,7 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			Application application = administrationService.getApplication(id);
+			Application application = metadataManager.getApplication(id);
 			return application;
 		}
 		else {
@@ -80,10 +80,10 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 		if (application.getId() != null) {
 			Map data = new HashMap();
 
-			List selectedObjectDefinition = administrationService.getObjectDefinitionsForApplication(application);
+			List selectedObjectDefinition = metadataManager.getObjectDefinitionsForApplication(application);
 			data.put("selectedObjectDefinition", selectedObjectDefinition);
 
-			List availableObjectDefinition = administrationService.getObjectDefinitions();
+			List availableObjectDefinition = metadataManager.getObjectDefinitions();
 			availableObjectDefinition.removeAll(selectedObjectDefinition);
 			data.put("availableObjectDefinition", availableObjectDefinition);
 

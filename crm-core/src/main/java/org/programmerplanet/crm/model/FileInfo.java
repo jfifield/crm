@@ -1,5 +1,6 @@
 package org.programmerplanet.crm.model;
 
+
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
  * 

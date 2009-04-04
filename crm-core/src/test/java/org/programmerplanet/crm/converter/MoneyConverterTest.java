@@ -1,6 +1,6 @@
 package org.programmerplanet.crm.converter;
 
-import org.programmerplanet.crm.model.FieldDefinition;
+import org.programmerplanet.crm.metadata.FieldDefinition;
 
 import junit.framework.TestCase;
 

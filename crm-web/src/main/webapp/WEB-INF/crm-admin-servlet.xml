@@ -32,7 +32,7 @@
 	<bean id="applicationEditController" class="org.programmerplanet.crm.web.admin.ApplicationEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="application"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.Application"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.Application"/>
 		<property name="validator" ref="applicationValidator"/>
 		<property name="formView" value="applicationEdit"/>
 		<property name="successView" value="redirect:applicationList"/>
@@ -41,7 +41,7 @@
 	<bean id="applicationObjectEditController" class="org.programmerplanet.crm.web.admin.ApplicationObjectEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="applicationObject"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.ApplicationObject"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.ApplicationObject"/>
 		<property name="successView" value="redirect:applicationEdit"/>
 	</bean>
 
@@ -52,7 +52,7 @@
 	<bean id="objectEditController" class="org.programmerplanet.crm.web.admin.ObjectEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="objectDefinition"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.ObjectDefinition"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.ObjectDefinition"/>
 		<property name="validator" ref="objectValidator"/>
 		<property name="formView" value="objectEdit"/>
 		<property name="successView" value="redirect:objectList"/>
@@ -63,7 +63,7 @@
 	<bean id="fieldEditController" class="org.programmerplanet.crm.web.admin.FieldEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="fieldDefinition"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.FieldDefinition"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.FieldDefinition"/>
 		<property name="validator" ref="fieldValidator"/>
 		<property name="formView" value="fieldEdit"/>
 		<property name="successView" value="redirect:objectEdit"/>
@@ -76,7 +76,7 @@
 	<bean id="optionListEditController" class="org.programmerplanet.crm.web.admin.OptionListEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="optionList"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.OptionList"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.OptionList"/>
 		<property name="validator" ref="optionListValidator"/>
 		<property name="formView" value="optionListEdit"/>
 		<property name="successView" value="redirect:optionListList"/>
@@ -87,7 +87,7 @@
 	<bean id="optionListItemEditController" class="org.programmerplanet.crm.web.admin.OptionListItemEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="optionListItem"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.OptionListItem"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.OptionListItem"/>
 		<property name="validator" ref="optionListItemValidator"/>
 		<property name="formView" value="optionListItemEdit"/>
 		<property name="successView" value="redirect:optionListEdit"/>
@@ -96,7 +96,7 @@
 	<bean id="relationshipEditController" class="org.programmerplanet.crm.web.admin.RelationshipEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="relationship"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.Relationship"/>
+		<property name="commandClass" value="org.programmerplanet.crm.metadata.Relationship"/>
 		<property name="successView" value="redirect:objectEdit"/>
 	</bean>
 

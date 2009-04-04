@@ -1,9 +1,9 @@
 package org.programmerplanet.crm.schema;
 
-import org.programmerplanet.crm.model.DataType;
-import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.ObjectDefinition;
-import org.programmerplanet.crm.model.Relationship;
+import org.programmerplanet.crm.metadata.DataType;
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+import org.programmerplanet.crm.metadata.Relationship;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaManager {
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#createTable(org.programmerplanet.crm.model.ObjectDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#createTable(org.programmerplanet.crm.metadata.ObjectDefinition)
 	 */
 	public void createTable(ObjectDefinition objectDefinition) {
 		String sql = "CREATE TABLE " + objectDefinition.getTableName() + " (id uuid NOT NULL, CONSTRAINT pk_" + objectDefinition.getTableName() + " PRIMARY KEY (id))";
@@ -22,7 +22,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#renameTable(java.lang.String, org.programmerplanet.crm.model.ObjectDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#renameTable(java.lang.String, org.programmerplanet.crm.metadata.ObjectDefinition)
 	 */
 	public void renameTable(String oldTableName, ObjectDefinition objectDefinition) {
 		String sql = "ALTER TABLE " + oldTableName + " RENAME TO " + objectDefinition.getTableName();
@@ -30,7 +30,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#dropTable(org.programmerplanet.crm.model.ObjectDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#dropTable(org.programmerplanet.crm.metadata.ObjectDefinition)
 	 */
 	public void dropTable(ObjectDefinition objectDefinition) {
 		String sql = "DROP TABLE " + objectDefinition.getTableName();
@@ -38,7 +38,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#createColumn(org.programmerplanet.crm.model.ObjectDefinition, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#createColumn(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void createColumn(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition) {
 		String sql = "ALTER TABLE " + objectDefinition.getTableName() + " ADD COLUMN ";
@@ -47,7 +47,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#renameColumn(org.programmerplanet.crm.model.ObjectDefinition, java.lang.String, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#renameColumn(org.programmerplanet.crm.metadata.ObjectDefinition, java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void renameColumn(ObjectDefinition objectDefinition, String oldColumnName, FieldDefinition fieldDefinition) {
 		String sql = "ALTER TABLE " + objectDefinition.getTableName() + " RENAME COLUMN " + oldColumnName + " TO " + fieldDefinition.getColumnName();
@@ -55,7 +55,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#dropColumn(org.programmerplanet.crm.model.ObjectDefinition, org.programmerplanet.crm.model.FieldDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#dropColumn(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void dropColumn(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition) {
 		String sql = "ALTER TABLE " + objectDefinition.getTableName() + " DROP COLUMN " + fieldDefinition.getColumnName();
@@ -133,7 +133,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#createTable(org.programmerplanet.crm.model.Relationship, org.programmerplanet.crm.model.ObjectDefinition, org.programmerplanet.crm.model.ObjectDefinition)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#createTable(org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.ObjectDefinition)
 	 */
 	public void createTable(Relationship relationship, ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2) {
 		String sql = "CREATE TABLE " + relationship.getTableName() + " (";
@@ -143,7 +143,7 @@ public class PostgresqlSchemaManager extends JdbcDaoSupport implements SchemaMan
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.schema.SchemaManager#dropTable(org.programmerplanet.crm.model.Relationship)
+	 * @see org.programmerplanet.crm.schema.SchemaManager#dropTable(org.programmerplanet.crm.metadata.Relationship)
 	 */
 	public void dropTable(Relationship relationship) {
 		String sql = "DROP TABLE " + relationship.getTableName();

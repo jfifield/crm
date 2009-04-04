@@ -8,9 +8,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.ObjectDefinition;
-import org.programmerplanet.crm.model.Relationship;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.metadata.MetadataManager;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+import org.programmerplanet.crm.metadata.Relationship;
 import org.programmerplanet.crm.service.ApplicationService;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,11 +23,11 @@ import org.springframework.web.util.WebUtils;
  */
 public class ObjectLinkController extends ObjectController {
 
-	private AdministrationService administrationService;
+	private MetadataManager metadataManager;
 	private ApplicationService applicationService;
 
-	private void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	private void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public void setApplicationService(ApplicationService applicationService) {
@@ -55,10 +55,10 @@ public class ObjectLinkController extends ObjectController {
 
 		UUID id = RequestUtil.getRequestId(request, "source_object_id");
 
-		ObjectDefinition parentObjectDefinition = administrationService.getObjectDefinition(parentObjectName);
-		ObjectDefinition childObjectDefinition = administrationService.getObjectDefinition(childObjectName);
-		List fieldDefinitions = administrationService.getFieldDefinitionsForObjectList(childObjectDefinition);
-		Relationship relationship = administrationService.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
+		ObjectDefinition parentObjectDefinition = metadataManager.getObjectDefinition(parentObjectName);
+		ObjectDefinition childObjectDefinition = metadataManager.getObjectDefinition(childObjectName);
+		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(childObjectDefinition);
+		Relationship relationship = metadataManager.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
 		List data = applicationService.getCrmObjectsAvailableForLinking(childObjectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 
 		Map model = new HashMap();
@@ -76,8 +76,8 @@ public class ObjectLinkController extends ObjectController {
 		String parentObjectName = request.getParameter("source_object");
 		String childObjectName = getObjectName(request);
 
-		ObjectDefinition parentObjectDefinition = administrationService.getObjectDefinition(parentObjectName);
-		ObjectDefinition childObjectDefinition = administrationService.getObjectDefinition(childObjectName);
+		ObjectDefinition parentObjectDefinition = metadataManager.getObjectDefinition(parentObjectName);
+		ObjectDefinition childObjectDefinition = metadataManager.getObjectDefinition(childObjectName);
 
 		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
 		UUID childId = RequestUtil.getRequestId(request);
@@ -92,8 +92,8 @@ public class ObjectLinkController extends ObjectController {
 		String parentObjectName = request.getParameter("source_object");
 		String childObjectName = getObjectName(request);
 
-		ObjectDefinition parentObjectDefinition = administrationService.getObjectDefinition(parentObjectName);
-		ObjectDefinition childObjectDefinition = administrationService.getObjectDefinition(childObjectName);
+		ObjectDefinition parentObjectDefinition = metadataManager.getObjectDefinition(parentObjectName);
+		ObjectDefinition childObjectDefinition = metadataManager.getObjectDefinition(childObjectName);
 
 		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
 		UUID childId = RequestUtil.getRequestId(request);

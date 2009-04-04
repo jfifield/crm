@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.ObjectDefinition;
+
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
  * 
