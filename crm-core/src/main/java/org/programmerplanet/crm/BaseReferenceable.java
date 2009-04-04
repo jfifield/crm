@@ -7,7 +7,7 @@ import java.util.UUID;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public abstract class BaseReferenceable {
+public abstract class BaseReferenceable implements Referenceable {
 
 	private UUID id;
 
@@ -20,7 +20,7 @@ public abstract class BaseReferenceable {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof BaseReferenceable) {
+		if (obj instanceof Referenceable) {
 			if (this.getClass().equals(obj.getClass())) {
 				Referenceable other = (Referenceable)obj;
 				if (this.id == null && other.getId() == null) {
