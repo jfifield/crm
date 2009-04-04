@@ -2,14 +2,14 @@ package org.programmerplanet.crm.metadata;
 
 import java.util.UUID;
 
-import org.programmerplanet.crm.model.Entity;
+import org.programmerplanet.crm.BaseReferenceable;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class OptionListItem extends Entity {
+public class OptionListItem extends BaseReferenceable {
 
 	private UUID optionListId;
 	private String value;

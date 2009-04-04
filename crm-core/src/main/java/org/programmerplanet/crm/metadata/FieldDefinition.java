@@ -2,12 +2,12 @@ package org.programmerplanet.crm.metadata;
 
 import java.util.UUID;
 
-import org.programmerplanet.crm.model.Entity;
+import org.programmerplanet.crm.BaseReferenceable;
 
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
-public class FieldDefinition extends Entity {
+public class FieldDefinition extends BaseReferenceable {
 
 	private UUID objectId;
 	private String fieldName;

@@ -1,11 +1,11 @@
 package org.programmerplanet.crm.user;
 
-import org.programmerplanet.crm.model.Entity;
+import org.programmerplanet.crm.BaseReferenceable;
 
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
-public class User extends Entity {
+public class User extends BaseReferenceable {
 
 	private String username;
 	private String password;

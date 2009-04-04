@@ -2,12 +2,12 @@ package org.programmerplanet.crm.metadata;
 
 import java.util.UUID;
 
-import org.programmerplanet.crm.model.Entity;
+import org.programmerplanet.crm.BaseReferenceable;
 
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
-public class Relationship extends Entity {
+public class Relationship extends BaseReferenceable {
 
 	private UUID parentObjectId;
 	private UUID childObjectId;

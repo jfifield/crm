@@ -1,6 +1,6 @@
 package org.programmerplanet.crm.data;
 
-import org.programmerplanet.crm.model.Entity;
+import org.programmerplanet.crm.BaseReferenceable;
 
 
 /**
@@ -8,7 +8,7 @@ import org.programmerplanet.crm.model.Entity;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class FileInfo extends Entity {
+public class FileInfo extends BaseReferenceable {
 
 	private String fileName;
 	private long fileSize;

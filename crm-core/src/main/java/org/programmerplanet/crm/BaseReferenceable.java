@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.model;
+package org.programmerplanet.crm;
 
 import java.util.UUID;
 
@@ -7,7 +7,7 @@ import java.util.UUID;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public abstract class Entity {
+public abstract class BaseReferenceable {
 
 	private UUID id;
 
@@ -20,17 +20,17 @@ public abstract class Entity {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof Entity) {
+		if (obj instanceof BaseReferenceable) {
 			if (this.getClass().equals(obj.getClass())) {
-				Entity other = (Entity)obj;
-				if (this.id == null && other.id == null) {
+				Referenceable other = (Referenceable)obj;
+				if (this.id == null && other.getId() == null) {
 					return super.equals(obj);
 				}
-				else if (this.id == null || other.id == null) {
+				else if (this.id == null || other.getId() == null) {
 					return false;
 				}
 				else {
-					return this.id.equals(other.id);
+					return this.id.equals(other.getId());
 				}
 			}
 			else {

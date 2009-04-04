@@ -1,11 +1,11 @@
 package org.programmerplanet.crm.metadata;
 
-import org.programmerplanet.crm.model.Entity;
+import org.programmerplanet.crm.BaseReferenceable;
 
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>
  */
-public class ObjectDefinition extends Entity {
+public class ObjectDefinition extends BaseReferenceable {
 
 	private String objectName;
 	private String tableName;
