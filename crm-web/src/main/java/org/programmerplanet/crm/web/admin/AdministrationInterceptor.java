@@ -3,7 +3,7 @@ package org.programmerplanet.crm.web.admin;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.AuthorizationException;
+import org.programmerplanet.crm.web.AuthorizationException;
 import org.programmerplanet.crm.web.UserSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
