@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.converter;
+package org.programmerplanet.crm.web.converter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,17 +13,17 @@ import org.programmerplanet.crm.metadata.FieldDefinition;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class DateConverter implements Converter {
+public class DateTimeConverter implements Converter {
 
-	public static final String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+	public static final String DEFAULT_DATE_TIME_FORMAT = "MM/dd/yyyy hh:mm a";
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public String convert(Object value, FieldDefinition fieldDefinition) throws ConversionException {
 		if (value != null) {
 			if (value instanceof Date) {
-				DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+				DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT);
 				Date date = (Date)value;
 				String str = dateFormat.format(date);
 				return str;
@@ -36,12 +36,12 @@ public class DateConverter implements Converter {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public Object convert(String value, FieldDefinition fieldDefinition) throws ConversionException {
 		Date result = null;
 		if (StringUtils.isNotEmpty(value)) {
-			DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+			DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT);
 			try {
 				result = dateFormat.parse(value);
 			}

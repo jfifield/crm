@@ -153,63 +153,63 @@
 	<util:map id="converters">
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.SHORT_TEXT"/></key>
-			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.TextConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.LONG_TEXT"/></key>
-			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.TextConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.AUTO_NUMBER"/></key>
-			<bean class="org.programmerplanet.crm.converter.NumberConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.NumberConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.NUMBER"/></key>
-			<bean class="org.programmerplanet.crm.converter.NumberConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.NumberConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.MONEY"/></key>
-			<bean class="org.programmerplanet.crm.converter.MoneyConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.MoneyConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.PERCENT"/></key>
-			<bean class="org.programmerplanet.crm.converter.PercentConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.PercentConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.DATE"/></key>
-			<bean class="org.programmerplanet.crm.converter.DateConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.DateConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.DATE_TIME"/></key>
-			<bean class="org.programmerplanet.crm.converter.DateTimeConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.DateTimeConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.BOOLEAN"/></key>
-			<bean class="org.programmerplanet.crm.converter.BooleanConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.BooleanConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.USER"/></key>
-			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.TextConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.EMAIL"/></key>
-			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.TextConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.URL"/></key>
-			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.TextConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.OPTION_LIST"/></key>
-			<bean class="org.programmerplanet.crm.converter.TextConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.TextConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.FILE"/></key>
-			<bean class="org.programmerplanet.crm.converter.FileConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.FileConverter"/>
 		</entry>
 		<entry>
 			<key><util:constant static-field="org.programmerplanet.crm.metadata.DataType.OBJECT"/></key>
-			<bean class="org.programmerplanet.crm.converter.ObjectConverter"/>
+			<bean class="org.programmerplanet.crm.web.converter.ObjectConverter"/>
 		</entry>
 	</util:map>
 	

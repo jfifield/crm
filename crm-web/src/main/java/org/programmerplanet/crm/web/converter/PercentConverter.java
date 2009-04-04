@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.converter;
+package org.programmerplanet.crm.web.converter;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -12,10 +12,10 @@ import org.programmerplanet.crm.metadata.FieldDefinition;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class MoneyConverter implements Converter {
+public class PercentConverter implements Converter {
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public String convert(Object value, FieldDefinition fieldDefinition) throws ConversionException {
 		if (value != null) {
@@ -33,22 +33,13 @@ public class MoneyConverter implements Converter {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public Object convert(String value, FieldDefinition fieldDefinition) throws ConversionException {
 		Number result = null;
 		if (StringUtils.isNotEmpty(value)) {
-			boolean hasNegativeSign = value.charAt(0) == '-' || value.charAt(1) == '-';
-			boolean hasCurrencySign = value.charAt(0) == '$' || value.charAt(1) == '$';
-			if (hasNegativeSign) {
-				value = value.substring(1);
-			}
-			if (hasCurrencySign) {
-				value = value.substring(1);
-			}
-			value = "$" + value;
-			if (hasNegativeSign) {
-				value = "-" + value;
+			if (value.charAt(value.length() - 1) != '%') {
+				value += "%";
 			}
 			DecimalFormat decimalFormat = getDecimalFormat(fieldDefinition);
 			try {
@@ -62,14 +53,10 @@ public class MoneyConverter implements Converter {
 	}
 
 	private DecimalFormat getDecimalFormat(FieldDefinition fieldDefinition) {
-		DecimalFormat decimalFormat = (DecimalFormat)NumberFormat.getCurrencyInstance();
+		DecimalFormat decimalFormat = (DecimalFormat)NumberFormat.getPercentInstance();
 		int fractionDigits = fieldDefinition.getDataTypeExt() != null ? fieldDefinition.getDataTypeExt().intValue() : 0;
 		decimalFormat.setMinimumFractionDigits(fractionDigits);
 		decimalFormat.setMaximumFractionDigits(fractionDigits);
-		decimalFormat.setPositivePrefix("$");
-		decimalFormat.setPositiveSuffix("");
-		decimalFormat.setNegativePrefix("-$");
-		decimalFormat.setNegativeSuffix("");
 		return decimalFormat;
 	}
 

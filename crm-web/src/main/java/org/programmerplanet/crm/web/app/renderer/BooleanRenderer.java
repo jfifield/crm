@@ -3,9 +3,9 @@ package org.programmerplanet.crm.web.app.renderer;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.programmerplanet.crm.converter.BooleanConverter;
-import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.web.converter.BooleanConverter;
+import org.programmerplanet.crm.web.converter.Converter;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

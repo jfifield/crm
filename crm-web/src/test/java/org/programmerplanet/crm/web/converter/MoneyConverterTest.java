@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.converter;
+package org.programmerplanet.crm.web.converter;
 
 import org.programmerplanet.crm.metadata.FieldDefinition;
 

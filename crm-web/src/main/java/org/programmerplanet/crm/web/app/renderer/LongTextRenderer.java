@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.programmerplanet.crm.converter.Converter;
-import org.programmerplanet.crm.converter.TextConverter;
 import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.web.converter.Converter;
+import org.programmerplanet.crm.web.converter.TextConverter;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

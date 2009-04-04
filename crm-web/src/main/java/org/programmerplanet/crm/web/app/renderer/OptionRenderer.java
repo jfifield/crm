@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.converter.Converter;
-import org.programmerplanet.crm.converter.TextConverter;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.OptionList;
 import org.programmerplanet.crm.metadata.OptionListItem;
 import org.programmerplanet.crm.metadata.dao.OptionListDao;
 import org.programmerplanet.crm.metadata.dao.OptionListItemDao;
+import org.programmerplanet.crm.web.converter.Converter;
+import org.programmerplanet.crm.web.converter.TextConverter;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

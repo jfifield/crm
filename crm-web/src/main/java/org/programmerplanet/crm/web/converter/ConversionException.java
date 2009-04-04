@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.converter;
+package org.programmerplanet.crm.web.converter;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

@@ -5,11 +5,11 @@ import java.io.Writer;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.converter.Converter;
-import org.programmerplanet.crm.converter.FileConverter;
 import org.programmerplanet.crm.data.DataManager;
 import org.programmerplanet.crm.data.FileInfo;
 import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.web.converter.Converter;
+import org.programmerplanet.crm.web.converter.FileConverter;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

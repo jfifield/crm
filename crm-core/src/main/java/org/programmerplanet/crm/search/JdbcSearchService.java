@@ -12,8 +12,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.converter.DateConverter;
-import org.programmerplanet.crm.converter.DateTimeConverter;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
@@ -25,6 +23,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Copyright (c) 2007 Joseph Fifield
  */
 public class JdbcSearchService extends AbstractSearchService {
+
+	public static final String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+	public static final String DEFAULT_DATE_TIME_FORMAT = "MM/dd/yyyy hh:mm a";
 
 	private static final List NUMERIC_DATA_TYPES = new ArrayList() {
 		{
@@ -94,7 +95,7 @@ public class JdbcSearchService extends AbstractSearchService {
 				else if (DataType.DATE.equals(fieldDefinition.getDataType())) {
 					// only include if value appears to be a date
 					try {
-						DateFormat dateFormat = new SimpleDateFormat(DateConverter.DEFAULT_DATE_FORMAT);
+						DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 						Date value = dateFormat.parse(term);
 						sql.append(columnName);
 						sql.append(" = ? OR ");
@@ -107,7 +108,7 @@ public class JdbcSearchService extends AbstractSearchService {
 				else if (DataType.DATE_TIME.equals(fieldDefinition.getDataType())) {
 					// only include if value appears to be a date/time
 					try {
-						DateFormat dateFormat = new SimpleDateFormat(DateTimeConverter.DEFAULT_DATE_TIME_FORMAT);
+						DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT);
 						Date value = dateFormat.parse(term);
 						sql.append(columnName);
 						sql.append(" = ? OR ");

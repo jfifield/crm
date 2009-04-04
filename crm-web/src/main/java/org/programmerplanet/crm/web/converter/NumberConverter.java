@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.converter;
+package org.programmerplanet.crm.web.converter;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -14,7 +14,7 @@ import org.programmerplanet.crm.metadata.FieldDefinition;
 public class NumberConverter implements Converter {
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.converter.Converter#convert(java.lang.Object, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public String convert(Object value, FieldDefinition fieldDefinition) throws ConversionException {
 		if (value != null) {
@@ -35,7 +35,7 @@ public class NumberConverter implements Converter {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.web.converter.Converter#convert(java.lang.String, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public Object convert(String value, FieldDefinition fieldDefinition) throws ConversionException {
 		Number result = null;
