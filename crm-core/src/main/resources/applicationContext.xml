@@ -32,7 +32,8 @@
 		<property name="beanNames">
 			<list>
 				<value>userManager</value>
-				<value>*Service</value>
+				<value>metadataManager</value>
+				<value>dataManager</value>
 			</list>
 		</property>
 		<property name="interceptorNames">

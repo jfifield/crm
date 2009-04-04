@@ -22,8 +22,8 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
+import org.programmerplanet.crm.data.DataManager;
 import org.programmerplanet.crm.data.ObjectData;
-import org.programmerplanet.crm.data.dao.ObjectDataDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
@@ -38,7 +38,7 @@ public class LuceneSearchService extends AbstractSearchService {
 
 	private File indexDirectory;
 	private ObjectDefinitionDao objectDefinitionDao;
-	private ObjectDataDao objectDataDao;
+	private DataManager dataManager;
 
 	public void setIndexDirectory(File indexDirectory) {
 		this.indexDirectory = indexDirectory;
@@ -48,8 +48,8 @@ public class LuceneSearchService extends AbstractSearchService {
 		this.objectDefinitionDao = objectDefinitionDao;
 	}
 
-	public void setObjectDataDao(ObjectDataDao objectDataDao) {
-		this.objectDataDao = objectDataDao;
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class LuceneSearchService extends AbstractSearchService {
 			return;
 		}
 
-		List<Map> objects = objectDataDao.getObjects(objectDefinition, fieldDefinitions);
+		List<Map> objects = dataManager.getObjects(objectDefinition, fieldDefinitions);
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexModifier indexModifier = new IndexModifier(getIndexDirectoryForObject(objectDefinition), analyzer, true);
 		try {
@@ -140,7 +140,7 @@ public class LuceneSearchService extends AbstractSearchService {
 				Hit hit = (Hit)h.next();
 				String idValue = hit.get("id");
 				UUID id = UUID.fromString(idValue);
-				Map object = objectDataDao.getObject(objectDefinition, fieldDefinitionsForDisplay, id);
+				Map object = dataManager.getObject(objectDefinition, fieldDefinitionsForDisplay, id);
 				results.add(object);
 			}
 		}
