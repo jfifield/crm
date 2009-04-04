@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.util;
+package org.programmerplanet.crm.web.propertyeditor;
 
 import java.beans.PropertyEditorSupport;
 import java.util.UUID;
