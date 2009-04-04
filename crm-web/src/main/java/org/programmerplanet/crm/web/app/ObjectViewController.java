@@ -10,10 +10,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.programmerplanet.crm.data.DataManager;
 import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.Relationship;
-import org.programmerplanet.crm.service.ApplicationService;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,14 +25,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class ObjectViewController extends ObjectController {
 
 	private MetadataManager metadataManager;
-	private ApplicationService applicationService;
+	private DataManager dataManager;
 
 	public void setMetadataManager(MetadataManager metadataManager) {
 		this.metadataManager = metadataManager;
 	}
 
-	public void setApplicationService(ApplicationService applicationService) {
-		this.applicationService = applicationService;
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class ObjectViewController extends ObjectController {
 
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectView(objectDefinition);
-		Map data = applicationService.getCrmObject(objectDefinition, fieldDefinitions, id);
+		Map data = dataManager.getCrmObject(objectDefinition, fieldDefinitions, id);
 
 		Map model = new HashMap();
 		model.put("objectDefinition", objectDefinition);
@@ -71,7 +71,7 @@ public class ObjectViewController extends ObjectController {
 			ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectId);
 			List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(objectDefinition);
 
-			List data = applicationService.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+			List data = dataManager.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 
 			Map model = new HashMap();
 			model.put("objectDefinition", objectDefinition);

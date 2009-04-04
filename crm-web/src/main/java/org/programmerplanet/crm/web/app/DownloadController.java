@@ -6,8 +6,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.FileInfo;
-import org.programmerplanet.crm.service.ApplicationService;
+import org.programmerplanet.crm.data.DataManager;
+import org.programmerplanet.crm.data.FileInfo;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -19,10 +19,10 @@ import org.springframework.web.servlet.mvc.Controller;
  */
 public class DownloadController implements Controller {
 
-	private ApplicationService applicationService;
+	private DataManager dataManager;
 
-	public void setApplicationService(ApplicationService applicationService) {
-		this.applicationService = applicationService;
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
 	}
 
 	/**
@@ -31,14 +31,14 @@ public class DownloadController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UUID id = RequestUtil.getRequestId(request);
 
-		FileInfo fileInfo = applicationService.getFileInfo(id);
+		FileInfo fileInfo = dataManager.getFileInfo(id);
 
 		response.setHeader("Content-Type", fileInfo.getMimeType());
 		response.setHeader("Content-Length", Long.toString(fileInfo.getFileSize()));
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileInfo.getFileName());
 
 		ServletOutputStream outputStream = response.getOutputStream();
-		applicationService.getFile(id, outputStream);
+		dataManager.getFile(id, outputStream);
 		response.flushBuffer();
 
 		return null;

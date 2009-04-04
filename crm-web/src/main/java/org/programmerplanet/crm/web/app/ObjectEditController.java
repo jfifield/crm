@@ -13,12 +13,12 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.ConversionException;
 import org.programmerplanet.crm.converter.Converter;
+import org.programmerplanet.crm.data.CrmObject;
+import org.programmerplanet.crm.data.DataManager;
+import org.programmerplanet.crm.data.FileInfo;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
-import org.programmerplanet.crm.model.CrmObject;
-import org.programmerplanet.crm.model.FileInfo;
-import org.programmerplanet.crm.service.ApplicationService;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.validation.BindException;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,15 +34,15 @@ import org.springframework.web.util.WebUtils;
 public class ObjectEditController extends ObjectController {
 
 	private MetadataManager metadataManager;
-	private ApplicationService applicationService;
+	private DataManager dataManager;
 	private Map converters;
 
 	public void setMetadataManager(MetadataManager metadataManager) {
 		this.metadataManager = metadataManager;
 	}
 
-	public void setApplicationService(ApplicationService applicationService) {
-		this.applicationService = applicationService;
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
 	}
 
 	public void setConverters(Map converters) {
@@ -150,7 +150,7 @@ public class ObjectEditController extends ObjectController {
 					fileInfo.setFileName(multipartFile.getOriginalFilename());
 					fileInfo.setFileSize(multipartFile.getSize());
 					fileInfo.setMimeType(multipartFile.getContentType());
-					applicationService.saveFile(fileInfo, multipartFile.getInputStream());
+					dataManager.saveFile(fileInfo, multipartFile.getInputStream());
 					crmObject.getData().put(name, fileInfo.getId());
 				}
 			}
@@ -159,10 +159,10 @@ public class ObjectEditController extends ObjectController {
 		UUID id = crmObject.getId();
 		boolean newObject = (id == null);
 		if (newObject) {
-			id = applicationService.insertCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData());
+			id = dataManager.insertCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData());
 		}
 		else {
-			applicationService.updateCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData(), id);
+			dataManager.updateCrmObject(crmObject.getObjectDefinition(), crmObject.getFieldDefinitions(), crmObject.getData(), id);
 		}
 
 		String source = request.getParameter("source");
@@ -179,7 +179,7 @@ public class ObjectEditController extends ObjectController {
 			UUID parentId = sourceObjectId;
 			UUID childId = id;
 
-			applicationService.saveCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
+			dataManager.saveCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 		}
 
 		String destinationObject = null;
@@ -223,7 +223,7 @@ public class ObjectEditController extends ObjectController {
 		Map data = null;
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			data = applicationService.getCrmObject(objectDefinition, fieldDefinitions, id);
+			data = dataManager.getCrmObject(objectDefinition, fieldDefinitions, id);
 		}
 		else {
 			data = new HashMap();
@@ -284,7 +284,7 @@ public class ObjectEditController extends ObjectController {
 		String objectName = getObjectName(request);
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		UUID id = RequestUtil.getRequestId(request);
-		applicationService.deleteCrmObject(objectDefinition, id);
+		dataManager.deleteCrmObject(objectDefinition, id);
 
 		String source = request.getParameter("source");
 		String sourceObject = request.getParameter("source_object");

@@ -10,7 +10,7 @@ import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.ObjectConverter;
-import org.programmerplanet.crm.dao.CrmObjectDao;
+import org.programmerplanet.crm.data.dao.CrmObjectDao;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;

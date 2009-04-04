@@ -22,12 +22,12 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
-import org.programmerplanet.crm.dao.CrmObjectDao;
+import org.programmerplanet.crm.data.CrmObject;
+import org.programmerplanet.crm.data.dao.CrmObjectDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.dao.ObjectDefinitionDao;
-import org.programmerplanet.crm.model.CrmObject;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

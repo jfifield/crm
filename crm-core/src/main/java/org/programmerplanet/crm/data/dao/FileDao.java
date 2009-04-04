@@ -1,12 +1,12 @@
-package org.programmerplanet.crm.dao;
+package org.programmerplanet.crm.data.dao;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import org.programmerplanet.crm.data.FileInfo;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
-import org.programmerplanet.crm.model.FileInfo;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

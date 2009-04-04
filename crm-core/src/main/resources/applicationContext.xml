@@ -60,15 +60,15 @@
 
 	<bean id="optionListItemDao" class="org.programmerplanet.crm.metadata.dao.jdbc.JdbcOptionListItemDao"/>
 
-	<bean id="fileDao" class="org.programmerplanet.crm.dao.jdbc.JdbcFileDao"/>
+	<bean id="fileDao" class="org.programmerplanet.crm.data.dao.jdbc.JdbcFileDao"/>
 	
-	<bean id="crmObjectDao" class="org.programmerplanet.crm.dao.jdbc.JdbcCrmObjectDao"/>
+	<bean id="crmObjectDao" class="org.programmerplanet.crm.data.dao.jdbc.JdbcCrmObjectDao"/>
 	
 	<bean id="schemaManager" class="org.programmerplanet.crm.schema.PostgresqlSchemaManager"/>
 	
 	<bean id="metadataManager" class="org.programmerplanet.crm.metadata.MetadataManagerImpl"/>
 
-	<bean id="applicationService" class="org.programmerplanet.crm.service.ApplicationServiceImpl"/>
+	<bean id="dataManager" class="org.programmerplanet.crm.data.DataManagerImpl"/>
 	
 	<!--
 	<bean id="searchService" class="org.programmerplanet.crm.search.LuceneSearchService">

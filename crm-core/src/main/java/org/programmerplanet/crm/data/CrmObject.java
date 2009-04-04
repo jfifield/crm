@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.model;
+package org.programmerplanet.crm.data;
 
 import java.util.List;
 import java.util.Map;

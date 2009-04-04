@@ -2,8 +2,8 @@ package org.programmerplanet.crm.web.app;
 
 import java.util.Iterator;
 
+import org.programmerplanet.crm.data.CrmObject;
 import org.programmerplanet.crm.metadata.FieldDefinition;
-import org.programmerplanet.crm.model.CrmObject;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

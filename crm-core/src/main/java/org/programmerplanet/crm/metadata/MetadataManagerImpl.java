@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.programmerplanet.crm.dao.FileDao;
+import org.programmerplanet.crm.data.dao.FileDao;
 import org.programmerplanet.crm.metadata.dao.ApplicationDao;
 import org.programmerplanet.crm.metadata.dao.ApplicationObjectDao;
 import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;

@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.dao.jdbc;
+package org.programmerplanet.crm.data.dao.jdbc;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,10 +9,10 @@ import java.sql.Types;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
-import org.programmerplanet.crm.dao.FileDao;
+import org.programmerplanet.crm.data.FileInfo;
+import org.programmerplanet.crm.data.dao.FileDao;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
-import org.programmerplanet.crm.model.FileInfo;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,7 +32,7 @@ public class JdbcFileDao extends JdbcDaoSupport implements FileDao {
 	private LobHandler lobHandler = new DefaultLobHandler();
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FileDao#getFileInfo(java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.FileDao#getFileInfo(java.util.UUID)
 	 */
 	public FileInfo getFileInfo(UUID id) {
 		String sql = "SELECT id, file_name, file_size, mime_type FROM crm_file WHERE id = ?::uuid";
@@ -42,7 +42,7 @@ public class JdbcFileDao extends JdbcDaoSupport implements FileDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FileDao#insertFile(org.programmerplanet.crm.model.FileInfo, java.io.InputStream)
+	 * @see org.programmerplanet.crm.data.dao.FileDao#insertFile(org.programmerplanet.crm.data.FileInfo, java.io.InputStream)
 	 */
 	public void insertFile(FileInfo fileInfo, InputStream inputStream) {
 		UUID id = UUID.randomUUID();
@@ -54,7 +54,7 @@ public class JdbcFileDao extends JdbcDaoSupport implements FileDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FileDao#getFile(java.util.UUID, java.io.OutputStream)
+	 * @see org.programmerplanet.crm.data.dao.FileDao#getFile(java.util.UUID, java.io.OutputStream)
 	 */
 	public void getFile(UUID id, final OutputStream outputStream) {
 		String sql = "SELECT content FROM crm_file WHERE id = ?::uuid";
@@ -71,7 +71,7 @@ public class JdbcFileDao extends JdbcDaoSupport implements FileDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FileDao#deleteFile(java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.FileDao#deleteFile(java.util.UUID)
 	 */
 	public void deleteFile(UUID id) {
 		String sql = "DELETE FROM crm_file WHERE id = ?::uuid";
@@ -80,7 +80,7 @@ public class JdbcFileDao extends JdbcDaoSupport implements FileDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.FileDao#deleteFiles(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition)
+	 * @see org.programmerplanet.crm.data.dao.FileDao#deleteFiles(org.programmerplanet.crm.metadata.ObjectDefinition, org.programmerplanet.crm.metadata.FieldDefinition)
 	 */
 	public void deleteFiles(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition) {
 		String sql = "DELETE FROM crm_file AS f USING " + objectDefinition.getTableName() + " AS o";

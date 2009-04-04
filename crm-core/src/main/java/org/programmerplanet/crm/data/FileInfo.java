@@ -1,4 +1,6 @@
-package org.programmerplanet.crm.model;
+package org.programmerplanet.crm.data;
+
+import org.programmerplanet.crm.model.Entity;
 
 
 /**

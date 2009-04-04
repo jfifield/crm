@@ -7,9 +7,9 @@ import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.FileConverter;
-import org.programmerplanet.crm.dao.FileDao;
+import org.programmerplanet.crm.data.FileInfo;
+import org.programmerplanet.crm.data.dao.FileDao;
 import org.programmerplanet.crm.metadata.FieldDefinition;
-import org.programmerplanet.crm.model.FileInfo;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

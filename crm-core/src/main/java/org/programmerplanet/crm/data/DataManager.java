@@ -1,5 +1,7 @@
-package org.programmerplanet.crm.dao;
+package org.programmerplanet.crm.data;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -13,7 +15,7 @@ import org.programmerplanet.crm.metadata.Relationship;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public interface CrmObjectDao {
+public interface DataManager {
 
 	List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions);
 
@@ -23,18 +25,20 @@ public interface CrmObjectDao {
 
 	Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id);
 
+	FileInfo getFileInfo(UUID id);
+
+	void saveFile(FileInfo fileInfo, InputStream inputStream);
+
+	void getFile(UUID id, OutputStream outputStream);
+
 	UUID insertCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data);
 
 	void updateCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id);
 
 	void deleteCrmObject(ObjectDefinition objectDefinition, UUID id);
 
-	void insertCrmObjectRelationship(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
+	void saveCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
 
-	void deleteCrmObjectRelationship(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
-
-	void deleteCrmObjectRelationships(Relationship relationship, ObjectDefinition parentObjectDefinition, UUID parentId);
-
-	void clearCrmObjectValue(ObjectDefinition objectDefinition, FieldDefinition fieldDefinition, Object value);
+	void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
 
 }

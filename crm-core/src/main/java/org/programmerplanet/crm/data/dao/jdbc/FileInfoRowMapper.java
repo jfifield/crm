@@ -1,10 +1,10 @@
-package org.programmerplanet.crm.dao.jdbc;
+package org.programmerplanet.crm.data.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import org.programmerplanet.crm.model.FileInfo;
+import org.programmerplanet.crm.data.FileInfo;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
