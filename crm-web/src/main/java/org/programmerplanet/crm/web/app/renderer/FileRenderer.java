@@ -7,8 +7,8 @@ import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.FileConverter;
+import org.programmerplanet.crm.data.DataManager;
 import org.programmerplanet.crm.data.FileInfo;
-import org.programmerplanet.crm.data.dao.FileDao;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 
 /**
@@ -20,10 +20,10 @@ public class FileRenderer implements FieldRenderer {
 
 	private Converter converter = new FileConverter();
 
-	private FileDao fileDao;
+	private DataManager dataManager;
 
-	public void setFileDao(FileDao fileDao) {
-		this.fileDao = fileDao;
+	public void setDataManager(DataManager dataManager) {
+		this.dataManager = dataManager;
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class FileRenderer implements FieldRenderer {
 
 			// get metadata required to build file download link
 			UUID id = UUID.fromString(str);
-			FileInfo fileInfo = fileDao.getFileInfo(id);
+			FileInfo fileInfo = dataManager.getFileInfo(id);
 
 			// build file download link
 			writer.write("<a href=\"");
