@@ -35,7 +35,7 @@
 	<bean id="searchController" class="org.programmerplanet.crm.web.app.SearchController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="searchCriteria"/>
-		<property name="commandClass" value="org.programmerplanet.crm.service.SearchCriteria"/>
+		<property name="commandClass" value="org.programmerplanet.crm.search.SearchCriteria"/>
 		<property name="formView" value="search"/>
 		<property name="successView" value="search"/>
 	</bean>

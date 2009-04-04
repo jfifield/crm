@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.service;
+package org.programmerplanet.crm.search;
 
 import java.util.List;
 

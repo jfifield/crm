@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.service;
+package org.programmerplanet.crm.search;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>

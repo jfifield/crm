@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.service;
+package org.programmerplanet.crm.search;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public abstract class AbstractSearchService implements SearchService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.SearchService#search(org.programmerplanet.crm.service.SearchCriteria)
+	 * @see org.programmerplanet.crm.search.SearchService#search(org.programmerplanet.crm.search.SearchCriteria)
 	 */
 	public List search(SearchCriteria searchCriteria) {
 		List results = new LinkedList();

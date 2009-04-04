@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.service.SearchCriteria;
-import org.programmerplanet.crm.service.SearchService;
+import org.programmerplanet.crm.search.SearchCriteria;
+import org.programmerplanet.crm.search.SearchService;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;

@@ -66,11 +66,11 @@
 	<bean id="applicationService" class="org.programmerplanet.crm.service.ApplicationServiceImpl"/>
 	
 	<!--
-	<bean id="searchService" class="org.programmerplanet.crm.service.LuceneSearchService">
+	<bean id="searchService" class="org.programmerplanet.crm.search.LuceneSearchService">
 		<property name="indexDirectory" value="${user.dir}/.org.programmerplanet.crm/lucene"/>
 	</bean>
 	-->
 
-	<bean id="searchService" class="org.programmerplanet.crm.service.JdbcSearchService"/>
+	<bean id="searchService" class="org.programmerplanet.crm.search.JdbcSearchService"/>
 	
 </beans>

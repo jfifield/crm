@@ -1,4 +1,4 @@
-package org.programmerplanet.crm.service;
+package org.programmerplanet.crm.search;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class LuceneSearchService extends AbstractSearchService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.SearchService#index()
+	 * @see org.programmerplanet.crm.search.SearchService#index()
 	 */
 	public void index() {
 		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
@@ -121,7 +121,7 @@ public class LuceneSearchService extends AbstractSearchService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AbstractSearchService#search(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.service.SearchCriteria)
+	 * @see org.programmerplanet.crm.search.AbstractSearchService#search(org.programmerplanet.crm.model.ObjectDefinition, java.util.List, java.util.List, org.programmerplanet.crm.search.SearchCriteria)
 	 */
 	protected List search(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitionsForSearch, List<FieldDefinition> fieldDefinitionsForDisplay, SearchCriteria searchCriteria) throws Exception {
 		List results = new LinkedList();
