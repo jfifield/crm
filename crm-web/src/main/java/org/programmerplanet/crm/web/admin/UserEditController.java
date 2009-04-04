@@ -5,8 +5,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.User;
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.user.User;
+import org.programmerplanet.crm.user.UserManager;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.programmerplanet.crm.web.SimpleMultiActionFormController;
 import org.springframework.validation.BindException;
@@ -20,28 +20,21 @@ import org.springframework.web.util.WebUtils;
  */
 public class UserEditController extends SimpleMultiActionFormController {
 
-	private AdministrationService administrationService;
+	private UserManager userManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		User user = (User)command;
-
-		if (user.getId() != null) {
-			administrationService.updateUser(user);
-		}
-		else {
-			administrationService.insertUser(user);
-		}
-
+		userManager.saveUser(user);
 		return new ModelAndView(getSuccessView());
 	}
 
 	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		User user = (User)command;
-		administrationService.deleteUser(user);
+		userManager.deleteUser(user);
 		return new ModelAndView(getSuccessView());
 	}
 
@@ -56,7 +49,7 @@ public class UserEditController extends SimpleMultiActionFormController {
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			User user = administrationService.getUser(id);
+			User user = userManager.getUser(id);
 			return user;
 		}
 		else {

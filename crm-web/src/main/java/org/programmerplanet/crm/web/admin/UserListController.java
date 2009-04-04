@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.service.AdministrationService;
+import org.programmerplanet.crm.user.UserManager;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -18,17 +18,17 @@ import org.springframework.web.servlet.mvc.Controller;
  */
 public class UserListController implements Controller {
 
-	private AdministrationService administrationService;
+	private UserManager userManager;
 
-	public void setAdministrationService(AdministrationService administrationService) {
-		this.administrationService = administrationService;
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 	/**
 	 * @see org.springframework.web.servlet.mvc.Controller#handleRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List users = administrationService.getAllUsers();
+		List users = userManager.getUsers();
 
 		Map model = new HashMap();
 		model.put("users", users);

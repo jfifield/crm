@@ -12,14 +12,12 @@ import org.programmerplanet.crm.dao.FieldDefinitionDao;
 import org.programmerplanet.crm.dao.FileDao;
 import org.programmerplanet.crm.dao.ObjectDefinitionDao;
 import org.programmerplanet.crm.dao.RelationshipDao;
-import org.programmerplanet.crm.dao.UserDao;
 import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.DataType;
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
 import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.Relationship;
-import org.programmerplanet.crm.model.User;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -34,7 +32,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 	private RelationshipDao relationshipDao;
 	private CrmObjectDao crmObjectDao;
 	private FileDao fileDao;
-	private UserDao userDao;
 
 	public void setObjectDefinitionDao(ObjectDefinitionDao objectDefinitionDao) {
 		this.objectDefinitionDao = objectDefinitionDao;
@@ -58,17 +55,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	public void setFileDao(FileDao fileDao) {
 		this.fileDao = fileDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getUser(java.lang.String, java.lang.String)
-	 */
-	public User getUser(String username, String password) {
-		return userDao.getUser(username, password);
 	}
 
 	/**

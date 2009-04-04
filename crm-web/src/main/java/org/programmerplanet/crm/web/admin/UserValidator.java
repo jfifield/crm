@@ -1,8 +1,8 @@
 package org.programmerplanet.crm.web.admin;
 
 import org.apache.commons.lang.StringUtils;
-import org.programmerplanet.crm.dao.UserDao;
-import org.programmerplanet.crm.model.User;
+import org.programmerplanet.crm.user.User;
+import org.programmerplanet.crm.user.UserManager;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -13,10 +13,10 @@ import org.springframework.validation.Validator;
  */
 public class UserValidator implements Validator {
 
-	private UserDao userDao;
+	private UserManager userManager;
 	
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 	
 	public boolean supports(Class clazz) {
@@ -35,7 +35,7 @@ public class UserValidator implements Validator {
 			errors.rejectValue("username", "error.username.invalid");
 		}
 		// username must be unique
-		else if (!userDao.isUsernameUnique(user.getId(), user.getUsername())) {
+		else if (!userManager.isUsernameUnique(user.getId(), user.getUsername())) {
 			errors.rejectValue("username", "error.username.exists");
 		}
 		

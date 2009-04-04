@@ -1,10 +1,8 @@
-package org.programmerplanet.crm.dao.jdbc;
+package org.programmerplanet.crm.user;
 
 import java.util.List;
 import java.util.UUID;
 
-import org.programmerplanet.crm.dao.UserDao;
-import org.programmerplanet.crm.model.User;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -14,12 +12,12 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  * 
  * Copyright (c) 2007 Joseph Fifield
  */
-public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
+public class JdbcUserManager extends JdbcDaoSupport implements UserManager {
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#getAllUsers()
+	 * @see org.programmerplanet.crm.user.UserManager#getUsers()
 	 */
-	public List<User> getAllUsers() {
+	public List<User> getUsers() {
 		String sql = "SELECT * FROM crm_user ORDER BY username";
 		RowMapper userRowMapper = new UserRowMapper();
 		List users = this.getJdbcTemplate().query(sql, userRowMapper);
@@ -27,7 +25,7 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#getUser(java.util.UUID)
+	 * @see org.programmerplanet.crm.user.UserManager#getUser(java.util.UUID)
 	 */
 	public User getUser(UUID id) {
 		String sql = "SELECT * FROM crm_user WHERE id = ?::uuid";
@@ -37,7 +35,7 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#getUser(java.lang.String, java.lang.String)
+	 * @see org.programmerplanet.crm.user.UserManager#getUser(java.lang.String, java.lang.String)
 	 */
 	public User getUser(String username, String password) {
 		String sql = "SELECT * FROM crm_user WHERE username = ? AND password = ?";
@@ -57,9 +55,18 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#insertUser(org.programmerplanet.crm.model.User)
+	 * @see org.programmerplanet.crm.user.UserManager#saveUser(org.programmerplanet.crm.user.User)
 	 */
-	public void insertUser(User user) {
+	public void saveUser(User user) {
+		if (user.getId() != null) {
+			this.updateUser(user);
+		}
+		else {
+			this.insertUser(user);
+		}
+	}
+
+	private void insertUser(User user) {
 		UUID id = UUID.randomUUID();
 		String sql = "INSERT INTO crm_user (id, username, password, first_name, last_name, email_address, administrator) VALUES (?::uuid, ?, ?, ?, ?, ?, ?)";
 		Object[] params = new Object[] { id.toString(), user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailAddress(), new Boolean(user.isAdministrator()) };
@@ -67,17 +74,14 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 		user.setId(id);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#updateUser(org.programmerplanet.crm.model.User)
-	 */
-	public void updateUser(User user) {
+	private void updateUser(User user) {
 		String sql = "UPDATE crm_user SET username = ?, password = ?, first_name = ?, last_name = ?, email_address = ?, administrator = ? WHERE id = ?::uuid";
 		Object[] params = new Object[] { user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailAddress(), new Boolean(user.isAdministrator()), user.getId().toString() };
 		this.getJdbcTemplate().update(sql, params);
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#deleteUser(org.programmerplanet.crm.model.User)
+	 * @see org.programmerplanet.crm.user.UserManager#deleteUser(org.programmerplanet.crm.user.User)
 	 */
 	public void deleteUser(User user) {
 		String sql = "DELETE FROM crm_user WHERE id = ?::uuid";
@@ -86,7 +90,7 @@ public class JdbcUserDao extends JdbcDaoSupport implements UserDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.dao.UserDao#isUsernameUnique(java.util.UUID, java.lang.String)
+	 * @see org.programmerplanet.crm.user.UserManager#isUsernameUnique(java.util.UUID, java.lang.String)
 	 */
 	public boolean isUsernameUnique(UUID id, String username) {
 		String sql = null;

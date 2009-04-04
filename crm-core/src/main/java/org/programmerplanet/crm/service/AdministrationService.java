@@ -11,7 +11,6 @@ import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.OptionList;
 import org.programmerplanet.crm.model.OptionListItem;
 import org.programmerplanet.crm.model.Relationship;
-import org.programmerplanet.crm.model.User;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -101,15 +100,5 @@ public interface AdministrationService {
 	void deleteRelationship(Relationship relationship);
 
 	void moveRelationshipViewIndex(Relationship relationship, String direction);
-
-	List<User> getAllUsers();
-
-	User getUser(UUID id);
-
-	void insertUser(User user);
-
-	void updateUser(User user);
-
-	void deleteUser(User user);
 
 }

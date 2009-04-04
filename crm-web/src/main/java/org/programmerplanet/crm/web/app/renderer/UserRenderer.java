@@ -8,9 +8,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.TextConverter;
-import org.programmerplanet.crm.dao.UserDao;
 import org.programmerplanet.crm.model.FieldDefinition;
-import org.programmerplanet.crm.model.User;
+import org.programmerplanet.crm.user.User;
+import org.programmerplanet.crm.user.UserManager;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -21,10 +21,10 @@ public class UserRenderer implements FieldRenderer {
 
 	private Converter converter = new TextConverter();
 
-	private UserDao userDao;
+	private UserManager userManager;
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class UserRenderer implements FieldRenderer {
 		
 		String str = getAsString(value, fieldDefinition);
 		
-		List users = userDao.getAllUsers();
+		List users = userManager.getUsers();
 		for (Iterator i = users.iterator(); i.hasNext();) {
 			User user = (User)i.next();
 			writer.write("<option value=\"");

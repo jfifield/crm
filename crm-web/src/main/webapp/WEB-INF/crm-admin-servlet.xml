@@ -19,7 +19,7 @@
 	<bean id="userEditController" class="org.programmerplanet.crm.web.admin.UserEditController">
 		<property name="sessionForm" value="false"/>
 		<property name="commandName" value="user"/>
-		<property name="commandClass" value="org.programmerplanet.crm.model.User"/>
+		<property name="commandClass" value="org.programmerplanet.crm.user.User"/>
 		<property name="validator" ref="userValidator"/>
 		<property name="formView" value="userEdit"/>
 		<property name="successView" value="redirect:userList"/>

@@ -3,8 +3,8 @@ package org.programmerplanet.crm.web.app;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.programmerplanet.crm.model.User;
-import org.programmerplanet.crm.service.ApplicationService;
+import org.programmerplanet.crm.user.User;
+import org.programmerplanet.crm.user.UserManager;
 import org.programmerplanet.crm.web.UserSession;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,16 +17,16 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  */
 public class LoginController extends SimpleFormController {
 
-	private ApplicationService applicationService;
+	private UserManager userManager;
 
-	public void setApplicationService(ApplicationService applicationService) {
-		this.applicationService = applicationService;
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Credentials credentials = (Credentials)command;
 
-		User user = applicationService.getUser(credentials.getUsername(), credentials.getPassword());
+		User user = userManager.getUser(credentials.getUsername(), credentials.getPassword());
 
 		if (user == null) {
 			// login bad!

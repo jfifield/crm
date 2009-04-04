@@ -16,7 +16,6 @@ import org.programmerplanet.crm.dao.ObjectDefinitionDao;
 import org.programmerplanet.crm.dao.OptionListDao;
 import org.programmerplanet.crm.dao.OptionListItemDao;
 import org.programmerplanet.crm.dao.RelationshipDao;
-import org.programmerplanet.crm.dao.UserDao;
 import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.ApplicationObject;
 import org.programmerplanet.crm.model.DataType;
@@ -25,7 +24,6 @@ import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.OptionList;
 import org.programmerplanet.crm.model.OptionListItem;
 import org.programmerplanet.crm.model.Relationship;
-import org.programmerplanet.crm.model.User;
 import org.programmerplanet.crm.schema.SchemaManager;
 import org.programmerplanet.crm.util.ListUtil;
 
@@ -44,7 +42,6 @@ public class AdministrationServiceImpl implements AdministrationService {
 	private OptionListDao optionListDao;
 	private OptionListItemDao optionListItemDao;
 	private FileDao fileDao;
-	private UserDao userDao;
 	private SchemaManager schemaManager;
 
 	public void setObjectDefinitionDao(ObjectDefinitionDao objectDefinitionDao) {
@@ -77,10 +74,6 @@ public class AdministrationServiceImpl implements AdministrationService {
 
 	public void setFileDao(FileDao fileDao) {
 		this.fileDao = fileDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
 	}
 
 	public void setSchemaManager(SchemaManager schemaManager) {
@@ -573,41 +566,6 @@ public class AdministrationServiceImpl implements AdministrationService {
 			}
 			index++;
 		}
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getAllUsers()
-	 */
-	public List<User> getAllUsers() {
-		return userDao.getAllUsers();
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getUser(java.util.UUID)
-	 */
-	public User getUser(UUID id) {
-		return userDao.getUser(id);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertUser(org.programmerplanet.crm.model.User)
-	 */
-	public void insertUser(User user) {
-		userDao.insertUser(user);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#updateUser(org.programmerplanet.crm.model.User)
-	 */
-	public void updateUser(User user) {
-		userDao.updateUser(user);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#deleteUser(org.programmerplanet.crm.model.User)
-	 */
-	public void deleteUser(User user) {
-		userDao.deleteUser(user);
 	}
 
 	private int getNextIndexValue(Collection collection, String propertyName) {

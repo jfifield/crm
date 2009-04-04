@@ -1,4 +1,6 @@
-package org.programmerplanet.crm.model;
+package org.programmerplanet.crm.user;
+
+import org.programmerplanet.crm.model.Entity;
 
 /**
  * @author <a href="jfifield@programmerplanet.org">Joseph Fifield</a>

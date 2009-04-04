@@ -11,7 +11,6 @@ import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
 import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.Relationship;
-import org.programmerplanet.crm.model.User;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -19,8 +18,6 @@ import org.programmerplanet.crm.model.User;
  * Copyright (c) 2007 Joseph Fifield
  */
 public interface ApplicationService {
-
-	User getUser(String username, String password);
 
 	List<Application> getAllApplications();
 
