@@ -58,28 +58,28 @@ public class DataManagerImpl implements DataManager {
 	/**
 	 * @see org.programmerplanet.crm.data.DataManager#getObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List)
 	 */
-	public List<Map> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
+	public List<ObjectData> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
 		return objectDataDao.getObjects(objectDefinition, fieldDefinitions);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.data.DataManager#getRelatedObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<ObjectData> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		return objectDataDao.getRelatedObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.data.DataManager#getObjectsAvailableForLinking(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<ObjectData> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		return objectDataDao.getObjectsAvailableForLinking(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.data.DataManager#getObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
+	public ObjectData getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
 		return objectDataDao.getObject(objectDefinition, fieldDefinitions, id);
 	}
 
@@ -105,17 +105,15 @@ public class DataManagerImpl implements DataManager {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.DataManager#insertObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map)
+	 * @see org.programmerplanet.crm.data.DataManager#saveObject(org.programmerplanet.crm.data.ObjectData)
 	 */
-	public UUID insertObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
-		return objectDataDao.insertObject(objectDefinition, fieldDefinitions, data);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.data.DataManager#updateObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
-	 */
-	public void updateObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
-		objectDataDao.updateObject(objectDefinition, fieldDefinitions, data, id);
+	public void saveObject(ObjectData objectData) {
+		if (objectData.getId() == null) {
+			objectDataDao.insertObject(objectData);
+		}
+		else {
+			objectDataDao.updateObject(objectData);
+		}
 	}
 
 	/**
@@ -124,12 +122,13 @@ public class DataManagerImpl implements DataManager {
 	public void deleteObject(ObjectDefinition objectDefinition, UUID id) {
 		List<FieldDefinition> fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
 
-		Map object = objectDataDao.getObject(objectDefinition, fieldDefinitions, id);
+		ObjectData objectData = objectDataDao.getObject(objectDefinition, fieldDefinitions, id);
+		Map data = objectData.getData();
 
 		// delete referenced files
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			if (fieldDefinition.getDataType().equals(DataType.FILE)) {
-				UUID fileId = (UUID)object.get(fieldDefinition.getColumnName());
+				UUID fileId = (UUID)data.get(fieldDefinition.getColumnName());
 				if (fileId != null) {
 					fileDao.deleteFile(fileId);
 				}

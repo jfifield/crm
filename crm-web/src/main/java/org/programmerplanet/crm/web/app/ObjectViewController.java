@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.programmerplanet.crm.data.DataManager;
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.Relationship;
@@ -44,7 +45,8 @@ public class ObjectViewController extends ObjectController {
 
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectView(objectDefinition);
-		Map data = dataManager.getObject(objectDefinition, fieldDefinitions, id);
+		ObjectData objectData = dataManager.getObject(objectDefinition, fieldDefinitions, id);
+		Map data = objectData.getData();
 
 		Map model = new HashMap();
 		model.put("objectDefinition", objectDefinition);
@@ -71,7 +73,12 @@ public class ObjectViewController extends ObjectController {
 			ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectId);
 			List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(objectDefinition);
 
-			List data = dataManager.getRelatedObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+			List<ObjectData> objects = dataManager.getRelatedObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+			
+			List<Map> data = new ArrayList<Map>();
+			for (ObjectData objectData : objects) {
+				data.add(objectData.getData());
+			}
 
 			Map model = new HashMap();
 			model.put("objectDefinition", objectDefinition);

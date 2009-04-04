@@ -1,9 +1,9 @@
 package org.programmerplanet.crm.data.dao;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.Relationship;
@@ -15,17 +15,17 @@ import org.programmerplanet.crm.metadata.Relationship;
  */
 public interface ObjectDataDao {
 
-	List<Map> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions);
+	List<ObjectData> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions);
 
-	List<Map> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
+	List<ObjectData> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	List<Map> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
+	List<ObjectData> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
-	Map getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id);
+	ObjectData getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id);
 
-	UUID insertObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data);
+	UUID insertObject(ObjectData objectData);
 
-	void updateObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id);
+	void updateObject(ObjectData objectData);
 
 	void deleteObject(ObjectDefinition objectDefinition, UUID id);
 

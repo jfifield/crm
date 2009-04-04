@@ -2,7 +2,6 @@ package org.programmerplanet.crm.web.app.renderer;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.converter.Converter;
 import org.programmerplanet.crm.converter.ObjectConverter;
 import org.programmerplanet.crm.data.DataManager;
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.metadata.FieldDefinition;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;
@@ -74,8 +74,9 @@ public class ObjectRenderer implements FieldRenderer {
 
 			// get object data to build object title link
 			UUID id = UUID.fromString(str);
-			Map objectData = dataManager.getObject(refObjectDefinition, refFieldDefinitions, id);
-			Object objectTitleValue = objectData.get(refFieldDefinition.getColumnName());
+			ObjectData objectData = dataManager.getObject(refObjectDefinition, refFieldDefinitions, id);
+			Map data = objectData.getData();
+			Object objectTitleValue = data.get(refFieldDefinition.getColumnName());
 			String objectTitle = null;
 			if (objectTitleConverter != null) {
 				objectTitle = objectTitleConverter.convert(objectTitleValue, refFieldDefinition);
@@ -111,13 +112,11 @@ public class ObjectRenderer implements FieldRenderer {
 		refFieldDefinitions.add(refFieldDefinition);
 		Converter objectTitleConverter = (Converter)converters.get(refFieldDefinition.getDataType());
 
-		List objects = dataManager.getObjects(refObjectDefinition, refFieldDefinitions);
+		List<ObjectData> objects = dataManager.getObjects(refObjectDefinition, refFieldDefinitions);
 
-		for (Iterator i = objects.iterator(); i.hasNext();) {
-			Map objectData = (Map)i.next();
-
-			String id = objectData.get("id").toString();
-			Object objectTitleValue = objectData.get(refFieldDefinition.getColumnName());
+		for (ObjectData objectData : objects) {
+			String id = objectData.getId().toString();
+			Object objectTitleValue = objectData.getData().get(refFieldDefinition.getColumnName());
 			String objectTitle = null;
 			if (objectTitleConverter != null) {
 				objectTitle = objectTitleConverter.convert(objectTitleValue, refFieldDefinition);

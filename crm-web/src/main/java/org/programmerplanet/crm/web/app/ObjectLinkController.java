@@ -1,5 +1,6 @@
 package org.programmerplanet.crm.web.app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.programmerplanet.crm.data.DataManager;
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.Relationship;
@@ -59,7 +61,12 @@ public class ObjectLinkController extends ObjectController {
 		ObjectDefinition childObjectDefinition = metadataManager.getObjectDefinition(childObjectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(childObjectDefinition);
 		Relationship relationship = metadataManager.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
-		List data = dataManager.getObjectsAvailableForLinking(childObjectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+		List<ObjectData> objects = dataManager.getObjectsAvailableForLinking(childObjectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
+		
+		List<Map> data = new ArrayList<Map>();
+		for (ObjectData objectData : objects) {
+			data.add(objectData.getData());
+		}
 
 		Map model = new HashMap();
 		model.put("objectDefinition", parentObjectDefinition);

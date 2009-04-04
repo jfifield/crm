@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.data.dao.ObjectDataDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
@@ -23,17 +24,18 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 	/**
 	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List)
 	 */
-	public List<Map> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
+	public List<ObjectData> getObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
 		String sql = getBasicSelectSql(objectDefinition, fieldDefinitions);
-		List data = this.getJdbcTemplate().queryForList(sql);
+		List<Map> data = this.getJdbcTemplate().queryForList(sql);
 		convertUUIDValues(data, fieldDefinitions);
-		return data;
+		List<ObjectData> objects = createObjectDataList(objectDefinition, fieldDefinitions, data);
+		return objects;
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getRelatedObjects(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<ObjectData> getRelatedObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ot.id, ");
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
@@ -56,15 +58,16 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 		sql.append(parentObjectDefinition.getTableName());
 		sql.append("_id = ?::uuid");
 
-		List data = this.getJdbcTemplate().queryForList(sql.toString(), new Object[] { id.toString() });
+		List<Map> data = this.getJdbcTemplate().queryForList(sql.toString(), new Object[] { id.toString() });
 		convertUUIDValues(data, fieldDefinitions);
-		return data;
+		List<ObjectData> objects = createObjectDataList(objectDefinition, fieldDefinitions, data);
+		return objects;
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getObjectsAvailableForLinking(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, org.programmerplanet.crm.metadata.Relationship, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
-	public List<Map> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
+	public List<ObjectData> getObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ot.id, ");
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
@@ -87,21 +90,23 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 		sql.append("AND rt.");
 		sql.append(parentObjectDefinition.getTableName());
 		sql.append("_id = ?::uuid)");
-		List data = this.getJdbcTemplate().queryForList(sql.toString(), new Object[] { id.toString() });
+		List<Map> data = this.getJdbcTemplate().queryForList(sql.toString(), new Object[] { id.toString() });
 		convertUUIDValues(data, fieldDefinitions);
-		return data;
+		List<ObjectData> objects = createObjectDataList(objectDefinition, fieldDefinitions, data);
+		return objects;
 	}
 
 	/**
 	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#getObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.UUID)
 	 */
-	public Map getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
+	public ObjectData getObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
 		String sql = getBasicSelectSql(objectDefinition, fieldDefinitions);
 		sql += " WHERE id = ?::uuid";
 		List data = this.getJdbcTemplate().queryForList(sql, new Object[] { id.toString() });
 		Map map = (Map)data.get(0);
 		convertUUIDValues(map, fieldDefinitions);
-		return map;
+		ObjectData objectData = createObjectData(objectDefinition, fieldDefinitions, map);
+		return objectData;
 	}
 
 	private String getBasicSelectSql(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
@@ -147,9 +152,12 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 	}
 	
 	/**
-	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#insertObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#insertObject(org.programmerplanet.crm.data.ObjectData)
 	 */
-	public UUID insertObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
+	public UUID insertObject(ObjectData objectData) {
+		ObjectDefinition objectDefinition = objectData.getObjectDefinition();
+		List<FieldDefinition> fieldDefinitions = objectData.getFieldDefinitions();
+		Map<String, Object> data = objectData.getData();
 		UUID id = UUID.randomUUID();
 		List parameters = new ArrayList();
 		StringBuffer sql = new StringBuffer();
@@ -183,6 +191,7 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 		sql.delete(sql.length() - 2, sql.length());
 		sql.append(")");
 		this.getJdbcTemplate().update(sql.toString(), parameters.toArray());
+		objectData.setId(id);
 		return id;
 	}
 
@@ -199,15 +208,19 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#updateObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.List, java.util.Map, java.util.UUID)
+	 * @see org.programmerplanet.crm.data.dao.ObjectDataDao#updateObject(org.programmerplanet.crm.data.ObjectData)
 	 */
-	public void updateObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data, UUID id) {
+	public void updateObject(ObjectData objectData) {
+		ObjectDefinition objectDefinition = objectData.getObjectDefinition();
+		List<FieldDefinition> fieldDefinitions = objectData.getFieldDefinitions();
+		Map<String, Object> data = objectData.getData();
+		UUID id = objectData.getId();
 		List parameters = new ArrayList();
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE ");
 		sql.append(objectDefinition.getTableName());
 		sql.append(" SET ");
-
+		
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
 			// special case - skip update of autonumber field
 			if (fieldDefinition.getDataType().equals(DataType.AUTO_NUMBER)) {
@@ -280,6 +293,24 @@ public class JdbcObjectDataDao extends JdbcDaoSupport implements ObjectDataDao {
 		sql += " WHERE " + fieldDefinition.getColumnName() + " = ?";
 		Object[] params = new Object[] { value };
 		this.getJdbcTemplate().update(sql, params);
+	}
+
+	private List<ObjectData> createObjectDataList(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, List<Map> data) {
+		List<ObjectData> objects = new ArrayList<ObjectData>();
+		for (Map map : data) {
+			ObjectData objectData = createObjectData(objectDefinition, fieldDefinitions, map);
+			objects.add(objectData);
+		}
+		return objects;
+	}
+
+	private ObjectData createObjectData(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Map data) {
+		ObjectData objectData = new ObjectData();
+		objectData.setData(data);
+		objectData.setId((UUID)data.get("id"));
+		objectData.setObjectDefinition(objectDefinition);
+		objectData.setFieldDefinitions(fieldDefinitions);
+		return objectData;
 	}
 
 }

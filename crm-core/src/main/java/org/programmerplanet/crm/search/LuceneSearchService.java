@@ -74,17 +74,11 @@ public class LuceneSearchService extends AbstractSearchService {
 			return;
 		}
 
-		List<Map> objects = dataManager.getObjects(objectDefinition, fieldDefinitions);
+		List<ObjectData> objects = dataManager.getObjects(objectDefinition, fieldDefinitions);
 		Analyzer analyzer = new StandardAnalyzer();
 		IndexModifier indexModifier = new IndexModifier(getIndexDirectoryForObject(objectDefinition), analyzer, true);
 		try {
-			for (Map data : objects) {
-				ObjectData objectData = new ObjectData();
-				objectData.setObjectDefinition(objectDefinition);
-				objectData.setFieldDefinitions(fieldDefinitions);
-				objectData.setData(data);
-				objectData.setId((UUID)data.get("id"));
-
+			for (ObjectData objectData : objects) {
 				Document document = createDocument(objectData);
 				indexModifier.addDocument(document);
 			}
@@ -140,8 +134,9 @@ public class LuceneSearchService extends AbstractSearchService {
 				Hit hit = (Hit)h.next();
 				String idValue = hit.get("id");
 				UUID id = UUID.fromString(idValue);
-				Map object = dataManager.getObject(objectDefinition, fieldDefinitionsForDisplay, id);
-				results.add(object);
+				ObjectData objectData = dataManager.getObject(objectDefinition, fieldDefinitionsForDisplay, id);
+				Map data = objectData.getData();
+				results.add(data);
 			}
 		}
 		finally {

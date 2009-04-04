@@ -1,5 +1,6 @@
 package org.programmerplanet.crm.web.app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.programmerplanet.crm.data.DataManager;
+import org.programmerplanet.crm.data.ObjectData;
 import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +40,12 @@ public class ObjectListController extends ObjectController {
 
 		ObjectDefinition objectDefinition = metadataManager.getObjectDefinition(objectName);
 		List fieldDefinitions = metadataManager.getFieldDefinitionsForObjectList(objectDefinition);
-		List data = dataManager.getObjects(objectDefinition, fieldDefinitions);
+		List<ObjectData> objects = dataManager.getObjects(objectDefinition, fieldDefinitions);
+		
+		List<Map> data = new ArrayList<Map>();
+		for (ObjectData objectData : objects) {
+			data.add(objectData.getData());
+		}
 
 		Map model = new HashMap();
 		model.put("objectDefinition", objectDefinition);

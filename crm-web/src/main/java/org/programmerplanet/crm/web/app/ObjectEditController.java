@@ -156,20 +156,15 @@ public class ObjectEditController extends ObjectController {
 			}
 		}
 
+		boolean isNew = (objectData.getId() == null);
+		dataManager.saveObject(objectData);
 		UUID id = objectData.getId();
-		boolean newObject = (id == null);
-		if (newObject) {
-			id = dataManager.insertObject(objectData.getObjectDefinition(), objectData.getFieldDefinitions(), objectData.getData());
-		}
-		else {
-			dataManager.updateObject(objectData.getObjectDefinition(), objectData.getFieldDefinitions(), objectData.getData(), id);
-		}
 
 		String source = request.getParameter("source");
 		String sourceObject = request.getParameter("source_object");
 		UUID sourceObjectId = RequestUtil.getRequestId(request, "source_object_id");
 
-		if (StringUtils.isNotEmpty(sourceObject) && newObject) {
+		if (StringUtils.isNotEmpty(sourceObject) && isNew) {
 			String parentObjectName = sourceObject;
 			String childObjectName = objectName;
 
@@ -199,7 +194,7 @@ public class ObjectEditController extends ObjectController {
 			destination = "view";
 		}
 		// if source == list, action == add, go to view
-		else if ("list".equals(source) && StringUtils.isNotEmpty(destinationObjectId) && newObject) {
+		else if ("list".equals(source) && StringUtils.isNotEmpty(destinationObjectId) && isNew) {
 			destination = "view";
 		}
 		// if source == list, action == update, go to list
@@ -223,7 +218,8 @@ public class ObjectEditController extends ObjectController {
 		Map data = null;
 		UUID id = RequestUtil.getRequestId(request);
 		if (id != null) {
-			data = dataManager.getObject(objectDefinition, fieldDefinitions, id);
+			ObjectData objectData = dataManager.getObject(objectDefinition, fieldDefinitions, id);
+			data = objectData.getData();
 		}
 		else {
 			data = new HashMap();
