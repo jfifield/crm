@@ -18,8 +18,8 @@ import org.apache.commons.lang.StringUtils;
 import org.programmerplanet.crm.model.DataType;
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.ObjectDefinition;
-import org.programmerplanet.crm.util.MapEntryComparator;
-import org.programmerplanet.crm.util.URI;
+import org.programmerplanet.crm.web.util.MapEntryComparator;
+import org.programmerplanet.crm.web.util.URI;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
