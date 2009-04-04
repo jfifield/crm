@@ -37,6 +37,8 @@ public interface AdministrationService {
 
 	ObjectDefinition getObjectDefinition(UUID id);
 
+	ObjectDefinition getObjectDefinition(String objectName);
+
 	void saveObjectDefinition(ObjectDefinition objectDefinition);
 
 	void deleteObjectDefinition(ObjectDefinition objectDefinition);
@@ -52,6 +54,8 @@ public interface AdministrationService {
 	List<FieldDefinition> getFieldDefinitionsForObject(ObjectDefinition objectDefinition);
 
 	List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
+
+	List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
 
 	void saveFieldDefinition(FieldDefinition fieldDefinition);
 
@@ -84,6 +88,10 @@ public interface AdministrationService {
 	void moveOptionListItemViewIndex(OptionListItem optionListItem, String direction);
 
 	Relationship getRelationship(UUID id);
+
+	Relationship getRelationship(UUID parentObjectId, UUID childObjectId);
+
+	List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition);
 
 	void saveRelationship(Relationship relationship);
 

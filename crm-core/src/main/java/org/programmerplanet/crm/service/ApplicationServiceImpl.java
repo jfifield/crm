@@ -12,7 +12,6 @@ import org.programmerplanet.crm.dao.FieldDefinitionDao;
 import org.programmerplanet.crm.dao.FileDao;
 import org.programmerplanet.crm.dao.ObjectDefinitionDao;
 import org.programmerplanet.crm.dao.RelationshipDao;
-import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.DataType;
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
@@ -58,55 +57,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getApplications()
-	 */
-	public List<Application> getApplications() {
-		return applicationDao.getApplications();
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getApplication(java.util.UUID)
-	 */
-	public Application getApplication(UUID id) {
-		return applicationDao.getApplication(id);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getObjectDefinition(java.util.UUID)
-	 */
-	public ObjectDefinition getObjectDefinition(UUID id) {
-		return objectDefinitionDao.getObjectDefinition(id);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getObjectDefinition(java.lang.String)
-	 */
-	public ObjectDefinition getObjectDefinition(String objectName) {
-		return objectDefinitionDao.getObjectDefinition(objectName);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getObjectDefinitionsForApplication(org.programmerplanet.crm.model.Application)
-	 */
-	public List<ObjectDefinition> getObjectDefinitionsForApplication(Application application) {
-		return objectDefinitionDao.getObjectDefinitionsForApplication(application);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getFieldDefinitionsForObjectList(org.programmerplanet.crm.model.ObjectDefinition)
-	 */
-	public List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition) {
-		return fieldDefinitionDao.getFieldDefinitionsForObjectList(objectDefinition);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getFieldDefinitionsForObjectView(org.programmerplanet.crm.model.ObjectDefinition)
-	 */
-	public List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition) {
-		return fieldDefinitionDao.getFieldDefinitionsForObjectView(objectDefinition);
-	}
-
-	/**
 	 * @see org.programmerplanet.crm.service.ApplicationService#getCrmObjects(org.programmerplanet.crm.model.ObjectDefinition, java.util.List)
 	 */
 	public List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions) {
@@ -132,20 +82,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 */
 	public Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id) {
 		return crmObjectDao.getCrmObject(objectDefinition, fieldDefinitions, id);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getRelationship(java.util.UUID, java.util.UUID)
-	 */
-	public Relationship getRelationship(UUID parentObjectId, UUID childObjectId) {
-		return relationshipDao.getRelationship(parentObjectId, childObjectId);
-	}
-
-	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getRelationshipsForObject(org.programmerplanet.crm.model.ObjectDefinition)
-	 */
-	public List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition) {
-		return relationshipDao.getRelationshipsForObject(objectDefinition);
 	}
 
 	/**

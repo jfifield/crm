@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.programmerplanet.crm.model.ObjectDefinition;
 import org.programmerplanet.crm.model.Relationship;
+import org.programmerplanet.crm.service.AdministrationService;
 import org.programmerplanet.crm.service.ApplicationService;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ObjectViewController extends ObjectController {
 
+	private AdministrationService administrationService;
 	private ApplicationService applicationService;
+
+	public void setAdministrationService(AdministrationService administrationService) {
+		this.administrationService = administrationService;
+	}
 
 	public void setApplicationService(ApplicationService applicationService) {
 		this.applicationService = applicationService;
@@ -36,8 +42,8 @@ public class ObjectViewController extends ObjectController {
 		String objectName = getObjectName(request);
 		UUID id = RequestUtil.getRequestId(request);
 
-		ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectName);
-		List fieldDefinitions = applicationService.getFieldDefinitionsForObjectView(objectDefinition);
+		ObjectDefinition objectDefinition = administrationService.getObjectDefinition(objectName);
+		List fieldDefinitions = administrationService.getFieldDefinitionsForObjectView(objectDefinition);
 		Map data = applicationService.getCrmObject(objectDefinition, fieldDefinitions, id);
 
 		Map model = new HashMap();
@@ -56,14 +62,14 @@ public class ObjectViewController extends ObjectController {
 
 		UUID parentObjectId = parentObjectDefinition.getId();
 
-		List relationships = applicationService.getRelationshipsForObject(parentObjectDefinition);
+		List relationships = administrationService.getRelationshipsForObject(parentObjectDefinition);
 		
 		for (Iterator i = relationships.iterator(); i.hasNext();) {
 			Relationship relationship = (Relationship)i.next();
 
 			UUID objectId = relationship.getChildObjectId();
-			ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectId);
-			List fieldDefinitions = applicationService.getFieldDefinitionsForObjectList(objectDefinition);
+			ObjectDefinition objectDefinition = administrationService.getObjectDefinition(objectId);
+			List fieldDefinitions = administrationService.getFieldDefinitionsForObjectList(objectDefinition);
 
 			List data = applicationService.getRelatedCrmObjects(objectDefinition, fieldDefinitions, relationship, parentObjectDefinition, id);
 

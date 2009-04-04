@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.programmerplanet.crm.model.Application;
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
 import org.programmerplanet.crm.model.ObjectDefinition;
@@ -19,20 +18,6 @@ import org.programmerplanet.crm.model.Relationship;
  */
 public interface ApplicationService {
 
-	List<Application> getApplications();
-
-	Application getApplication(UUID id);
-
-	ObjectDefinition getObjectDefinition(UUID id);
-
-	ObjectDefinition getObjectDefinition(String objectName);
-
-	List<ObjectDefinition> getObjectDefinitionsForApplication(Application application);
-
-	List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
-
-	List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
-
 	List<Map> getCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions);
 
 	List<Map> getRelatedCrmObjects(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
@@ -40,10 +25,6 @@ public interface ApplicationService {
 	List<Map> getCrmObjectsAvailableForLinking(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, Relationship relationship, ObjectDefinition parentObjectDefinition, UUID id);
 
 	Map getCrmObject(ObjectDefinition objectDefinition, List<FieldDefinition> fieldDefinitions, UUID id);
-
-	Relationship getRelationship(UUID parentObjectId, UUID childObjectId);
-
-	List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition);
 
 	FileInfo getFileInfo(UUID id);
 

@@ -179,6 +179,13 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return objectDefinitionDao.getObjectDefinition(id);
 	}
 
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#getObjectDefinition(java.lang.String)
+	 */
+	public ObjectDefinition getObjectDefinition(String objectName) {
+		return objectDefinitionDao.getObjectDefinition(objectName);
+	}
+	
 	private void insertObjectDefinition(ObjectDefinition objectDefinition) {
 		objectDefinitionDao.insertObjectDefinition(objectDefinition);
 		schemaManager.createTable(objectDefinition);
@@ -301,6 +308,13 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 */
 	public List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition) {
 		return fieldDefinitionDao.getFieldDefinitionsForObjectList(objectDefinition);
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#getFieldDefinitionsForObjectView(org.programmerplanet.crm.model.ObjectDefinition)
+	 */
+	public List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition) {
+		return fieldDefinitionDao.getFieldDefinitionsForObjectView(objectDefinition);
 	}
 
 	private void insertFieldDefinition(FieldDefinition fieldDefinition) {
@@ -530,6 +544,20 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 */
 	public Relationship getRelationship(UUID id) {
 		return relationshipDao.getRelationship(id);
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#getRelationship(java.util.UUID, java.util.UUID)
+	 */
+	public Relationship getRelationship(UUID parentObjectId, UUID childObjectId) {
+		return relationshipDao.getRelationship(parentObjectId, childObjectId);
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#getRelationshipsForObject(org.programmerplanet.crm.model.ObjectDefinition)
+	 */
+	public List<Relationship> getRelationshipsForObject(ObjectDefinition objectDefinition) {
+		return relationshipDao.getRelationshipsForObject(objectDefinition);
 	}
 
 	/**

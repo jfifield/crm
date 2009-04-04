@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.programmerplanet.crm.model.ObjectDefinition;
+import org.programmerplanet.crm.service.AdministrationService;
 import org.programmerplanet.crm.service.ApplicationService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +19,12 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ObjectListController extends ObjectController {
 
+	private AdministrationService administrationService;
 	private ApplicationService applicationService;
+
+	public void setAdministrationService(AdministrationService administrationService) {
+		this.administrationService = administrationService;
+	}
 
 	public void setApplicationService(ApplicationService applicationService) {
 		this.applicationService = applicationService;
@@ -30,8 +36,8 @@ public class ObjectListController extends ObjectController {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
 
-		ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectName);
-		List fieldDefinitions = applicationService.getFieldDefinitionsForObjectList(objectDefinition);
+		ObjectDefinition objectDefinition = administrationService.getObjectDefinition(objectName);
+		List fieldDefinitions = administrationService.getFieldDefinitionsForObjectList(objectDefinition);
 		List data = applicationService.getCrmObjects(objectDefinition, fieldDefinitions);
 
 		Map model = new HashMap();

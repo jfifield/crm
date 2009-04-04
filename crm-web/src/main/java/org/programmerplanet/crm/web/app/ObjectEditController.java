@@ -17,6 +17,7 @@ import org.programmerplanet.crm.model.CrmObject;
 import org.programmerplanet.crm.model.FieldDefinition;
 import org.programmerplanet.crm.model.FileInfo;
 import org.programmerplanet.crm.model.ObjectDefinition;
+import org.programmerplanet.crm.service.AdministrationService;
 import org.programmerplanet.crm.service.ApplicationService;
 import org.programmerplanet.crm.web.RequestUtil;
 import org.springframework.validation.BindException;
@@ -32,8 +33,13 @@ import org.springframework.web.util.WebUtils;
  */
 public class ObjectEditController extends ObjectController {
 
+	private AdministrationService administrationService;
 	private ApplicationService applicationService;
 	private Map converters;
+
+	public void setAdministrationService(AdministrationService administrationService) {
+		this.administrationService = administrationService;
+	}
 
 	public void setApplicationService(ApplicationService applicationService) {
 		this.applicationService = applicationService;
@@ -167,8 +173,8 @@ public class ObjectEditController extends ObjectController {
 			String parentObjectName = sourceObject;
 			String childObjectName = objectName;
 
-			ObjectDefinition parentObjectDefinition = applicationService.getObjectDefinition(parentObjectName);
-			ObjectDefinition childObjectDefinition = applicationService.getObjectDefinition(childObjectName);
+			ObjectDefinition parentObjectDefinition = administrationService.getObjectDefinition(parentObjectName);
+			ObjectDefinition childObjectDefinition = administrationService.getObjectDefinition(childObjectName);
 
 			UUID parentId = sourceObjectId;
 			UUID childId = id;
@@ -211,8 +217,8 @@ public class ObjectEditController extends ObjectController {
 	private CrmObject formBackingObject(HttpServletRequest request) throws Exception {
 		String objectName = getObjectName(request);
 
-		ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectName);
-		List fieldDefinitions = applicationService.getFieldDefinitionsForObjectView(objectDefinition);
+		ObjectDefinition objectDefinition = administrationService.getObjectDefinition(objectName);
+		List fieldDefinitions = administrationService.getFieldDefinitionsForObjectView(objectDefinition);
 
 		Map data = null;
 		UUID id = RequestUtil.getRequestId(request);
@@ -276,7 +282,7 @@ public class ObjectEditController extends ObjectController {
 
 	public ModelAndView handleDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String objectName = getObjectName(request);
-		ObjectDefinition objectDefinition = applicationService.getObjectDefinition(objectName);
+		ObjectDefinition objectDefinition = administrationService.getObjectDefinition(objectName);
 		UUID id = RequestUtil.getRequestId(request);
 		applicationService.deleteCrmObject(objectDefinition, id);
 
