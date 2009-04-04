@@ -144,7 +144,7 @@ public class ObjectEditController extends ObjectController {
 					fileInfo.setFileName(multipartFile.getOriginalFilename());
 					fileInfo.setFileSize(multipartFile.getSize());
 					fileInfo.setMimeType(multipartFile.getContentType());
-					applicationService.insertFile(fileInfo, multipartFile.getInputStream());
+					applicationService.saveFile(fileInfo, multipartFile.getInputStream());
 					crmObject.getData().put(name, fileInfo.getId());
 				}
 			}
@@ -173,7 +173,7 @@ public class ObjectEditController extends ObjectController {
 			UUID parentId = sourceObjectId;
 			UUID childId = id;
 
-			applicationService.insertCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
+			applicationService.saveCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 		}
 
 		String destinationObject = null;

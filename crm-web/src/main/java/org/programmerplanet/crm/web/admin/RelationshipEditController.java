@@ -27,7 +27,7 @@ public class RelationshipEditController extends SimpleMultiActionFormController 
 
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Relationship relationship = (Relationship)command;
-		administrationService.insertRelationship(relationship);
+		administrationService.saveRelationship(relationship);
 		return new ModelAndView(getSuccessView(), "id", relationship.getParentObjectId());
 	}
 

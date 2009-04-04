@@ -33,13 +33,13 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		Application application = (Application)command;
 
-		if (application.getId() != null) {
-			administrationService.updateApplication(application);
-			return new ModelAndView(getSuccessView());
+		boolean isNew = (application.getId() == null);
+		administrationService.saveApplication(application);
+		if (isNew) {
+			return new ModelAndView("redirect:applicationEdit", "id", application.getId());
 		}
 		else {
-			administrationService.insertApplication(application);
-			return new ModelAndView("redirect:applicationEdit", "id", application.getId());
+			return new ModelAndView(getSuccessView());
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ApplicationEditController extends SimpleMultiActionFormController {
 			List selectedObjectDefinition = administrationService.getObjectDefinitionsForApplication(application);
 			data.put("selectedObjectDefinition", selectedObjectDefinition);
 
-			List availableObjectDefinition = administrationService.getAllObjectDefinitions();
+			List availableObjectDefinition = administrationService.getObjectDefinitions();
 			availableObjectDefinition.removeAll(selectedObjectDefinition);
 			data.put("availableObjectDefinition", availableObjectDefinition);
 

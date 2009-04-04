@@ -28,7 +28,7 @@ public class ApplicationListController implements Controller {
 	 * @see org.springframework.web.servlet.mvc.Controller#handleRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List applications = administrationService.getAllApplications();
+		List applications = administrationService.getApplications();
 
 		Map model = new HashMap();
 		model.put("applications", applications);

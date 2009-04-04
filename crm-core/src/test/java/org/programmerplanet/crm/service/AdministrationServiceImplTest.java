@@ -32,14 +32,14 @@ import junit.framework.TestCase;
  */
 public class AdministrationServiceImplTest extends TestCase {
 
-	public void testInsertApplication_NoExisting() {
+	public void testSaveApplication_NoExisting() {
 		Application application = new Application();
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
 		MockControl applicationDaoControl = MockControl.createControl(ApplicationDao.class);
 		ApplicationDao applicationDao = (ApplicationDao)applicationDaoControl.getMock();
-		applicationDao.getAllApplications();
+		applicationDao.getApplications();
 		applicationDaoControl.setReturnValue(Collections.EMPTY_LIST);
 
 		applicationDao.insertApplication(application);
@@ -48,18 +48,18 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		administrationService.setApplicationDao(applicationDao);
 
-		administrationService.insertApplication(application);
+		administrationService.saveApplication(application);
 		assertEquals("application.viewIndex", new Integer(0), application.getViewIndex());
 	}
 
-	public void testInsertApplication_WithExisting() {
+	public void testSaveApplication_WithExisting() {
 		Application application = new Application();
 
 		AdministrationServiceImpl administrationService = new AdministrationServiceImpl();
 
 		MockControl applicationDaoControl = MockControl.createControl(ApplicationDao.class);
 		ApplicationDao applicationDao = (ApplicationDao)applicationDaoControl.getMock();
-		applicationDao.getAllApplications();
+		applicationDao.getApplications();
 
 		List list = new ArrayList();
 		Application application1 = new Application();
@@ -79,7 +79,7 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		administrationService.setApplicationDao(applicationDao);
 
-		administrationService.insertApplication(application);
+		administrationService.saveApplication(application);
 		assertEquals("application.viewIndex", new Integer(4), application.getViewIndex());
 	}
 
@@ -88,7 +88,7 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		MockControl applicationDaoControl = MockControl.createControl(ApplicationDao.class);
 		ApplicationDao applicationDao = (ApplicationDao)applicationDaoControl.getMock();
-		applicationDao.getAllApplications();
+		applicationDao.getApplications();
 
 		List list = new ArrayList();
 		Application application1 = new Application();
@@ -123,7 +123,7 @@ public class AdministrationServiceImplTest extends TestCase {
 
 		MockControl applicationDaoControl = MockControl.createControl(ApplicationDao.class);
 		ApplicationDao applicationDao = (ApplicationDao)applicationDaoControl.getMock();
-		applicationDao.getAllApplications();
+		applicationDao.getApplications();
 
 		List list = new ArrayList();
 		Application application1 = new Application();
@@ -153,7 +153,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		assertEquals("application3.viewIndex", new Integer(1), application3.getViewIndex());
 	}
 
-	public void testInsertApplicationObject_NoExisting() {
+	public void testSaveApplicationObject_NoExisting() {
 		UUID applicationId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		ApplicationObject applicationObject = new ApplicationObject();
 		applicationObject.setApplicationId(applicationId);
@@ -181,11 +181,11 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setApplicationDao(applicationDao);
 		administrationService.setApplicationObjectDao(applicationObjectDao);
 
-		administrationService.insertApplicationObject(applicationObject);
+		administrationService.saveApplicationObject(applicationObject);
 		assertEquals("applicationObject.viewIndex", new Integer(0), applicationObject.getViewIndex());
 	}
 
-	public void testInsertApplicationObject_WithExisting() {
+	public void testSaveApplicationObject_WithExisting() {
 		UUID applicationId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		ApplicationObject applicationObject = new ApplicationObject();
 		applicationObject.setApplicationId(applicationId);
@@ -224,7 +224,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setApplicationDao(applicationDao);
 		administrationService.setApplicationObjectDao(applicationObjectDao);
 
-		administrationService.insertApplicationObject(applicationObject);
+		administrationService.saveApplicationObject(applicationObject);
 		assertEquals("applicationObject.viewIndex", new Integer(4), applicationObject.getViewIndex());
 	}
 
@@ -328,7 +328,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		assertEquals("applicationObject3.viewIndex", new Integer(1), applicationObject3.getViewIndex());
 	}
 
-	public void testInsertFieldDefinition_NoExisting() {
+	public void testSaveFieldDefinition_NoExisting() {
 		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		FieldDefinition fieldDefinition = new FieldDefinition();
 		fieldDefinition.setObjectId(objectId);
@@ -364,11 +364,11 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setFieldDefinitionDao(fieldDefinitionDao);
 		administrationService.setSchemaManager(schemaManager);
 
-		administrationService.insertFieldDefinition(fieldDefinition);
+		administrationService.saveFieldDefinition(fieldDefinition);
 		assertEquals("fieldDefinition.viewIndex", new Integer(0), fieldDefinition.getViewIndex());
 	}
 
-	public void testInsertFieldDefinition_WithExisting() {
+	public void testSaveFieldDefinition_WithExisting() {
 		UUID objectId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		FieldDefinition fieldDefinition = new FieldDefinition();
 		fieldDefinition.setObjectId(objectId);
@@ -415,7 +415,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setFieldDefinitionDao(fieldDefinitionDao);
 		administrationService.setSchemaManager(schemaManager);
 
-		administrationService.insertFieldDefinition(fieldDefinition);
+		administrationService.saveFieldDefinition(fieldDefinition);
 		assertEquals("fieldDefinition.viewIndex", new Integer(4), fieldDefinition.getViewIndex());
 	}
 
@@ -760,7 +760,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		assertNull("fieldDefinition3.listIndex", fieldDefinition3.getListIndex());
 	}
 
-	public void testInsertOptionListItem_NoExisting() {
+	public void testSaveOptionListItem_NoExisting() {
 		UUID optionListId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		OptionListItem optionListItem = new OptionListItem();
 		optionListItem.setOptionListId(optionListId);
@@ -788,11 +788,11 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setOptionListDao(optionListDao);
 		administrationService.setOptionListItemDao(optionListItemDao);
 
-		administrationService.insertOptionListItem(optionListItem);
+		administrationService.saveOptionListItem(optionListItem);
 		assertEquals("optionListItem.viewIndex", new Integer(0), optionListItem.getViewIndex());
 	}
 
-	public void testInsertOptionListItem_WithExisting() {
+	public void testSaveOptionListItem_WithExisting() {
 		UUID optionListId = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		OptionListItem optionListItem = new OptionListItem();
 		optionListItem.setOptionListId(optionListId);
@@ -831,7 +831,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setOptionListDao(optionListDao);
 		administrationService.setOptionListItemDao(optionListItemDao);
 
-		administrationService.insertOptionListItem(optionListItem);
+		administrationService.saveOptionListItem(optionListItem);
 		assertEquals("optionListItem.viewIndex", new Integer(4), optionListItem.getViewIndex());
 	}
 
@@ -935,7 +935,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		assertEquals("optionListItem3.viewIndex", new Integer(1), optionListItem3.getViewIndex());
 	}
 
-	public void testInsertRelationship_NoExisting() {
+	public void testSaveRelationship_NoExisting() {
 		UUID objectId1 = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		UUID objectId2 = UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402");
 		Relationship relationship1 = new Relationship();
@@ -981,13 +981,13 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setRelationshipDao(relationshipDao);
 		administrationService.setSchemaManager(schemaManager);
 
-		administrationService.insertRelationship(relationship1);
+		administrationService.saveRelationship(relationship1);
 		assertEquals("relationship1.viewIndex", new Integer(0), relationship1.getViewIndex());
 		Relationship relationship2 = (Relationship)matcher.actual[0];
 		assertEquals("relationship2.viewIndex", new Integer(0), relationship2.getViewIndex());
 	}
 
-	public void testInsertRelationship_WithExisting() {
+	public void testSaveRelationship_WithExisting() {
 		UUID objectId1 = UUID.fromString("70a7031e-a5f6-40c4-a70f-10c8c171d7dc");
 		UUID objectId2 = UUID.fromString("654680ca-bead-4a70-a449-da1ee8187402");
 		Relationship relationship1 = new Relationship();
@@ -1054,7 +1054,7 @@ public class AdministrationServiceImplTest extends TestCase {
 		administrationService.setRelationshipDao(relationshipDao);
 		administrationService.setSchemaManager(schemaManager);
 
-		administrationService.insertRelationship(relationship1);
+		administrationService.saveRelationship(relationship1);
 		assertEquals("relationship1.viewIndex", new Integer(4), relationship1.getViewIndex());
 		Relationship relationship2 = (Relationship)matcher.actual[0];
 		assertEquals("relationship2.viewIndex", new Integer(4), relationship2.getViewIndex());

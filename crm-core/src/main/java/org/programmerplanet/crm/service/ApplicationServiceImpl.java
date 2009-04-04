@@ -58,10 +58,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#getAllApplications()
+	 * @see org.programmerplanet.crm.service.ApplicationService#getApplications()
 	 */
-	public List<Application> getAllApplications() {
-		return applicationDao.getAllApplications();
+	public List<Application> getApplications() {
+		return applicationDao.getApplications();
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#insertFile(org.programmerplanet.crm.model.FileInfo, java.io.InputStream)
+	 * @see org.programmerplanet.crm.service.ApplicationService#saveFile(org.programmerplanet.crm.model.FileInfo, java.io.InputStream)
 	 */
-	public void insertFile(FileInfo fileInfo, InputStream inputStream) {
+	public void saveFile(FileInfo fileInfo, InputStream inputStream) {
 		fileDao.insertFile(fileInfo, inputStream);
 	}
 
@@ -218,9 +218,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.ApplicationService#insertCrmObjectRelationship(org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
+	 * @see org.programmerplanet.crm.service.ApplicationService#saveCrmObjectRelationship(org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.model.ObjectDefinition, java.util.UUID)
 	 */
-	public void insertCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
+	public void saveCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
 		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
 		crmObjectDao.insertCrmObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}

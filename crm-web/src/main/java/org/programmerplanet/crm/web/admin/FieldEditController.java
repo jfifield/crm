@@ -78,12 +78,7 @@ public class FieldEditController extends SimpleMultiActionFormController {
 		String generatedColumnName = fieldDefinition.generateColumnName();
 		fieldDefinition.setColumnName(generatedColumnName);
 
-		if (fieldDefinition.getId() != null) {
-			administrationService.updateFieldDefinition(fieldDefinition);
-		}
-		else {
-			administrationService.insertFieldDefinition(fieldDefinition);
-		}
+		administrationService.saveFieldDefinition(fieldDefinition);
 
 		return new ModelAndView(getSuccessView(), "id", fieldDefinition.getObjectId());
 	}
@@ -152,10 +147,10 @@ public class FieldEditController extends SimpleMultiActionFormController {
 
 		data.put("dataTypes", DataType.getEnumList());
 
-		List optionLists = administrationService.getAllOptionLists();
+		List optionLists = administrationService.getOptionLists();
 		data.put("optionLists", optionLists);
 
-		List objectDefinitions = administrationService.getAllObjectDefinitions();
+		List objectDefinitions = administrationService.getObjectDefinitions();
 		data.put("objectDefinitions", objectDefinitions);
 
 		return data;

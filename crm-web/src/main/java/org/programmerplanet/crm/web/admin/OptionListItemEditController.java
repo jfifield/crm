@@ -32,14 +32,7 @@ public class OptionListItemEditController extends SimpleMultiActionFormControlle
 
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		OptionListItem optionListItem = (OptionListItem)command;
-
-		if (optionListItem.getId() != null) {
-			administrationService.updateOptionListItem(optionListItem);
-		}
-		else {
-			administrationService.insertOptionListItem(optionListItem);
-		}
-
+		administrationService.saveOptionListItem(optionListItem);
 		return new ModelAndView(getSuccessView(), "id", optionListItem.getOptionListId());
 	}
 

@@ -56,7 +56,7 @@ public class LuceneSearchService extends AbstractSearchService {
 	 * @see org.programmerplanet.crm.search.SearchService#index()
 	 */
 	public void index() {
-		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
+		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getObjectDefinitions();
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			try {
 				index(objectDefinition);

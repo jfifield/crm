@@ -16,9 +16,9 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 public class JdbcApplicationDao extends JdbcDaoSupport implements ApplicationDao {
 
 	/**
-	 * @see org.programmerplanet.crm.dao.ApplicationDao#getAllApplications()
+	 * @see org.programmerplanet.crm.dao.ApplicationDao#getApplications()
 	 */
-	public List<Application> getAllApplications() {
+	public List<Application> getApplications() {
 		String sql = "SELECT * FROM crm_application ORDER BY view_index, application_name";
 		RowMapper applicationRowMapper = new ApplicationRowMapper();
 		List application = this.getJdbcTemplate().query(sql, applicationRowMapper);

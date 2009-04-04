@@ -19,7 +19,7 @@ import org.programmerplanet.crm.model.Relationship;
  */
 public interface ApplicationService {
 
-	List<Application> getAllApplications();
+	List<Application> getApplications();
 
 	Application getApplication(UUID id);
 
@@ -47,7 +47,7 @@ public interface ApplicationService {
 
 	FileInfo getFileInfo(UUID id);
 
-	void insertFile(FileInfo fileInfo, InputStream inputStream);
+	void saveFile(FileInfo fileInfo, InputStream inputStream);
 
 	void getFile(UUID id, OutputStream outputStream);
 
@@ -57,7 +57,7 @@ public interface ApplicationService {
 
 	void deleteCrmObject(ObjectDefinition objectDefinition, UUID id);
 
-	void insertCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
+	void saveCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
 
 	void deleteCrmObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId);
 

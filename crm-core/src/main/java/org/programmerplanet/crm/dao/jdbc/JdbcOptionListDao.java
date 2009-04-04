@@ -16,9 +16,9 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 public class JdbcOptionListDao extends JdbcDaoSupport implements OptionListDao {
 
 	/**
-	 * @see org.programmerplanet.crm.dao.OptionListDao#getAllOptionLists()
+	 * @see org.programmerplanet.crm.dao.OptionListDao#getOptionLists()
 	 */
-	public List<OptionList> getAllOptionLists() {
+	public List<OptionList> getOptionLists() {
 		String sql = "SELECT * FROM crm_option_list ORDER BY option_list_name";
 		RowMapper rowMapper = new OptionListRowMapper();
 		List optionLists = this.getJdbcTemplate().query(sql, rowMapper);

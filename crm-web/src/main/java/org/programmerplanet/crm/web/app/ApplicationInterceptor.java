@@ -29,7 +29,7 @@ public class ApplicationInterceptor extends HandlerInterceptorAdapter {
 		UserSession userSession = UserSession.getUserSession(request);
 		request.setAttribute("userSession", userSession);
 
-		List applications = applicationService.getAllApplications();
+		List applications = applicationService.getApplications();
 		request.setAttribute("crm_applications", applications);
 
 		// change selected application if requested...

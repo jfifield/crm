@@ -33,13 +33,13 @@ public class OptionListEditController extends SimpleMultiActionFormController {
 	public ModelAndView save(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		OptionList optionList = (OptionList)command;
 
-		if (optionList.getId() != null) {
-			administrationService.updateOptionList(optionList);
-			return new ModelAndView(getSuccessView());
+		boolean isNew = (optionList.getId() == null);
+		administrationService.saveOptionList(optionList);
+		if (isNew) {
+			return new ModelAndView("redirect:optionListEdit", "id", optionList.getId());
 		}
 		else {
-			administrationService.insertOptionList(optionList);
-			return new ModelAndView("redirect:optionListEdit", "id", optionList.getId());
+			return new ModelAndView(getSuccessView());
 		}
 	}
 

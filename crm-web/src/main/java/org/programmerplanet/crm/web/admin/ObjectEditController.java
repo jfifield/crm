@@ -37,13 +37,13 @@ public class ObjectEditController extends SimpleMultiActionFormController {
 		String generatedTableName = objectDefinition.generateTableName();
 		objectDefinition.setTableName(generatedTableName);
 
-		if (objectDefinition.getId() != null) {
-			administrationService.updateObjectDefinition(objectDefinition);
-			return new ModelAndView(getSuccessView());
+		boolean isNew = (objectDefinition.getId() == null);
+		administrationService.saveObjectDefinition(objectDefinition);
+		if (isNew) {
+			return new ModelAndView("redirect:objectEdit", "id", objectDefinition.getId());
 		}
 		else {
-			administrationService.insertObjectDefinition(objectDefinition);
-			return new ModelAndView("redirect:objectEdit", "id", objectDefinition.getId());
+			return new ModelAndView(getSuccessView());
 		}
 	}
 
@@ -90,7 +90,7 @@ public class ObjectEditController extends SimpleMultiActionFormController {
 			Map selectedRelationships = administrationService.getRelatedObjectDefinitionsForObject(objectDefinition);
 			data.put("selectedRelationships", selectedRelationships);
 
-			List availableObjectDefinition = administrationService.getAllObjectDefinitions();
+			List availableObjectDefinition = administrationService.getObjectDefinitions();
 			availableObjectDefinition.removeAll(selectedRelationships.values());
 			availableObjectDefinition.remove(objectDefinition);
 			data.put("availableObjectDefinition", availableObjectDefinition);

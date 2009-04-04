@@ -76,7 +76,7 @@ public class ObjectLinkController extends ObjectController {
 		UUID parentId = RequestUtil.getRequestId(request, "source_object_id");
 		UUID childId = RequestUtil.getRequestId(request);
 
-		applicationService.insertCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
+		applicationService.saveCrmObjectRelationship(parentObjectDefinition, parentId, childObjectDefinition, childId);
 
 		String view = "redirect:" + parentObjectName + ".view?id=" + parentId;
 		return new ModelAndView(view);

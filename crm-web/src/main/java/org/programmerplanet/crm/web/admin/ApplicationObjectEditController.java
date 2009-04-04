@@ -27,7 +27,7 @@ public class ApplicationObjectEditController extends SimpleMultiActionFormContro
 
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 		ApplicationObject applicationObject = (ApplicationObject)command;
-		administrationService.insertApplicationObject(applicationObject);
+		administrationService.saveApplicationObject(applicationObject);
 		return new ModelAndView(getSuccessView(), "id", applicationObject.getApplicationId());
 	}
 

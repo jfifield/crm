@@ -28,7 +28,7 @@ public class OptionListListController implements Controller {
 	 * @see org.springframework.web.servlet.mvc.Controller#handleRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List optionLists = administrationService.getAllOptionLists();
+		List optionLists = administrationService.getOptionLists();
 
 		Map model = new HashMap();
 		model.put("optionLists", optionLists);

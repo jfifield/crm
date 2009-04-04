@@ -12,7 +12,7 @@ import org.programmerplanet.crm.model.OptionList;
  */
 public interface OptionListDao {
 
-	List<OptionList> getAllOptionLists();
+	List<OptionList> getOptionLists();
 
 	OptionList getOptionList(UUID id);
 

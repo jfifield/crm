@@ -81,10 +81,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getAllApplications()
+	 * @see org.programmerplanet.crm.service.AdministrationService#getApplications()
 	 */
-	public List<Application> getAllApplications() {
-		return applicationDao.getAllApplications();
+	public List<Application> getApplications() {
+		return applicationDao.getApplications();
 	}
 
 	/**
@@ -94,25 +94,31 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return applicationDao.getApplication(id);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertApplication(org.programmerplanet.crm.model.Application)
-	 */
-	public void insertApplication(Application application) {
+	private void insertApplication(Application application) {
 		int viewIndex = getNextApplicationViewIndex();
 		application.setViewIndex(new Integer(viewIndex));
 		applicationDao.insertApplication(application);
 	}
 
 	private int getNextApplicationViewIndex() {
-		List applications = applicationDao.getAllApplications();
+		List applications = applicationDao.getApplications();
 		return getNextIndexValue(applications, "viewIndex");
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#updateApplication(org.programmerplanet.crm.model.Application)
-	 */
-	public void updateApplication(Application application) {
+	private void updateApplication(Application application) {
 		applicationDao.updateApplication(application);
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveApplication(org.programmerplanet.crm.model.Application)
+	 */
+	public void saveApplication(Application application) {
+		if (application.getId() != null) {
+			this.updateApplication(application);
+		}
+		else {
+			this.insertApplication(application);
+		}
 	}
 
 	/**
@@ -126,7 +132,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 	 * @see org.programmerplanet.crm.service.AdministrationService#moveApplicationViewIndex(org.programmerplanet.crm.model.Application, java.lang.String)
 	 */
 	public void moveApplicationViewIndex(Application application, String direction) {
-		List<Application> applications = applicationDao.getAllApplications();
+		List<Application> applications = applicationDao.getApplications();
 		ListUtil.moveElement(applications, application, direction);
 
 		int index = 0;
@@ -160,10 +166,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getAllObjectDefinitions()
+	 * @see org.programmerplanet.crm.service.AdministrationService#getObjectDefinitions()
 	 */
-	public List<ObjectDefinition> getAllObjectDefinitions() {
-		return objectDefinitionDao.getAllObjectDefinitions();
+	public List<ObjectDefinition> getObjectDefinitions() {
+		return objectDefinitionDao.getObjectDefinitions();
 	}
 
 	/**
@@ -173,23 +179,29 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return objectDefinitionDao.getObjectDefinition(id);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertObjectDefinition(org.programmerplanet.crm.model.ObjectDefinition)
-	 */
-	public void insertObjectDefinition(ObjectDefinition objectDefinition) {
+	private void insertObjectDefinition(ObjectDefinition objectDefinition) {
 		objectDefinitionDao.insertObjectDefinition(objectDefinition);
 		schemaManager.createTable(objectDefinition);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#updateObjectDefinition(org.programmerplanet.crm.model.ObjectDefinition)
-	 */
-	public void updateObjectDefinition(ObjectDefinition objectDefinition) {
+	private void updateObjectDefinition(ObjectDefinition objectDefinition) {
 		ObjectDefinition originalObjectDefinition = objectDefinitionDao.getObjectDefinition(objectDefinition.getId());
 		objectDefinitionDao.updateObjectDefinition(objectDefinition);
 		// rename table if necessary...
 		if (!originalObjectDefinition.getTableName().equals(objectDefinition.getTableName())) {
 			schemaManager.renameTable(originalObjectDefinition.getTableName(), objectDefinition);
+		}
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveObjectDefinition(org.programmerplanet.crm.model.ObjectDefinition)
+	 */
+	public void saveObjectDefinition(ObjectDefinition objectDefinition) {
+		if (objectDefinition.getId() != null) {
+			this.updateObjectDefinition(objectDefinition);
+		}
+		else {
+			this.insertObjectDefinition(objectDefinition);
 		}
 	}
 
@@ -231,9 +243,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertApplicationObject(org.programmerplanet.crm.model.ApplicationObject)
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveApplicationObject(org.programmerplanet.crm.model.ApplicationObject)
 	 */
-	public void insertApplicationObject(ApplicationObject applicationObject) {
+	public void saveApplicationObject(ApplicationObject applicationObject) {
 		int viewIndex = getNextApplicationObjectViewIndex(applicationObject);
 		applicationObject.setViewIndex(new Integer(viewIndex));
 		applicationObjectDao.insertApplicationObject(applicationObject);
@@ -291,10 +303,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return fieldDefinitionDao.getFieldDefinitionsForObjectList(objectDefinition);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertFieldDefinition(org.programmerplanet.crm.model.FieldDefinition)
-	 */
-	public void insertFieldDefinition(FieldDefinition fieldDefinition) {
+	private void insertFieldDefinition(FieldDefinition fieldDefinition) {
 		int viewIndex = getNextFieldDefinitionViewIndex(fieldDefinition);
 		fieldDefinition.setViewIndex(new Integer(viewIndex));
 		fieldDefinitionDao.insertFieldDefinition(fieldDefinition);
@@ -310,16 +319,25 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return getNextIndexValue(fieldDefinitions, "viewIndex");
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#updateFieldDefinition(org.programmerplanet.crm.model.FieldDefinition)
-	 */
-	public void updateFieldDefinition(FieldDefinition fieldDefinition) {
+	private void updateFieldDefinition(FieldDefinition fieldDefinition) {
 		FieldDefinition originalFieldDefinition = fieldDefinitionDao.getFieldDefinition(fieldDefinition.getId());
 		fieldDefinitionDao.updateFieldDefinition(fieldDefinition);
 		// rename field if necessary...
 		if (!originalFieldDefinition.getColumnName().equals(fieldDefinition.getColumnName())) {
 			ObjectDefinition objectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getObjectId());
 			schemaManager.renameColumn(objectDefinition, originalFieldDefinition.getColumnName(), fieldDefinition);
+		}
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveFieldDefinition(org.programmerplanet.crm.model.FieldDefinition)
+	 */
+	public void saveFieldDefinition(FieldDefinition fieldDefinition) {
+		if (fieldDefinition.getId() != null) {
+			this.updateFieldDefinition(fieldDefinition);
+		}
+		else {
+			this.insertFieldDefinition(fieldDefinition);
 		}
 	}
 
@@ -395,10 +413,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#getAllOptionLists()
+	 * @see org.programmerplanet.crm.service.AdministrationService#getOptionLists()
 	 */
-	public List<OptionList> getAllOptionLists() {
-		return optionListDao.getAllOptionLists();
+	public List<OptionList> getOptionLists() {
+		return optionListDao.getOptionLists();
 	}
 
 	/**
@@ -408,18 +426,24 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return optionListDao.getOptionList(id);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertOptionList(org.programmerplanet.crm.model.OptionList)
-	 */
-	public void insertOptionList(OptionList optionList) {
+	private void insertOptionList(OptionList optionList) {
 		optionListDao.insertOptionList(optionList);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#updateOptionList(org.programmerplanet.crm.model.OptionList)
-	 */
-	public void updateOptionList(OptionList optionList) {
+	private void updateOptionList(OptionList optionList) {
 		optionListDao.updateOptionList(optionList);
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveOptionList(org.programmerplanet.crm.model.OptionList)
+	 */
+	public void saveOptionList(OptionList optionList) {
+		if (optionList.getId() != null) {
+			this.updateOptionList(optionList);
+		}
+		else {
+			this.insertOptionList(optionList);
+		}
 	}
 
 	/**
@@ -448,10 +472,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return optionListItemDao.getOptionListItem(id);
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertOptionListItem(org.programmerplanet.crm.model.OptionListItem)
-	 */
-	public void insertOptionListItem(OptionListItem optionListItem) {
+	private void insertOptionListItem(OptionListItem optionListItem) {
 		int viewIndex = getNextOptionListItemViewIndex(optionListItem);
 		optionListItem.setViewIndex(new Integer(viewIndex));
 		optionListItemDao.insertOptionListItem(optionListItem);
@@ -463,11 +484,20 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return getNextIndexValue(optionListItems, "viewIndex");
 	}
 
-	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#updateOptionListItem(org.programmerplanet.crm.model.OptionListItem)
-	 */
-	public void updateOptionListItem(OptionListItem optionListItem) {
+	private void updateOptionListItem(OptionListItem optionListItem) {
 		optionListItemDao.updateOptionListItem(optionListItem);
+	}
+
+	/**
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveOptionListItem(org.programmerplanet.crm.model.OptionListItem)
+	 */
+	public void saveOptionListItem(OptionListItem optionListItem) {
+		if (optionListItem.getId() != null) {
+			this.updateOptionListItem(optionListItem);
+		}
+		else {
+			this.insertOptionListItem(optionListItem);
+		}
 	}
 
 	/**
@@ -503,9 +533,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	}
 
 	/**
-	 * @see org.programmerplanet.crm.service.AdministrationService#insertRelationship(org.programmerplanet.crm.model.Relationship)
+	 * @see org.programmerplanet.crm.service.AdministrationService#saveRelationship(org.programmerplanet.crm.model.Relationship)
 	 */
-	public void insertRelationship(Relationship relationship) {
+	public void saveRelationship(Relationship relationship) {
 		ObjectDefinition parentObjectDefinition = objectDefinitionDao.getObjectDefinition(relationship.getParentObjectId());
 		ObjectDefinition childObjectDefinition = objectDefinitionDao.getObjectDefinition(relationship.getChildObjectId());
 

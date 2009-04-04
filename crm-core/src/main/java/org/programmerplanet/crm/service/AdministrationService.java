@@ -19,13 +19,11 @@ import org.programmerplanet.crm.model.Relationship;
  */
 public interface AdministrationService {
 
-	List<Application> getAllApplications();
+	List<Application> getApplications();
 
 	Application getApplication(UUID id);
 
-	void insertApplication(Application application);
-
-	void updateApplication(Application application);
+	void saveApplication(Application application);
 
 	void deleteApplication(Application application);
 
@@ -35,17 +33,15 @@ public interface AdministrationService {
 
 	Map<Relationship, ObjectDefinition> getRelatedObjectDefinitionsForObject(ObjectDefinition objectDefinition);
 
-	List<ObjectDefinition> getAllObjectDefinitions();
+	List<ObjectDefinition> getObjectDefinitions();
 
 	ObjectDefinition getObjectDefinition(UUID id);
 
-	void insertObjectDefinition(ObjectDefinition objectDefinition);
-
-	void updateObjectDefinition(ObjectDefinition objectDefinition);
+	void saveObjectDefinition(ObjectDefinition objectDefinition);
 
 	void deleteObjectDefinition(ObjectDefinition objectDefinition);
 
-	void insertApplicationObject(ApplicationObject applicationObject);
+	void saveApplicationObject(ApplicationObject applicationObject);
 
 	void deleteApplicationObject(ApplicationObject applicationObject);
 
@@ -57,9 +53,7 @@ public interface AdministrationService {
 
 	List<FieldDefinition> getFieldDefinitionsForObjectList(ObjectDefinition objectDefinition);
 
-	void insertFieldDefinition(FieldDefinition fieldDefinition);
-
-	void updateFieldDefinition(FieldDefinition fieldDefinition);
+	void saveFieldDefinition(FieldDefinition fieldDefinition);
 
 	void deleteFieldDefinition(FieldDefinition fieldDefinition);
 
@@ -71,13 +65,11 @@ public interface AdministrationService {
 
 	void removeFieldDefinitionListIndex(FieldDefinition fieldDefinition);
 
-	List<OptionList> getAllOptionLists();
+	List<OptionList> getOptionLists();
 
 	OptionList getOptionList(UUID id);
 
-	void insertOptionList(OptionList optionList);
-
-	void updateOptionList(OptionList optionList);
+	void saveOptionList(OptionList optionList);
 
 	void deleteOptionList(OptionList optionList);
 
@@ -85,9 +77,7 @@ public interface AdministrationService {
 
 	OptionListItem getOptionListItem(UUID id);
 
-	void insertOptionListItem(OptionListItem optionListItem);
-
-	void updateOptionListItem(OptionListItem optionListItem);
+	void saveOptionListItem(OptionListItem optionListItem);
 
 	void deleteOptionListItem(OptionListItem optionListItem);
 
@@ -95,7 +85,7 @@ public interface AdministrationService {
 
 	Relationship getRelationship(UUID id);
 
-	void insertRelationship(Relationship relationship);
+	void saveRelationship(Relationship relationship);
 
 	void deleteRelationship(Relationship relationship);
 

@@ -17,9 +17,9 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 public class JdbcObjectDefinitionDao extends JdbcDaoSupport implements ObjectDefinitionDao {
 
 	/**
-	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getAllObjectDefinitions()
+	 * @see org.programmerplanet.crm.dao.ObjectDefinitionDao#getObjectDefinitions()
 	 */
-	public List<ObjectDefinition> getAllObjectDefinitions() {
+	public List<ObjectDefinition> getObjectDefinitions() {
 		String sql = "SELECT * FROM crm_object ORDER BY object_name";
 		RowMapper objectDefinitionRowMapper = new ObjectDefinitionRowMapper();
 		List objectDefinition = this.getJdbcTemplate().query(sql, objectDefinitionRowMapper);

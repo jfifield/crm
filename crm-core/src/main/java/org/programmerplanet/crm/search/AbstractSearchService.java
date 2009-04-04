@@ -44,7 +44,7 @@ public abstract class AbstractSearchService implements SearchService {
 	 */
 	public List search(SearchCriteria searchCriteria) {
 		List results = new LinkedList();
-		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getAllObjectDefinitions();
+		List<ObjectDefinition> objectDefinitions = objectDefinitionDao.getObjectDefinitions();
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			List fieldDefinitionsForSearch = getFieldDefinitionsForSearch(objectDefinition);
 			if (fieldDefinitionsForSearch.isEmpty()) {

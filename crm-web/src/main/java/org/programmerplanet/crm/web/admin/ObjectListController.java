@@ -28,7 +28,7 @@ public class ObjectListController implements Controller {
 	 * @see org.springframework.web.servlet.mvc.Controller#handleRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List objects = administrationService.getAllObjectDefinitions();
+		List objects = administrationService.getObjectDefinitions();
 
 		Map model = new HashMap();
 		model.put("objects", objects);
