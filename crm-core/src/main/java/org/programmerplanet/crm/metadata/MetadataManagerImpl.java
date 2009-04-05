@@ -309,6 +309,13 @@ public class MetadataManagerImpl implements MetadataManager {
 		return fieldDefinitionDao.getFieldDefinitionsForObjectView(objectDefinition);
 	}
 
+	/**
+	 * @see org.programmerplanet.crm.metadata.MetadataManager#getFieldDefinitionsOfObjectType(org.programmerplanet.crm.metadata.ObjectDefinition)
+	 */
+	public List<FieldDefinition> getFieldDefinitionsOfObjectType(ObjectDefinition objectDefinition) {
+		return fieldDefinitionDao.getFieldDefinitionsOfObjectType(objectDefinition);
+	}
+
 	private void insertFieldDefinition(FieldDefinition fieldDefinition) {
 		int viewIndex = getNextFieldDefinitionViewIndex(fieldDefinition);
 		fieldDefinition.setViewIndex(new Integer(viewIndex));

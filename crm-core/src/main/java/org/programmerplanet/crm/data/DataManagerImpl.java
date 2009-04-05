@@ -10,12 +10,9 @@ import org.programmerplanet.crm.data.dao.ObjectDataDao;
 import org.programmerplanet.crm.data.dao.FileDao;
 import org.programmerplanet.crm.metadata.DataType;
 import org.programmerplanet.crm.metadata.FieldDefinition;
+import org.programmerplanet.crm.metadata.MetadataManager;
 import org.programmerplanet.crm.metadata.ObjectDefinition;
 import org.programmerplanet.crm.metadata.Relationship;
-import org.programmerplanet.crm.metadata.dao.ApplicationDao;
-import org.programmerplanet.crm.metadata.dao.FieldDefinitionDao;
-import org.programmerplanet.crm.metadata.dao.ObjectDefinitionDao;
-import org.programmerplanet.crm.metadata.dao.RelationshipDao;
 
 /**
  * @author <a href="mailto:jfifield@programmerplanet.org">Joseph Fifield<a>
@@ -24,27 +21,12 @@ import org.programmerplanet.crm.metadata.dao.RelationshipDao;
  */
 public class DataManagerImpl implements DataManager {
 
-	private ObjectDefinitionDao objectDefinitionDao;
-	private FieldDefinitionDao fieldDefinitionDao;
-	private ApplicationDao applicationDao;
-	private RelationshipDao relationshipDao;
+	private MetadataManager metadataManager;
 	private ObjectDataDao objectDataDao;
 	private FileDao fileDao;
 
-	public void setObjectDefinitionDao(ObjectDefinitionDao objectDefinitionDao) {
-		this.objectDefinitionDao = objectDefinitionDao;
-	}
-
-	public void setFieldDefinitionDao(FieldDefinitionDao fieldDefinitionDao) {
-		this.fieldDefinitionDao = fieldDefinitionDao;
-	}
-
-	public void setApplicationDao(ApplicationDao applicationDao) {
-		this.applicationDao = applicationDao;
-	}
-
-	public void setRelationshipDao(RelationshipDao relationshipDao) {
-		this.relationshipDao = relationshipDao;
+	public void setMetadataManager(MetadataManager metadataManager) {
+		this.metadataManager = metadataManager;
 	}
 
 	public void setObjectDataDao(ObjectDataDao objectDataDao) {
@@ -120,7 +102,7 @@ public class DataManagerImpl implements DataManager {
 	 * @see org.programmerplanet.crm.data.DataManager#deleteObject(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
 	public void deleteObject(ObjectDefinition objectDefinition, UUID id) {
-		List<FieldDefinition> fieldDefinitions = fieldDefinitionDao.getFieldDefinitionsForObject(objectDefinition);
+		List<FieldDefinition> fieldDefinitions = metadataManager.getFieldDefinitionsForObject(objectDefinition);
 
 		ObjectData objectData = objectDataDao.getObject(objectDefinition, fieldDefinitions, id);
 		Map data = objectData.getData();
@@ -136,15 +118,15 @@ public class DataManagerImpl implements DataManager {
 		}
 
 		// delete 'many' relationships
-		List<Relationship> relationships = relationshipDao.getRelationshipsForObject(objectDefinition);
+		List<Relationship> relationships = metadataManager.getRelationshipsForObject(objectDefinition);
 		for (Relationship relationship : relationships) {
 			objectDataDao.deleteObjectRelationships(relationship, objectDefinition, id);
 		}
 
 		// null 'one' relationships
-		List<FieldDefinition> objectFieldDefinitions = fieldDefinitionDao.getFieldDefinitionsOfObjectType(objectDefinition);
+		List<FieldDefinition> objectFieldDefinitions = metadataManager.getFieldDefinitionsOfObjectType(objectDefinition);
 		for (FieldDefinition fieldDefinition : objectFieldDefinitions) {
-			ObjectDefinition ownerObjectDefinition = objectDefinitionDao.getObjectDefinition(fieldDefinition.getObjectId());
+			ObjectDefinition ownerObjectDefinition = metadataManager.getObjectDefinition(fieldDefinition.getObjectId());
 			objectDataDao.clearObjectValue(ownerObjectDefinition, fieldDefinition, id);
 		}
 
@@ -155,7 +137,7 @@ public class DataManagerImpl implements DataManager {
 	 * @see org.programmerplanet.crm.data.DataManager#saveObjectRelationship(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
 	public void saveObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
-		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
+		Relationship relationship = metadataManager.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
 		objectDataDao.insertObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}
 
@@ -163,7 +145,7 @@ public class DataManagerImpl implements DataManager {
 	 * @see org.programmerplanet.crm.data.DataManager#deleteObjectRelationship(org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID, org.programmerplanet.crm.metadata.ObjectDefinition, java.util.UUID)
 	 */
 	public void deleteObjectRelationship(ObjectDefinition parentObjectDefinition, UUID parentId, ObjectDefinition childObjectDefinition, UUID childId) {
-		Relationship relationship = relationshipDao.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
+		Relationship relationship = metadataManager.getRelationship(parentObjectDefinition.getId(), childObjectDefinition.getId());
 		objectDataDao.deleteObjectRelationship(relationship, parentObjectDefinition, parentId, childObjectDefinition, childId);
 	}
 

@@ -50,6 +50,8 @@ public interface MetadataManager {
 
 	List<FieldDefinition> getFieldDefinitionsForObjectView(ObjectDefinition objectDefinition);
 
+	List<FieldDefinition> getFieldDefinitionsOfObjectType(ObjectDefinition objectDefinition);
+
 	void saveFieldDefinition(FieldDefinition fieldDefinition);
 
 	void deleteFieldDefinition(FieldDefinition fieldDefinition);
